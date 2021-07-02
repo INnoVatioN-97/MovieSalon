@@ -5,8 +5,6 @@ import moment from 'moment';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -20,8 +18,8 @@ const styles = (theme) => ({
     // },
     paper: {
         marginTop: 15,
-        marginLeft: 18,
-        marginRight: 18,
+        marginLeft: 24,
+        marginRight: 24,
     },
 });
 
