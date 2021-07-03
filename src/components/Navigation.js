@@ -1,6 +1,6 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { Link as RouterLink } from 'react-router-dom';
+import { AppBar, Toolbar, Link } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+    },
+    link: {
+        marginLeft: 6,
+        marginRight: 3,
     },
     search: {
         position: 'relative',
@@ -64,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Navigation(props) {
+const Navigation = ({ movieNm }) => {
     const classes = useStyles();
 
     return (
@@ -77,17 +81,17 @@ function Navigation(props) {
                     <Typography className={classes.title} variant="h6" noWrap>
                         {/* <Link to="/">Home</Link>
                         <Link to="/movieList">Movie List</Link> */}
-                        <Button variant="contained" color="primary" href="/#/">
+                        <Link href="/#" className={classes.link} variant="inherit" color="inherit">
                             Home
-                        </Button>
-                        <Button variant="contained" color="primary" href="/#/movieList">
+                        </Link>
+                        <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
                             Movie List
-                        </Button>
+                        </Link>
                     </Typography>
                 </Toolbar>
             </AppBar>
         </div>
     );
-}
+};
 
 export default Navigation;

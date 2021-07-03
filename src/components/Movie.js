@@ -1,8 +1,11 @@
-import React, { setState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+// import TableRow from '@material-ui/core/TableRow';
+// import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
+import { Button, Link, TableCell, TableRow } from '@material-ui/core';
+import ViewMovie from 'routes/ViewMovie';
+import { HashRouter, Route, Switch, Link as Nav } from 'react-router-dom';
 
 const styles = (theme) => ({
     movieTitle: {
@@ -15,7 +18,6 @@ const styles = (theme) => ({
     },
 });
 let rankInten, audiInten;
-
 class Movie extends React.Component {
     //     let props =  key, movieNm, rank, rankInten, openDt, audiCnt, audiAcc, audiInten ]
     // let key, movieNm, rank, rankInten, openDt, audiCnt, audiAcc, audiInten;
@@ -26,27 +28,35 @@ class Movie extends React.Component {
     }
 
     printRankInten = () => {
-        if (rankInten != 0)
+        if (rankInten !== 0)
             if (rankInten > 0) return `전일 대비 👍 X ${rankInten}`;
             else return `전일 대비 👎 X ${Math.abs(rankInten)}`;
         else return '순위 변동 없음.';
     };
 
     printAudiIten = () => {
-        if (audiInten != 0)
+        if (audiInten !== 0)
             if (audiInten > 0) return `👍 X ${audiInten}`;
             else return `👎 X ${Math.abs(audiInten)}`;
         else return '관람객 수 변동 없음.';
     };
 
+    clickToViewMovie = (event) => {
+        this.setState({
+            movieNm: event.target.innerText,
+        });
+        console.log('눌림!');
+    };
+
     render() {
         const { classes } = this.props;
-        let rankInten = this.props.rankInten;
+        let url = '/viewMovie?movieNm=';
+
         return (
             <>
                 <TableRow hover={true}>
                     <TableCell colSpan="2" className={classes.movieTitle}>
-                        {this.props.movieNm}
+                        <Nav to={url + this.props.movieNm}>{this.props.movieNm}</Nav>
                     </TableCell>
                     <TableCell className={classes.movieInfo}> {this.props.rank}위 </TableCell>
                     <TableCell colSpan="2" className={classes.movieInfo}>
