@@ -60,10 +60,10 @@ class MovieList extends React.Component {
                     {isLoading ? (
                         <TableHead>'영화 목록을 불러오는 중.'</TableHead>
                     ) : (
-                        movies.map((movie) => {
-                            //   console.log(movie);
-                            return (
-                                <TableBody>
+                        <TableBody>
+                            {movies.map((movie) => {
+                                //   console.log(movie);
+                                return (
                                     <Movie
                                         key={movie.movieCd}
                                         movieNm={movie.movieNm}
@@ -74,9 +74,9 @@ class MovieList extends React.Component {
                                         audiAcc={movie.audiAcc}
                                         audiInten={movie.audiInten}
                                     />
-                                </TableBody>
-                            );
-                        })
+                                );
+                            })}
+                        </TableBody>
                     )}
                 </Table>
             </Paper>
