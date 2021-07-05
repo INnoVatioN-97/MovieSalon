@@ -11,7 +11,7 @@ const AppRouter = () => {
         // return <ViewMovie movieNm={e.}
         const { search } = e.location;
         const queryObj = queryStirng.parse(search);
-        console.log(queryObj.movieNm);
+        // console.log(queryObj.movieNm);
         return <ViewMovie movieNm={queryObj.movieNm} />;
     };
     return (

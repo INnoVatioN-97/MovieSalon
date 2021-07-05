@@ -36,7 +36,7 @@ class MovieList extends React.Component {
     getMovies = async () => {
         //어제 기준 박스오피스 상위 10위권 출력.
         const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
-        console.log(yesterday);
+        // console.log(yesterday);
         const API_KEY = process.env.REACT_APP_KOBIS_API_KEY;
         const {
             data: {
