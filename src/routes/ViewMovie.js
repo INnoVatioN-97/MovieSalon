@@ -3,7 +3,6 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import { TableHead, TableBody, TableCell, Table, TableRow } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import queryStirng from 'query-string';
 
 //const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
 
@@ -27,7 +26,6 @@ class ViewMovie extends React.Component {
         const SECRET_KEY = process.env.REACT_APP_NAVER_CLIENT_SECRET_KEY;
         const search = this.props.movieNm;
         try {
-            // console.log(`search: ${search}, ID_KEY: ${ID_KEY}, SECRET_KEY: ${SECRET_KEY}`);
             if (search === '') {
                 this.setState({ movies: [], isLoading: false });
             } else {
@@ -47,13 +45,10 @@ class ViewMovie extends React.Component {
     };
 
     // 가져온 movies속 link에서 영화코드만 따로 뽑아 고화질 영화 포스터를 추출하는 함수
-    getMovieImage = (link) => {
-        console.log(link);
-        const queryObj = queryStirng.parse(link);
-        //영화 고화질 포스터 못가져옴 아직.
-
-        // console.log(queryObj);
-        // console.log('가져온 영화코드 : ', queryObj.code);
+    getMovieImage = (movie) => {
+        //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
+        const code = movie.link.split('?code=');
+        // console.log('[가져온 영화 code: ', code);
     };
 
     componentDidMount() {
@@ -82,7 +77,9 @@ class ViewMovie extends React.Component {
         const printMovieInfo = (movie) => {
             const movies = movie[0];
             const actors = movies.actor.split('|');
-            this.getMovieImage(movie.link);
+
+            console.log('movie: ', movies);
+            this.getMovieImage(movies);
             return (
                 <TableBody>
                     <TableRow>
