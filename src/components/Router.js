@@ -8,7 +8,6 @@ import queryStirng from 'query-string';
 const AppRouter = () => {
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
     const viewMovie = (e) => {
-        // return <ViewMovie movieNm={e.}
         const { search } = e.location;
         console.log(search);
         const queryObj = queryStirng.parse(search);

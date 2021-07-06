@@ -2,17 +2,34 @@ import React from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import { TableHead, TableBody, TableCell, Table, TableRow } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
-//const AppRouter = ({ refreshUser, isLoggedIn, userObj }) => {
+const cheerio = require('cheerio');
+
+/**
+ * axios를 활용해 AJAX로 HTML 문서를 가져오는 함수 구현
+ * 네이버 영화 검색 api에서 얻어낸 영화 코드를 이용해 해당 영화 포스터를 파싱해오기 위함.
+ */
+async function getHTML(code) {
+    try {
+        return await axios.get(`/poster/movie/bi/mi/photoViewPopup.nhn?movieCode=${code}`);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 const styles = (theme) => ({
     table: {
+        alignItem: 'center',
         marginLeft: 20,
         marginRight: 20,
+        width: 500,
     },
     image: {
         minWidth: 480,
+        maxWidth: 720,
+    },
+    alignItem: {
+        justifyContent: 'center',
     },
 });
 
@@ -31,12 +48,14 @@ class ViewMovie extends React.Component {
             } else {
                 const {
                     data: { items },
-                } = await axios.get('/v1/search/movie.json', {
+                } = await axios.get('/api/v1/search/movie.json', {
                     params: { query: search, display: 1 },
                     headers: { 'X-Naver-Client-Id': ID_KEY, 'X-Naver-Client-Secret': SECRET_KEY },
                 });
                 //주소를 통해 가져와 진 items 배열을 movies라는 state에 저장.
-                this.setState({ movies: items, isLoading: false });
+                // this.setState({ movies: items, isLoading: false });
+                this.setState({ movies: items });
+                this.getMovieImage();
             }
             // this.getMovieImage();
         } catch (error) {
@@ -44,27 +63,40 @@ class ViewMovie extends React.Component {
         }
     };
 
-    // 가져온 movies속 link에서 영화코드만 따로 뽑아 고화질 영화 포스터를 추출하는 함수
-    getMovieImage = (movie) => {
+    // 가져온 movies속 link에서 영화코드만 따로 뽑아 고화질 영화 포스터를 추출하는 함수로 할 예정.
+    getMovieImage = () => {
+        const movie = this.state.movies;
+        let highQualityPoster = '';
+        console.log(movie[0]);
+
         //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
-        const code = movie.link.split('?code=');
-        // console.log('[가져온 영화 code: ', code);
+        const code = movie[0].link.split('?code='); //정상적으로 코드 얻어오는것 확인됨.
+        // console.log('가져온 영화 code: ', code[1]);
+        getHTML(code[1]).then((html) => {
+            const $ = cheerio.load(html.data);
+            // console.log(html.data);
+            // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
+            const bodyList = $('#page_content').children('a').children('#targetImage');
+            highQualityPoster = bodyList[0].attribs.src;
+            console.log('hqPoster from getHtml(line94):', highQualityPoster);
+            if (highQualityPoster !== undefined) {
+                this.setState({ hqPoster: highQualityPoster, isLoading: false });
+                return;
+            }
+        });
     };
 
     componentDidMount() {
         //render() 함수가 실행되기 전 미리 api를 불러 영화 정보를 가져온다.
         this.getSearchMovie();
-        // this.getMovieImage();
     }
 
     render() {
         // state에 저장된 내용들 중 아까 26번 줄에서 저장한 movies, isLoading을 가져와 const 변수에 저장.
-        const { movies, isLoading } = this.state;
-        console.log(movies);
+        const { movies, isLoading, hqPoster } = this.state;
+        // console.log(movies);
         const { classes } = this.props;
-        // const { link, pubDate, title, image, userRating, director, actor } = movies;
         const printActors = (actors) => {
-            // console.log(actors);
             let text = '';
             for (let i = 0; i < actors.length - 1; i++) {
                 if (actors[i] === '') continue;
@@ -78,14 +110,16 @@ class ViewMovie extends React.Component {
             const movies = movie[0];
             const actors = movies.actor.split('|');
 
-            console.log('movie: ', movies);
-            this.getMovieImage(movies);
+            // console.log('movie: ', movies);
+            // this.getMovieImage(movies);
             return (
                 <TableBody>
                     <TableRow>
-                        <TableCell colSpan="4">
+                        <TableCell colSpan="4" className={classes.alignItem}>
                             <a href={movies.link} rel="norefferer">
-                                <img className={classes.image} src={movies.image} alt={movies.title} />
+                                {/* {this.getMovieImage(movies, classes.image)} */}
+                                {console.log(hqPoster)}
+                                <img className={classes.image} src={hqPoster} alt={movies.title} />
                             </a>
                         </TableCell>
                     </TableRow>
@@ -124,13 +158,13 @@ class ViewMovie extends React.Component {
     }
 }
 
-ViewMovie.propTypes = {
-    id: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    rating: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actor: PropTypes.string.isRequired,
-};
+// ViewMovie.propTypes = {
+//     id: PropTypes.string.isRequired,
+//     year: PropTypes.string.isRequired,
+//     title: PropTypes.string.isRequired,
+//     poster: PropTypes.string.isRequired,
+//     rating: PropTypes.string.isRequired,
+//     director: PropTypes.string.isRequired,
+//     actor: PropTypes.string.isRequired,
+// };
 export default withStyles(styles)(ViewMovie);

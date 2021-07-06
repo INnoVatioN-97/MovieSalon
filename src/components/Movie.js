@@ -1,11 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import TableRow from '@material-ui/core/TableRow';
-// import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Link, TableCell, TableRow } from '@material-ui/core';
-import ViewMovie from 'routes/ViewMovie';
-import { HashRouter, Route, Switch, Link as Nav } from 'react-router-dom';
+import { TableCell, TableRow } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     movieTitle: {
@@ -17,7 +13,7 @@ const styles = (theme) => ({
         textAlign: 'center',
     },
 });
-// let rankInten, audiInten;
+
 class Movie extends React.Component {
     render() {
         //props에 저장된 classes(withStyles에 필요), 영화이름, 순위, 개봉일과 같은 정보들을 가져와 변수로 관리.
@@ -26,8 +22,8 @@ class Movie extends React.Component {
 
         const printAudiIten = () => {
             // console.log(audiInten);
-            if (audiInten == 0) return '관람객 수 변동 없음.';
-            if (audiInten !== 0) {
+            if (audiInten === '0') return '관람객 수 변동 없음.';
+            if (audiInten !== '0') {
                 let text = '전일 대비 ';
                 if (audiInten > 0) text += `👍 X ${audiInten}`;
                 else text += `👎 X ${Math.abs(audiInten)}`;
@@ -37,8 +33,8 @@ class Movie extends React.Component {
 
         const printRankInten = () => {
             // console.log(rankInten);
-            if (rankInten == 0) return '순위 변동 없음.';
-            if (rankInten !== 0) {
+            if (rankInten === '0') return '순위 변동 없음.';
+            if (rankInten !== '0') {
                 let text = '전일 대비 ';
                 if (rankInten > 0) text += `👍 X ${rankInten}`;
                 else text += `👎 X ${Math.abs(rankInten)}`;
@@ -50,7 +46,7 @@ class Movie extends React.Component {
             <>
                 <TableRow hover={true}>
                     <TableCell colSpan="2" className={classes.movieTitle}>
-                        <Nav to={url + movieNm}>{movieNm}</Nav>
+                        <Link to={url + movieNm}>{movieNm}</Link>
                     </TableCell>
                     <TableCell className={classes.movieInfo}> {rank}위 </TableCell>
                     <TableCell colSpan="2" className={classes.movieInfo}>
@@ -69,9 +65,5 @@ class Movie extends React.Component {
         );
     }
 }
-
-Movie.propTypes = {
-    title: PropTypes.string.isRequired,
-};
 
 export default withStyles(styles)(Movie);
