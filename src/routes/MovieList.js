@@ -27,33 +27,26 @@ class MovieList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            // movies: props.movies.movies,
             isLoading: true,
-            movies: [],
-            searchKeyword: '',
         };
+        // console.log('movies from MovieList:', this.state.movies);
     }
 
     getMovies = async () => {
-        //어제 기준 박스오피스 상위 10위권 출력.
-        const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
-        // console.log(yesterday);
-        const API_KEY = process.env.REACT_APP_KOBIS_API_KEY;
-        const {
-            data: {
-                boxOfficeResult: { dailyBoxOfficeList },
-            },
-        } = await axios.get(
-            `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
-        );
-        // console.log(dailyBoxOfficeList);
-        this.setState({ movies: dailyBoxOfficeList, isLoading: false });
+        //영화 배열을 다 가져오기까지 시간이 좀 걸리므로 async 사용해서 스테이트 설정.
+        await this.setState({
+            movies: this.props.movies,
+            isLoading: false,
+        });
     };
     componentDidMount() {
         this.getMovies();
     }
     render() {
-        const { isLoading, movies } = this.state;
+        const { movies, isLoading } = this.state;
         const { classes } = this.props;
+
         return (
             <Paper className={classes.paper}>
                 <Table className={classes.table}>
@@ -61,7 +54,7 @@ class MovieList extends React.Component {
                         <TableHead>'영화 목록을 불러오는 중.'</TableHead>
                     ) : (
                         <TableBody>
-                            {movies.map((movie) => {
+                            {movies.movies.map((movie) => {
                                 //   console.log(movie);
                                 return (
                                     <Movie

@@ -5,7 +5,7 @@ import MovieList from 'routes/MovieList';
 import ViewMovie from 'routes/ViewMovie';
 import queryStirng from 'query-string';
 
-const AppRouter = () => {
+const AppRouter = (movies) => {
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
     const viewMovie = (e) => {
         const { search } = e.location;
@@ -19,10 +19,10 @@ const AppRouter = () => {
             <Switch>
                 <div>
                     <Route exact path="/">
-                        <Home />
+                        <Home movies={movies} />
                     </Route>
                     <Route exact path="/movieList">
-                        <MovieList />
+                        <MovieList movies={movies} />
                     </Route>
                     <Route path="/viewMovie" component={viewMovie} />
                 </div>
