@@ -30,7 +30,12 @@ class Home extends React.Component {
         super(props);
         this.state = {
             movies: props.movies.movies,
+            keyword: ''
         };
+        this.handleChange = this.handleChange.bind(this); // 바인딩
+    }
+    handleChange = (e) => {
+        this.setState({keyword: e.target.value});  
     }
 
     printTop3Movies = (movies) => {
@@ -38,23 +43,37 @@ class Home extends React.Component {
         let tmpMovies = [];
         for (let i = 0; i < 3; i++) {
             tmpMovies[i] = movies[i];
+            
         }
+
         // console.log('tmpMovies:', tmpMovies);
+        
         return tmpMovies.map((m) => (
+            
             <Box>
-                {m.rank}위, {m.movieNm}{' '}
+                {m.movieNm.indexOf(this.state.keyword) > -1 ?<p>{m.rank}위, {m.movieNm}{' '},</p> : <p></p> }
+                
             </Box>
         ));
+        
     };
+    /*
+    var stringVal = "javascript",
+    substring = "java";
+    stringVal.indexOf(substring) !== -1;
+    */
+    
+     // {console.log(m.movieNm.indexOf(this.state.keyword))}
 
     render() {
         const { movies } = this.state;
         const { classes } = this.props;
         // console.log('movies:', movies);
         return (
-            <>
+            <>  <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
                 <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
                 <Box className={classes.box}>{this.printTop3Movies(movies)}</Box>
+                
             </>
         );
     }

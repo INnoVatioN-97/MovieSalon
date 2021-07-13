@@ -27,6 +27,7 @@ const styles = (theme) => ({
     image: {
         minWidth: 480,
         maxWidth: 720,
+        height: 550
     },
     alignItem: {
         justifyContent: 'center',
