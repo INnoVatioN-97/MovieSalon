@@ -73,7 +73,6 @@ class Home extends React.Component {
                 <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
                 <Box className={classes.box}>{this.printTop3Movies(movies)}</Box>
                 <p>{userObj.email}님 안녕하세요.</p>
-                 
             </>
         );
     }

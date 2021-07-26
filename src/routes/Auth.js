@@ -61,6 +61,7 @@ const Auth= () => {
       // console.log(data.email);
     };
     
+    
     return (
         <div>
         <form onSubmit={onSubmit}>

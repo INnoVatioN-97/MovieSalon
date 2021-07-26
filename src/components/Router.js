@@ -8,7 +8,7 @@ import Auth from 'routes/Auth';
 import App from './App';
 
 
-const AppRouter = ({movies, userObj, isLoggedIn}) => {
+const AppRouter = (movies, userObj, isLoggedIn) => { // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
 
     const viewMovie = (e) => {
@@ -32,7 +32,7 @@ const AppRouter = ({movies, userObj, isLoggedIn}) => {
                     </Route>
                     <Route path="/viewMovie" component={viewMovie} />
                     <Route exact path="/auth">
-                        <Auth isLoggedIn={isLoggedIn} userObj={userObj} />
+                        <Auth isLoggedIn={isLoggedIn} userObj={userObj}  />
                     </Route>
             </Switch>
         </HashRouter>
