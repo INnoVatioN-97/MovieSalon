@@ -1,10 +1,15 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import AppRouter from './Router';
 import moment from 'moment';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
+import { authService } from 'fbase';
+import Auth from 'routes/Auth';
+
+
+
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
@@ -29,8 +34,35 @@ class App extends React.Component {
         this.state = {
             isLoading: true,
             movies: [],
+            
+            init: false,
+            isLoggedIn: false,
+            userObj: null,
+            
         };
     }
+
+    signInState = () => { // login 상태 확인
+        authService.onAuthStateChanged((user) => {
+            if(user) {
+                //this.isLoggedIn = true;
+                this.setState({isLoggedIn : true, userObj: user});
+                // this.userObj = user;
+                // console.log(this.isLoggedIn);
+                console.log(user.email);
+            } else{
+               // this.isLoggedIn= false;
+               // this.setState.isLoggedIn = false;
+               this.setState({isLoggedIn: false});
+                console.log(this.isLoggedIn);
+            }
+            
+            this.init = true;
+            this.movies = [];
+            
+        });
+    }
+    
 
     getMovies = async () => {
         //어제 기준 박스오피스 상위 10위권 출력.
@@ -45,28 +77,37 @@ class App extends React.Component {
             `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
         );
         // console.log(dailyBoxOfficeList);
+        
         this.setState({ movies: dailyBoxOfficeList, isLoading: false });
+        
     };
     componentDidMount() {
         this.getMovies();
+        this.signInState();
+        
     }
 
     render() {
-        const { isLoading, movies } = this.state;
+        const { isLoggedIn, movies, userObj } = this.state;
+        console.log(isLoggedIn);
+        console.log('usrObj', userObj);
         const { classes } = this.props;
+        
         return (
-            <>
-                {isLoading ? (
-                    'initializing...'
-                ) : (
+                <>
+                {isLoggedIn ? (
                     <>
-                        <Navigation />
-                        <AppRouter movies={movies} />
+                    <Navigation />
+                    <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
+                    
+                </>
+                ) : (<>
+                    <Auth />
+                    <p>LogIn이 필요합니다.</p>
                     </>
                 )}
             </>
         );
     }
 }
-
 export default withStyles(styles)(App);

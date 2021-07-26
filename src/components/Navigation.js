@@ -83,6 +83,9 @@ const Navigation = () => {
                         <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
                             Movie List
                         </Link>
+                        <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
+                            Login
+                        </Link>
                     </Typography>
                 </Toolbar>
             </AppBar>

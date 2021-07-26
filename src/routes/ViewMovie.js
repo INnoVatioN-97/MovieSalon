@@ -50,7 +50,7 @@ class ViewMovie extends React.Component {
                 const {
                     data: { items },
                 } = await axios.get('/api/v1/search/movie.json', {
-                    params: { query: search, display: 1 },
+                    params: { query: search, display: 5 },
                     headers: { 'X-Naver-Client-Id': ID_KEY, 'X-Naver-Client-Secret': SECRET_KEY },
                 });
                 //주소를 통해 가져와 진 items 배열을 movies라는 state에 저장.
