@@ -4,9 +4,6 @@ import Box from '@material-ui/core/Box';
 // firebase login import 추가
 import 'firebase/firestore';
 import 'firebase/auth';
-import { signInWithGoogle } from '../fbase';
-import { authService } from '../fbase';
-import Auth from './Auth';
 
 
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
@@ -36,9 +33,10 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            movies: props.movies.movies,
+            movies: props.movies,
             keyword: '',
             userObj: props.userObj,
+            isLoggedIn: props.isLoggedIn,
             
         };
         this.handleChange = this.handleChange.bind(this); // 바인딩
@@ -64,9 +62,9 @@ class Home extends React.Component {
     render() {
         const { movies, userObj, isLoggedIn } = this.state;
         const { classes } = this.props;
-        console.log('userObj_Home',userObj);
-        console.log('logState', isLoggedIn);
-        console.log('movies:', movies);
+        console.log('userObj_Home',this.state.userObj);
+        console.log('logState_Home', isLoggedIn);
+        console.log('movies_Home:', movies);
         
         return (
             <>  <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
@@ -77,5 +75,4 @@ class Home extends React.Component {
         );
     }
 }
-
 export default withStyles(styles)(Home);

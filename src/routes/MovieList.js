@@ -12,13 +12,6 @@ import InputBase from '@material-ui/core/InputBase';
 2021.07.14 List 기능 추가 ver1.0 @TylerKang
 */
 const styles = (theme) => ({
-    // table: {
-    // justifyContent: 'center',
-    // // maxWidth: 960,
-    // minWidth: 480,
-    // marginLeft: 15,
-    // marginRight: 15,
-    // },
     paper: {
         marginTop: 15,
         marginLeft: 24,
@@ -30,7 +23,7 @@ class MovieList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // movies: props.movies.movies,
+            movies: props.movies,
             isLoading: true,
             keyword: ''
         };
@@ -47,6 +40,7 @@ class MovieList extends React.Component {
             movies: this.props.movies,
             isLoading: false,
         });
+       // console.log('List_movies',this.props.movies);
     };
     componentDidMount() {
         this.getMovies();
@@ -63,8 +57,8 @@ class MovieList extends React.Component {
                     ) : (
                         <TableBody>
                             <InputBase type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" /> 
-                            {movies.movies.map((movie) => {
-                                //   console.log(movie);
+                            {movies.map((movie) => {
+                                  // console.log('movie_list',movie);
                                 return (
                                     // 검색창에 입력된 문자의 키워드를 movieName과 매치하여 리스트 출력
                                     movie.movieNm.indexOf(this.state.keyword) > -1 ?

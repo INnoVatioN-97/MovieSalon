@@ -7,6 +7,7 @@ import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
 import Auth from 'routes/Auth';
+import { PinDropRounded } from '@material-ui/icons';
 
 
 
@@ -14,13 +15,6 @@ import Auth from 'routes/Auth';
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
 const styles = (theme) => ({
-    // table: {
-    // justifyContent: 'center',
-    // // maxWidth: 960,
-    // minWidth: 480,
-    // marginLeft: 15,
-    // marginRight: 15,
-    // },
     paper: {
         marginTop: 15,
         marginLeft: 24,
@@ -34,11 +28,9 @@ class App extends React.Component {
         this.state = {
             isLoading: true,
             movies: [],
-            
             init: false,
             isLoggedIn: false,
             userObj: null,
-            
         };
     }
 
@@ -49,21 +41,18 @@ class App extends React.Component {
                 this.setState({isLoggedIn : true, userObj: user});
                 // this.userObj = user;
                 // console.log(this.isLoggedIn);
-                console.log(user.email);
+                console.log('userObj_App',this.state.userObj.email); 
             } else{
                // this.isLoggedIn= false;
                // this.setState.isLoggedIn = false;
                this.setState({isLoggedIn: false});
                 console.log(this.isLoggedIn);
             }
-            
             this.init = true;
-            this.movies = [];
-            
+            // this.movies = [];
         });
     }
     
-
     getMovies = async () => {
         //어제 기준 박스오피스 상위 10위권 출력.
         const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
@@ -77,14 +66,11 @@ class App extends React.Component {
             `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
         );
         // console.log(dailyBoxOfficeList);
-        
         this.setState({ movies: dailyBoxOfficeList, isLoading: false });
-        
     };
     componentDidMount() {
         this.getMovies();
         this.signInState();
-        
     }
 
     render() {
