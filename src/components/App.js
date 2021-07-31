@@ -83,7 +83,7 @@ class App extends React.Component {
                 <>
                 {isLoggedIn ? (
                     <>
-                    <Navigation />
+                    <Navigation userObj={userObj} />
                     <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
                     
                 </>

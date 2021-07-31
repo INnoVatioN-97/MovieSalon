@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Navigation = () => {
+const Navigation = ({userObj}) => {
     const classes = useStyles();
 
     return (
@@ -86,6 +86,8 @@ const Navigation = () => {
                         <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
                             Login
                         </Link>
+                        &nbsp; {userObj.email}님
+                        
                     </Typography>
                 </Toolbar>
             </AppBar>
