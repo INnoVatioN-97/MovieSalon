@@ -58,7 +58,7 @@ class ViewMovie extends React.Component {
                 this.setState({ movies: items });
                 this.getMovieImage();
             }
-            // this.getMovieImage();
+           //  this.getMovieImage();
         } catch (error) {
             console.log(error);
         }
@@ -68,14 +68,14 @@ class ViewMovie extends React.Component {
     getMovieImage = () => {
         const movie = this.state.movies;
         let highQualityPoster = '';
-        console.log(movie[0]);
+        console.log('movie[0]',movie[0]);
 
         //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
         const code = movie[0].link.split('?code='); //정상적으로 코드 얻어오는것 확인됨.
-        // console.log('가져온 영화 code: ', code[1]);
+         console.log('가져온 영화 code: ', code[1]);
         getHTML(code[1]).then((html) => {
             const $ = cheerio.load(html.data);
-            // console.log(html.data);
+            console.log('html.data',html.data);
             // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
             const bodyList = $('#page_content').children('a').children('#targetImage');
             highQualityPoster = bodyList[0].attribs.src;
@@ -90,6 +90,7 @@ class ViewMovie extends React.Component {
     componentDidMount() {
         //render() 함수가 실행되기 전 미리 api를 불러 영화 정보를 가져온다.
         this.getSearchMovie();
+      //  this.getMovieImage();
     }
 
     render() {

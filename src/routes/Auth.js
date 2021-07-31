@@ -3,7 +3,7 @@ import { authService, firebaseInstance } from "fbase";
 import { useState } from "react";
 import { useHistory } from 'react-router-dom';
 
-const Auth= () => {
+const Auth= ({userObj, isLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setNewAccount] = useState(true); 
@@ -63,6 +63,13 @@ const Auth= () => {
     
     
     return (
+      <>
+      {isLoggedIn ? (
+        <>
+        <p>{userObj.email}님 안녕하세요</p>
+        <button onClick={onLogOutClick}>Log Out</button>
+        </>
+      ) : (
         <div>
         <form onSubmit={onSubmit}>
         <input name="email"
@@ -79,14 +86,16 @@ const Auth= () => {
         <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
         {error}
         </form>
-        <span onClick={toggleAccount}>{newAccount ? "Sign in" : "Create Account"}</span>
+        <span onClick={toggleAccount}>{newAccount ? "==>Sign in<==" : "==>Create Account<=="}</span>
         <div>
         <button onClick={onSocialClick} name="google">Continue with Google</button>
         <button onClick={onSocialClick} name="github">Continue with Github</button>
-        <button onClick={onLogOutClick}>Log Out</button>
         
         </div>
     </div>
+      )}
+      </>
+        
     );
 
 }

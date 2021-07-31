@@ -80,12 +80,11 @@ class App extends React.Component {
         const { classes } = this.props;
         
         return (
-                <>
+            <>
                 {isLoggedIn ? (
                     <>
                     <Navigation userObj={userObj} />
                     <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
-                    
                 </>
                 ) : (<>
                     <Auth />

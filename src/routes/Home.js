@@ -44,13 +44,12 @@ class Home extends React.Component {
     handleChange = (e) => {
         this.setState({keyword: e.target.value});  
     }
-
-    printTop3Movies = (movies) => {
+    
+    printTop3Movies = () => { // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
         // console.log('movies from printTop3Movies:', movies);
         let tmpMovies = [];
-       // if (tmpMovies && tmpMovies.length > 0) {
             for (let i = 0; i < 3; i++) {
-                tmpMovies[i] = movies[i];   
+                tmpMovies[i] = this.state.movies[i];   
             }
         return tmpMovies.map((m) => (
             <Box>

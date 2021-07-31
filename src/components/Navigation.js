@@ -84,9 +84,9 @@ const Navigation = ({userObj}) => {
                             Movie List
                         </Link>
                         <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
-                            Login
+                            {userObj.email}님
                         </Link>
-                        &nbsp; {userObj.email}님
+                        
                         
                     </Typography>
                 </Toolbar>
