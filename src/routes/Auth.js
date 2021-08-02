@@ -1,7 +1,7 @@
 import { data } from "cheerio/lib/api/attributes";
 import { authService, firebaseInstance } from "fbase";
 import { useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 
 const Auth= ({userObj, isLoggedIn}) => {
     const [email, setEmail] = useState("");
