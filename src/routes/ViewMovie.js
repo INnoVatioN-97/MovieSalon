@@ -9,13 +9,14 @@ const cheerio = require('cheerio');
  * axios를 활용해 AJAX로 HTML 문서를 가져오는 함수 구현
  * 네이버 영화 검색 api에서 얻어낸 영화 코드를 이용해 해당 영화 포스터를 파싱해오기 위함.
  */
-async function getHTML(code) {
-    try {
-        return await axios.get(`/poster/movie/bi/mi/photoViewPopup.nhn?movieCode=${code}`);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// async function getHTML(code) {
+//     try {
+//         // console.log(`code from getHTML: ${code}`); //정확히 전달 됨.
+//         return await axios.get(`/poster/movie/bi/mi/photoViewPopup.nhn?movieCode=${code}`);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 const styles = (theme) => ({
     table: {
@@ -27,7 +28,7 @@ const styles = (theme) => ({
     image: {
         minWidth: 480,
         maxWidth: 720,
-        height: 550
+        height: 550,
     },
     alignItem: {
         justifyContent: 'center',
@@ -37,6 +38,50 @@ const styles = (theme) => ({
 class ViewMovie extends React.Component {
     // const { params } = this.props.match;
     state = { isLoading: true, movies: [], value: '' };
+
+    // await axios.get('/api/v1/search/movie.json', {
+    //     params: { query: search, display: 5 },
+    //     headers: { 'X-Naver-Client-Id': ID_KEY, 'X-Naver-Client-Secret': SECRET_KEY },
+    // });
+
+    getHTML = async (code) => {
+        try {
+            console.log(`code from getHTML: ${code}`); //정확히 전달 됨.
+            return await axios.get('/poster/movie/bi/mi/photoViewPopup.naver?movieCode=' + code);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // 가져온 movies속 link에서 영화코드만 따로 뽑아 고화질 영화 포스터를 추출하는 함수로 할 예정.
+    getMovieImage = () => {
+        const movie = this.state.movies;
+        let highQualityPoster = '';
+        // console.log('movie[0]', movie[0]);
+
+        //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
+        const codes = movie[0].link.split('?code='); //정상적으로 코드 얻어오는것 확인됨.
+        const code = codes[1];
+        console.log('가져온 영화 code: ', code);
+
+        this.getHTML(code)
+            .then((res) => {
+                // console.log(`html: ${res}`);
+                let $ = cheerio.load(res.data);
+                console.log('html.data: ', res.data);
+                // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
+                const bodyList = $('#page_content').children('a').children('#targetImage');
+                highQualityPoster = bodyList[0].attribs.src;
+                console.log('hqPoster from getHtml(line94):', highQualityPoster);
+                if (highQualityPoster !== undefined) {
+                    this.setState({ hqPoster: highQualityPoster, isLoading: false });
+                    return;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     //네이버 검색 API에서 영화 검색 정보를 가져오는 비동기 함수
     getSearchMovie = async () => {
@@ -58,39 +103,16 @@ class ViewMovie extends React.Component {
                 this.setState({ movies: items });
                 this.getMovieImage();
             }
-           //  this.getMovieImage();
+            //  this.getMovieImage();
         } catch (error) {
             console.log(error);
         }
     };
 
-    // 가져온 movies속 link에서 영화코드만 따로 뽑아 고화질 영화 포스터를 추출하는 함수로 할 예정.
-    getMovieImage = () => {
-        const movie = this.state.movies;
-        let highQualityPoster = '';
-        console.log('movie[0]',movie[0]);
-
-        //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
-        const code = movie[0].link.split('?code='); //정상적으로 코드 얻어오는것 확인됨.
-         console.log('가져온 영화 code: ', code[1]);
-        getHTML(code[1]).then((html) => {
-            const $ = cheerio.load(html.data);
-            console.log('html.data',html.data);
-            // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
-            const bodyList = $('#page_content').children('a').children('#targetImage');
-            highQualityPoster = bodyList[0].attribs.src;
-            console.log('hqPoster from getHtml(line94):', highQualityPoster);
-            if (highQualityPoster !== undefined) {
-                this.setState({ hqPoster: highQualityPoster, isLoading: false });
-                return;
-            }
-        });
-    };
-
     componentDidMount() {
         //render() 함수가 실행되기 전 미리 api를 불러 영화 정보를 가져온다.
         this.getSearchMovie();
-      //  this.getMovieImage();
+        //  this.getMovieImage();
     }
 
     render() {
