@@ -6,6 +6,8 @@ import TableBody from '@material-ui/core/TableBody';
 import { withStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 const styles = (theme) => ({
     paper: {
@@ -21,7 +23,13 @@ class AllMovies extends React.Component {
         this.state = {
             isLoading: true,
             movies: [],
+            genre: '',
         };
+        this.handleChange = this.handleChange.bind(this); // 바인딩
+    }
+
+    handleChange = (e) => {
+        this.setState({genre: e.target.value});  
     }
 
     getAllMovies = async () => {
@@ -39,19 +47,32 @@ class AllMovies extends React.Component {
     }
     render() {
         const { movies, isLoading } = this.state;
-        const { classes } = this.props;
 
         return (
             <>
+             <input type="text" name="genre" value={this.state.genre} onChange={this.handleChange} placeholder="장르" />
+             <button name="genBtn_drama" onClick={() => this.setState({ genre: '드라마' })}>드라마 </button>
+             <button name="genBtn_horro" onClick={() => this.setState({ genre: '공포' })}>공포 </button>
+             <button name="genBtn_mistary" onClick={() => this.setState({ genre: '미스터리' })}>미스터리 </button>
                 {isLoading ? (
                     <TableHead>'영화 목록을 불러오는 중.'</TableHead>
                 ) : (
                     movies.map((m) => (
-                        <TableBody>
-                            제목: {m.movieNm}({m.movieNmEn}){m.repGenreNm}
-                        </TableBody>
+                        
+                        <>
+                        {m.repGenreNm.indexOf(this.state.genre) > -1 ? <TableRow>
+                        <TableCell>
+                        {m.movieNm}({m.movieNmEn})
+                        </TableCell>
+                        <TableCell>
+                        {m.repGenreNm}
+                        </TableCell>
+                        </TableRow> : <p></p>}
+                        </>
                     ))
+                              
                 )}
+               
             </>
         );
     }
