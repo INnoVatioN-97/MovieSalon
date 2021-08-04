@@ -1,22 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/styles';
-import { TableHead, TableBody, TableCell, Table, TableRow } from '@material-ui/core';
+import { TableHead, TableBody, TableCell, Table, TableRow, TextField } from '@material-ui/core';
+import { dbService } from 'fbase';
 
 const cheerio = require('cheerio');
-
-/**
- * axios를 활용해 AJAX로 HTML 문서를 가져오는 함수 구현
- * 네이버 영화 검색 api에서 얻어낸 영화 코드를 이용해 해당 영화 포스터를 파싱해오기 위함.
- */
-// async function getHTML(code) {
-//     try {
-//         // console.log(`code from getHTML: ${code}`); //정확히 전달 됨.
-//         return await axios.get(`/poster/movie/bi/mi/photoViewPopup.nhn?movieCode=${code}`);
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
 
 const styles = (theme) => ({
     table: {
@@ -62,17 +50,15 @@ class ViewMovie extends React.Component {
         //하드코딩이지만 일단 영화정보에서 네이버 영화검색 결과창 주소를 가져와 거기서 영화코드를 추출.
         const codes = movie[0].link.split('?code='); //정상적으로 코드 얻어오는것 확인됨.
         const code = codes[1];
-        console.log('가져온 영화 code: ', code);
-
         this.getHTML(code)
             .then((res) => {
                 // console.log(`html: ${res}`);
                 let $ = cheerio.load(res.data);
-                console.log('html.data: ', res.data);
+                // console.log('html.data: ', res.data);
                 // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
                 const bodyList = $('#page_content').children('a').children('#targetImage');
                 highQualityPoster = bodyList[0].attribs.src;
-                console.log('hqPoster from getHtml(line94):', highQualityPoster);
+                // console.log('hqPoster from getHtml(line94):', highQualityPoster);
                 if (highQualityPoster !== undefined) {
                     this.setState({ hqPoster: highQualityPoster, isLoading: false });
                     return;
@@ -129,10 +115,26 @@ class ViewMovie extends React.Component {
             }
             return text;
         };
+        const handleChange = (e) => {
+            this.setState({ comment: e.target.value });
+            // console.log(`comment: ${e.target.value}`);
+            // e.target.value = '';
+        };
 
-        const printMovieInfo = (movie) => {
-            const movies = movie[0];
-            const actors = movies.actor.split('|');
+        const addComment = (e) => {
+            if (e.keyCode === 13) {
+                console.log(`addComment : ${this.state.comment}`);
+                // document.getElementById('commentField').innerText = '';
+                this.setState({ comment: '' });
+            }
+        };
+        const printMovieInfo = (mv) => {
+            const movie = mv[0];
+            const actors = movie.actor.split('|');
+
+            // console.log('movie from printMovieInfo:', movie);
+            const code = movie.link.split('?code=')[1];
+            // console.log('code from printMovieInfo:', code);
 
             // console.log('movie: ', movies);
             // this.getMovieImage(movies);
@@ -140,24 +142,42 @@ class ViewMovie extends React.Component {
                 <TableBody>
                     <TableRow>
                         <TableCell colSpan="4" className={classes.alignItem}>
-                            <a href={movies.link} rel="norefferer">
+                            <a href={movie.link} rel="norefferer">
                                 {/* {this.getMovieImage(movies, classes.image)} */}
                                 {console.log(hqPoster)}
-                                <img className={classes.image} src={hqPoster} alt={movies.title} />
+                                <img className={classes.image} src={hqPoster} alt={movie.title} />
                             </a>
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell colSpan="4">{movies.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
+                        <TableCell colSpan="4">{movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell colSpan="2">개봉: {movies.pubDate}</TableCell>
-                        <TableCell>평점: {movies.userRating}</TableCell>
-                        <TableCell>감독: {movies.director.replace('|', '')}</TableCell>
+                        <TableCell colSpan="2">개봉: {movie.pubDate}</TableCell>
+                        <TableCell>평점: {movie.userRating}</TableCell>
+                        <TableCell>감독: {movie.director.replace('|', '')}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell>출연진</TableCell>
                         <TableCell colSpan="3">{printActors(actors)}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        {/* <form className={classes.commentForm} noValidate autoComplete="off"> */}
+                        <TableCell colSpan="4">
+                            {/* <TextField id="outliend-basic" label="한줄평 남기기" variant="outlined" /> */}
+                            <TextField
+                                id="commentField"
+                                fullWidth={true}
+                                label="한줄평"
+                                placeholder="한줄평 남기기"
+                                // multiline
+                                variant="filled"
+                                value={this.state.comment}
+                                onChange={handleChange}
+                                onKeyDown={addComment}
+                            />
+                        </TableCell>
+                        {/* </form> */}
                     </TableRow>
                 </TableBody>
             );
