@@ -24,6 +24,7 @@ class AllMovies extends React.Component {
             isLoading: true,
             movies: [],
             genre: '',
+            tmdbs: [],
         };
         this.handleChange = this.handleChange.bind(this); // 바인딩
     }
@@ -42,9 +43,24 @@ class AllMovies extends React.Component {
         console.log('All MovieList', movieList);
         this.setState({ movies: movieList, isLoading: false });
     };
+
+    getTmdbMoives = async () => { // Tmdb API 이용
+        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const {
+            data: {
+                results,
+            },
+        } = await axios.get(`
+        https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=ko&page=1&region=KR`);
+        console.log('tmdb', results);
+        this.setState({tmdbs:results, isLoading: false});
+    };
+
     componentDidMount() {
         this.getAllMovies();
+        this.getTmdbMoives();
     }
+    
     render() {
         const { movies, isLoading } = this.state;
 
