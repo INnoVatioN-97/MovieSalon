@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
     paper: {
@@ -23,16 +24,16 @@ class AllMovies extends React.Component {
         this.state = {
             isLoading: true,
             movies: [],
-            genre: '',
+            keyword: '',
             tmdbs: [],
         };
         this.handleChange = this.handleChange.bind(this); // 바인딩
     }
 
     handleChange = (e) => {
-        this.setState({genre: e.target.value});  
+        this.setState({keyword: e.target.value});  
     }
-
+    /*
     getAllMovies = async () => {
         const API_KEYS = process.env.REACT_APP_KOBIS_API_KEY;
         const {
@@ -43,7 +44,7 @@ class AllMovies extends React.Component {
         console.log('All MovieList', movieList);
         this.setState({ movies: movieList, isLoading: false });
     };
-
+    */
     getTmdbMoives = async () => { // Tmdb API 이용
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
@@ -57,38 +58,39 @@ class AllMovies extends React.Component {
     };
 
     componentDidMount() {
-        this.getAllMovies();
+       // this.getAllMovies();
         this.getTmdbMoives();
     }
     
     render() {
-        const { movies, isLoading } = this.state;
-
+        const { isLoading, tmdbs } = this.state;
+        let url = '/viewMovie?movieNm='; 
         return (
             <>
-             <input type="text" name="genre" value={this.state.genre} onChange={this.handleChange} placeholder="장르" />
-             <button name="genBtn_drama" onClick={() => this.setState({ genre: '드라마' })}>드라마 </button>
-             <button name="genBtn_horro" onClick={() => this.setState({ genre: '공포' })}>공포 </button>
-             <button name="genBtn_mistary" onClick={() => this.setState({ genre: '미스터리' })}>미스터리 </button>
+            <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
                 {isLoading ? (
                     <TableHead>'영화 목록을 불러오는 중.'</TableHead>
-                ) : (
-                    movies.map((m) => (
-                        
+                ) : (  
+                    tmdbs.map((m) => (
                         <>
-                        {m.repGenreNm.indexOf(this.state.genre) > -1 ? <TableRow>
+                         {m.original_title.indexOf(this.state.keyword) > -1 ?
+                        <TableRow>
                         <TableCell>
-                        {m.movieNm}({m.movieNmEn})
+                        <Link to={url + m.original_title}>
+                        {m.original_title}({m.title})
+                        </Link>
                         </TableCell>
                         <TableCell>
-                        {m.repGenreNm}
+                        {m.release_date}
                         </TableCell>
-                        </TableRow> : <p></p>}
+                        <TableCell>
+                        {m.vote_average}
+                        </TableCell>
+                        </TableRow>
+                        : <p></p> }
                         </>
-                    ))
-                              
+                    ))            
                 )}
-               
             </>
         );
     }
