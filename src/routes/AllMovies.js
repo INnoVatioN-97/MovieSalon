@@ -26,12 +26,18 @@ class AllMovies extends React.Component {
             movies: [],
             keyword: '',
             tmdbs: [],
+            count: 1,
         };
         this.handleChange = this.handleChange.bind(this); // 바인딩
+        this.onClickHander = this.onClickHander.bind(this); // 바인딩
     }
 
     handleChange = (e) => {
         this.setState({keyword: e.target.value});  
+    }
+    onClickHander = () => {
+        this.setState({count: this.state.count+1});
+        console.log('count', this.state.count);
     }
     /*
     getAllMovies = async () => {
@@ -47,12 +53,13 @@ class AllMovies extends React.Component {
     */
     getTmdbMoives = async () => { // Tmdb API 이용
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const COUNT = this.state.count;
         const {
             data: {
                 results,
             },
         } = await axios.get(`
-        https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=ko&page=1&region=KR`);
+        https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&language=ko&page=${COUNT}&region=KR`);
         console.log('tmdb', results);
         this.setState({tmdbs:results, isLoading: false});
     };
@@ -68,6 +75,7 @@ class AllMovies extends React.Component {
         return (
             <>
             <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
+            <button onClick={this.onClickHander} >다음페이지</button>   
                 {isLoading ? (
                     <TableHead>'영화 목록을 불러오는 중.'</TableHead>
                 ) : (  
@@ -84,7 +92,7 @@ class AllMovies extends React.Component {
                         {m.release_date}
                         </TableCell>
                         <TableCell>
-                        {m.vote_average}
+                        {m.vote_average}점
                         </TableCell>
                         </TableRow>
                         : <p></p> }
