@@ -144,7 +144,7 @@ class ViewMovie extends React.Component {
                         <TableCell colSpan="4" className={classes.alignItem}>
                             <a href={movie.link} rel="norefferer">
                                 {/* {this.getMovieImage(movies, classes.image)} */}
-                                {console.log('hqPoster',hqPoster)}
+                                {console.log('hqPoster', hqPoster)}
                                 <img className={classes.image} src={hqPoster} alt={movie.title} />
                             </a>
                         </TableCell>
