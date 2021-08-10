@@ -5,7 +5,6 @@ import Box from '@material-ui/core/Box';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
 const styles = (theme) => ({
@@ -37,36 +36,43 @@ class Home extends React.Component {
             keyword: '',
             userObj: props.userObj,
             isLoggedIn: props.isLoggedIn,
-            
         };
         this.handleChange = this.handleChange.bind(this); // 바인딩
     }
     handleChange = (e) => {
-        this.setState({keyword: e.target.value});  
-    }
-    
-    printTop3Movies = () => { // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
+        this.setState({ keyword: e.target.value });
+    };
+
+    printTop3Movies = () => {
+        // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
         // console.log('movies from printTop3Movies:', movies);
         let tmpMovies = [];
-            for (let i = 0; i < 3; i++) {
-                tmpMovies[i] = this.state.movies[i];   
-            }
+        for (let i = 0; i < 3; i++) {
+            tmpMovies[i] = this.state.movies[i];
+        }
         return tmpMovies.map((m) => (
             <Box>
-                {m.movieNm.indexOf(this.state.keyword) > -1 ?<p>{m.rank}위, {m.movieNm}{' '},</p> : <p></p> }
+                {m.movieNm.indexOf(this.state.keyword) > -1 ? (
+                    <p>
+                        {m.rank}위, {m.movieNm} ,
+                    </p>
+                ) : (
+                    <p></p>
+                )}
             </Box>
         ));
     };
-    
+
     render() {
         const { movies, userObj, isLoggedIn } = this.state;
         const { classes } = this.props;
-        console.log('userObj_Home',this.state.userObj);
-        console.log('logState_Home', isLoggedIn);
-        console.log('movies_Home:', movies);
-        
+        // console.log('userObj_Home',this.state.userObj);
+        // console.log('logState_Home', isLoggedIn);
+        // console.log('movies_Home:', movies);
+
         return (
-            <>  <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
+            <>
+                <input type="text" name="keyword" value={this.state.keyword} onChange={this.handleChange} placeholder="검색" />
                 <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
                 <Box className={classes.box}>{this.printTop3Movies(movies)}</Box>
                 <p>{userObj.email}님 안녕하세요.</p>
