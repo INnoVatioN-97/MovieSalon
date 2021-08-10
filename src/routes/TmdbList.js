@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-class ViewTmdb extends React.Component {
+class TmdbList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,4 +41,4 @@ class ViewTmdb extends React.Component {
         );
     }
 }
-export default ViewTmdb;
+export default TmdbList;

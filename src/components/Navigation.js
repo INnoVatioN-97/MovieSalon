@@ -86,7 +86,7 @@ const Navigation = ({userObj}) => {
                         <Link href="/#/allMovies" className={classes.link} variant="inherit" color="inherit">
                             MovieList
                         </Link>
-                        <Link href="/#/viewTmdb" className={classes.link} variant="inherit" color="inherit">
+                        <Link href="/#/tmdbList" className={classes.link} variant="inherit" color="inherit">
                             TMDB_BoxOffice
                         </Link>
                         <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
