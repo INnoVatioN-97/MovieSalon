@@ -3,10 +3,10 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from 'routes/Home';
 import MovieList from 'routes/MovieList';
 import ViewMovie from 'routes/ViewMovie';
-import ViewMovie_tmp from 'routes/ViewMovie_tmp';
 import queryString from 'query-string';
 import Auth from 'routes/Auth';
 import AllMovies from 'routes/AllMovies';
+import ViewTmdb from 'routes/ViewTmdb';
 
 const AppRouter = ({ movies, userObj, isLoggedIn }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
@@ -17,7 +17,7 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
         // console.log(search);
         const queryObj = queryString.parse(search);
         // console.log(queryObj.movieNm);
-        return <ViewMovie_tmp movieNm={queryObj.movieNm} />;
+        return <ViewMovie movieNm={queryObj.movieNm} />;
     };
 
     return (
@@ -35,6 +35,9 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
                 </Route>
                 <Route path="/allMovies">
                     <AllMovies />
+                </Route>
+                <Route path="/viewTmdb">
+                    <ViewTmdb />
                 </Route>
             </Switch>
         </HashRouter>
