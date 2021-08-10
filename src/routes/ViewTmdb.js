@@ -36,7 +36,7 @@ class ViewTmdb extends React.Component {
         const { tmdbs } = this.state;
         return (
         tmdbs.map((m) => (
-            <img src={`https://image.tmdb.org/t/p/w300/${m.poster_path}`} alt='img' />
+            <img src={`https://image.tmdb.org/t/p/w200/${m.poster_path}`} alt='img' />
         ))
         );
     }
