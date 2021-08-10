@@ -17,7 +17,7 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
         // console.log(search);
         const queryObj = queryString.parse(search);
         // console.log(queryObj.movieNm);
-        return <ViewMovie movieNm={queryObj.movieNm} />;
+        return <ViewMovie movieNm={queryObj.movieNm} userObj={userObj} />;
     };
 
     return (

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../components/App.css';
 import axios from 'axios';
 import { TableBody, Table, TableRow, TableCell, TableHead, TextField } from '@material-ui/core';
+import { dbService } from 'fbase';
+import CommentFactory from 'components/CommentFactory';
 const cheerio = require('cheerio');
 
-const ViewMovie = ({ movieNm }) => {
+const ViewMovie = ({ movieNm, userObj }) => {
     // console.log(movieNm);
     const ID_KEY = process.env.REACT_APP_NAVER_CLIENT_ID;
     const SECRET_KEY = process.env.REACT_APP_NAVER_CLIENT_SECRET_KEY;
@@ -14,11 +16,11 @@ const ViewMovie = ({ movieNm }) => {
     const [hqPoster, setHqPoster] = useState('');
     const [code, setCode] = useState(0);
     const [comment, setComment] = useState('');
+    const [commentsFactory, setCommentsFactory] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                // console.log('movieNm:', movieNm);
                 if (movieNm === '') {
                     setMovieInfo(null);
                     setIsLoading(false);
@@ -44,14 +46,14 @@ const ViewMovie = ({ movieNm }) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                console.log('movieInfo (line65):', movieInfo);
+                // console.log('movieInfo (line65):', movieInfo);
 
                 if (movieInfo !== null || movieInfo !== undefined) {
                     let tmp = movieInfo.link;
                     setCode(tmp.split('?code=')[1]);
                 }
 
-                console.log(`code from line 72: ${code}`); //정확히 전달 됨.
+                // console.log(`code from line 72: ${code}`); //정확히 전달 됨.
                 return await axios.get('/poster/movie/bi/mi/photoViewPopup.naver?movieCode=' + code);
                 // console.log(res);
             } catch (error) {
@@ -91,18 +93,71 @@ const ViewMovie = ({ movieNm }) => {
 
     const addComment = (e) => {
         if (e.keyCode === 13) {
+            // console.log(`\"${comment}\", ${userObj.email}`);
+
+            //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
+            //한줄평 필드를 비운다.
+            dbService
+                .collection(`comment_movieCode=${code}`)
+                .doc(userObj.email)
+                .set({
+                    comment: comment,
+                    user: userObj.email,
+                })
+                .then(() => {
+                    console.log('Document successfully written!');
+                })
+                .catch((error) => {
+                    console.error('Error writing document: ', error);
+                });
+
             setComment('');
         }
     };
+
+    const printComments = () => {
+        dbService.collection(`comment_movieCode=${code}`).onSnapshot((querySnapshot) => {
+            // const comments = new HashTable();
+            const comments = [];
+            querySnapshot.forEach((doc) => {
+                // comments.(doc.data().name);
+                // console.log('firebase DATAS ', doc.data());
+                // comments.push(doc.data());
+                // comments.set()
+                let tmp = {
+                    user: doc.data().user,
+                    comment: doc.data().comment,
+                };
+                comments.push(tmp);
+                // comments.set(doc.data().user, doc.data().comment);
+                // commentsObj.push
+            });
+            console.log('comments:', comments);
+            // comments.map((m) => {
+            //     return (
+            //         // <TableRow>
+            //         //     {console.log('m:', m.comment)}
+            //         //     <TableCell colSpan="3" align="center">
+            //         //         "{m.comment}" - {m.user}
+            //         //         asdsadas
+            //         //     </TableCell>
+            //         // </TableRow>
+            //         );
+            //     }
+            <CommentFactory obj={comments} />;
+            // console.log('Comments: ', comments.join(', '));
+        });
+    };
+
     const printMovieInfo = (movie) => {
         const actors = movie.actor.split('|');
-
+        // console.log('userObj from printMovieInfo:', userObj.email);
         return (
             <TableBody>
                 <TableRow hover={true}>
                     <TableCell align="center" rowSpan="7" width="25%">
                         <a href={movie.link} rel="norefferer">
-                            {console.log('hqPoster', hqPoster)}
+                            {/* {console.log('hqPoster', hqPoster)} */}
                             <img className="posterCell__posterImg" src={hqPoster} alt={movie.title} />
                         </a>
                     </TableCell>
@@ -143,7 +198,8 @@ const ViewMovie = ({ movieNm }) => {
                         />
                     </TableCell>
                 </TableRow>
-                <TableRow>
+                {printComments()}
+                {/* <TableRow>
                     <TableCell colSpan="3" align="center">
                         {' '}
                         오 개쩐다{' '}
@@ -157,10 +213,9 @@ const ViewMovie = ({ movieNm }) => {
                 </TableRow>
                 <TableRow>
                     <TableCell colSpan="3" align="center">
-                        {' '}
                         오 개쩐다{' '}
                     </TableCell>
-                </TableRow>
+                </TableRow> */}
             </TableBody>
         );
     };
