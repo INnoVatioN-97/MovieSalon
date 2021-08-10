@@ -81,10 +81,13 @@ const Navigation = ({userObj}) => {
                             Home
                         </Link>
                         <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
-                            BoxOffice
+                            KOBIS_BoxOffice
                         </Link>
                         <Link href="/#/allMovies" className={classes.link} variant="inherit" color="inherit">
                             MovieList
+                        </Link>
+                        <Link href="/#/viewTmdb" className={classes.link} variant="inherit" color="inherit">
+                            TMDB_BoxOffice
                         </Link>
                         <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
                             {userObj.email}님

@@ -6,6 +6,7 @@ import ViewMovie from 'routes/ViewMovie';
 import queryStirng from 'query-string';
 import Auth from 'routes/Auth';
 import AllMovies from 'routes/AllMovies';
+import ViewTmdb from 'routes/ViewTmdb';
 
 const AppRouter = ({ movies, userObj, isLoggedIn }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
@@ -34,6 +35,9 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
                 </Route>
                 <Route path="/allMovies">
                     <AllMovies />
+                </Route>
+                <Route path="/viewTmdb">
+                    <ViewTmdb />
                 </Route>
             </Switch>
         </HashRouter>

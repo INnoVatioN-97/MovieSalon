@@ -69,7 +69,7 @@ class AllMovies extends React.Component {
     }
     
     render() {
-        const { isLoading, tmdbs, count } = this.state;
+        const { isLoading, tmdbs } = this.state;
         let url = '/viewMovie?movieNm='; 
         return (
             <>
