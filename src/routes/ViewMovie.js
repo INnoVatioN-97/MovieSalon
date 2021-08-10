@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../components/App.css';
 import axios from 'axios';
 import { TableBody, Table, TableRow, TableCell, TableHead, TextField } from '@material-ui/core';
 const cheerio = require('cheerio');
@@ -98,28 +99,36 @@ const ViewMovie = ({ movieNm }) => {
 
         return (
             <TableBody>
-                <TableRow>
-                    <TableCell colSpan="4">
+                <TableRow hover={true}>
+                    <TableCell align="center" rowSpan="7" width="25%">
                         <a href={movie.link} rel="norefferer">
                             {console.log('hqPoster', hqPoster)}
-                            <img src={hqPoster} alt={movie.title} />
+                            <img className="posterCell__posterImg" src={hqPoster} alt={movie.title} />
                         </a>
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell colSpan="4">{movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
+                    <TableCell align="center">제목</TableCell>
+                    <TableCell align="center">{movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell colSpan="2">개봉: {movie.pubDate}</TableCell>
-                    <TableCell>평점: {movie.userRating}</TableCell>
-                    <TableCell>감독: {movie.director.replace('|', '')}</TableCell>
+                    <TableCell align="center">감독</TableCell>
+                    <TableCell align="center">{movie.director.replace('|', '')}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>출연진</TableCell>
-                    <TableCell colSpan="3">{printActors(actors)}</TableCell>
+                    <TableCell align="center">개봉</TableCell>
+                    <TableCell align="center">{movie.pubDate}</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell colSpan="4">
+                    <TableCell align="center">출연진</TableCell>
+                    <TableCell align="center">{printActors(actors)}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell align="center">평점</TableCell>
+                    <TableCell align="center">{movie.userRating}</TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell align="center" colSpan="3">
                         <TextField
                             id="commentField"
                             fullWidth={true}
@@ -127,10 +136,29 @@ const ViewMovie = ({ movieNm }) => {
                             placeholder="한줄평 남기기"
                             // multiline
                             variant="filled"
+                            size="medium"
                             value={comment}
                             onChange={handleChange}
                             onKeyDown={addComment}
                         />
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell colSpan="3" align="center">
+                        {' '}
+                        오 개쩐다{' '}
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell colSpan="3" align="center">
+                        {' '}
+                        오 개쩐다{' '}
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell colSpan="3" align="center">
+                        {' '}
+                        오 개쩐다{' '}
                     </TableCell>
                 </TableRow>
             </TableBody>
@@ -138,7 +166,7 @@ const ViewMovie = ({ movieNm }) => {
     };
 
     return (
-        <Table>
+        <Table className="movieInfoTable">
             {isLoading ? (
                 <TableHead>
                     <TableRow>Loading..</TableRow>
@@ -146,7 +174,11 @@ const ViewMovie = ({ movieNm }) => {
             ) : (
                 <>
                     <TableHead>
-                        <TableRow>포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.</TableRow>
+                        <TableRow>
+                            <TableCell colSpan="4" align="center">
+                                포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.
+                            </TableCell>
+                        </TableRow>
                     </TableHead>
                     {printMovieInfo(movieInfo)}
                 </>
