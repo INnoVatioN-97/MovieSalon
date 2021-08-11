@@ -37,7 +37,7 @@ class TmdbList extends React.Component {
     };
 
     onClickHandle = (e) => {
-        this.setState({titles: e.target.title, movies: e.target.id, open: true});
+        this.setState({titles: e.target.title, movies: e.target.id.split(','), open: true});
         console.log('titles', this.state.titles);
         console.log('poster_path', this.state.movies);
     }
@@ -57,13 +57,13 @@ class TmdbList extends React.Component {
         tmdbs.map((m) => (
             <>
             <img src={url + m.poster_path} alt='img' onClick={this.onClickHandle}
-             id={[m.id, m.release_date, m.poster_path]}
+             id={[m.id, m.release_date, m.poster_path, m.overview]}
              title={m.title}
               />
             <Dialog open={this.state.open} onClose={this.onCloseHandle}>
                 <DialogTitle>{this.state.titles}</DialogTitle>
-                <DialogContent>{/*this.state.movies*/}<br />
-                <img src={url + this.state.movies.substring(18,50)} /></DialogContent>
+                <DialogContent>{/*this.state.movies[3]*/}<br />
+                <img src={url + this.state.movies[2]} /></DialogContent>
             </Dialog>
             </>
         ))
