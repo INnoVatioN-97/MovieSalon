@@ -9,9 +9,6 @@ import { authService } from 'fbase';
 import Auth from 'routes/Auth';
 import { PinDropRounded } from '@material-ui/icons';
 
-
-
-
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
 const styles = (theme) => ({
@@ -34,25 +31,26 @@ class App extends React.Component {
         };
     }
 
-    signInState = () => { // login 상태 확인
+    signInState = () => {
+        // login 상태 확인
         authService.onAuthStateChanged((user) => {
-            if(user) {
+            if (user) {
                 //this.isLoggedIn = true;
-                this.setState({isLoggedIn : true, userObj: user});
+                this.setState({ isLoggedIn: true, userObj: user });
                 // this.userObj = user;
                 // console.log(this.isLoggedIn);
-                console.log('userObj_App',this.state.userObj.email); 
-            } else{
-               // this.isLoggedIn= false;
-               // this.setState.isLoggedIn = false;
-               this.setState({isLoggedIn: false});
+                console.log('userObj_App', this.state.userObj.email);
+            } else {
+                // this.isLoggedIn= false;
+                // this.setState.isLoggedIn = false;
+                this.setState({ isLoggedIn: false });
                 console.log(this.isLoggedIn);
             }
             this.init = true;
             // this.movies = [];
         });
-    }
-    
+    };
+
     getMovies = async () => {
         //어제 기준 박스오피스 상위 10위권 출력.
         const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
@@ -78,17 +76,18 @@ class App extends React.Component {
         console.log(isLoggedIn);
         console.log('usrObj', userObj);
         const { classes } = this.props;
-        
+
         return (
             <>
-                {isLoggedIn ? (
+                {isLoggedIn && movies ? (
                     <>
-                    <Navigation userObj={userObj} />
-                    <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
-                </>
-                ) : (<>
-                    <Auth />
-                    <p>LogIn이 필요합니다.</p>
+                        <Navigation userObj={userObj} />
+                        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
+                    </>
+                ) : (
+                    <>
+                        <Auth />
+                        <p>LogIn이 필요합니다.</p>
                     </>
                 )}
             </>

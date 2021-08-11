@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import '../components/App.css';
 import axios from 'axios';
 import { TableBody, Table, TableRow, TableCell, TableHead, TextField } from '@material-ui/core';
-import { dbService } from 'fbase';
+import { dbService, storageService } from 'fbase';
+import { v4 as uuidv4 } from 'uuid';
 import CommentFactory from 'components/CommentFactory';
+import Comment from 'components/Comment';
 const cheerio = require('cheerio');
 
 const ViewMovie = ({ movieNm, userObj }) => {
@@ -16,7 +18,8 @@ const ViewMovie = ({ movieNm, userObj }) => {
     const [hqPoster, setHqPoster] = useState('');
     const [code, setCode] = useState(0);
     const [comment, setComment] = useState('');
-    const [commentsFactory, setCommentsFactory] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [attachment, setAttachment] = useState('');
 
     useEffect(() => {
         async function fetchData() {
@@ -39,7 +42,22 @@ const ViewMovie = ({ movieNm, userObj }) => {
             }
         }
         fetchData();
-    }, []);
+    }, [ID_KEY, SECRET_KEY, movieNm]);
+
+    useEffect(() => {
+        const getData = dbService
+            .collection(`comment_movieCode=${code}`)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot((snapshot) => {
+                const commentsArray = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setComments(commentsArray);
+                // console.log(comments);
+            });
+        return () => getData();
+    }, [code, comments]);
 
     //code 의 값 변경이 감지되면 (영화정보를 가져와 거기서 영화코드추출이 끝남을 인지하면) 실행되는 훅.
     // 고화질 포스터를 가져온다.
@@ -66,7 +84,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                 // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
                 const bodyList = $('#page_content').children('a').children('#targetImage');
                 // hqPoster = bodyList[0].attribs.src;
-                console.log('bodyList[0].attribs.src:', bodyList[0].attribs.src);
+                // console.log('bodyList[0].attribs.src:', bodyList[0].attribs.src);
                 let hqPoster = bodyList[0].attribs.src;
                 if (hqPoster !== null || hqPoster !== undefined) {
                     setHqPoster(bodyList[0].attribs.src);
@@ -91,19 +109,33 @@ const ViewMovie = ({ movieNm, userObj }) => {
         setComment(e.target.value);
     };
 
-    const addComment = (e) => {
-        if (e.keyCode === 13) {
+    const addComment = async (event) => {
+        if (event.keyCode === 13) {
             // console.log(`\"${comment}\", ${userObj.email}`);
 
             //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
             //한줄평 필드를 비운다.
-            dbService
+            if (comment === '') {
+                return;
+            }
+            event.preventDefault();
+            let attachmentUrl = '';
+            if (attachment !== '') {
+                const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+                const response = await attachmentRef.putString(attachment, 'data_url');
+                attachmentUrl = await response.ref.getDownloadURL();
+            }
+
+            const commentObj = {
+                comment: comment,
+                userId: userObj.email,
+                createdAt: Date.now(),
+                attachmentUrl,
+            };
+            await dbService
                 .collection(`comment_movieCode=${code}`)
-                .doc(userObj.email)
-                .set({
-                    comment: comment,
-                    user: userObj.email,
-                })
+                .doc(commentObj.userId)
+                .set(commentObj)
                 .then(() => {
                     console.log('Document successfully written!');
                 })
@@ -111,49 +143,36 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     console.error('Error writing document: ', error);
                 });
 
+            setAttachment('');
             setComment('');
+            setComments([]);
         }
     };
 
     const printComments = () => {
-        dbService.collection(`comment_movieCode=${code}`).onSnapshot((querySnapshot) => {
-            // const comments = new HashTable();
-            const comments = [];
-            querySnapshot.forEach((doc) => {
-                // comments.(doc.data().name);
-                // console.log('firebase DATAS ', doc.data());
-                // comments.push(doc.data());
-                // comments.set()
-                let tmp = {
-                    user: doc.data().user,
-                    comment: doc.data().comment,
-                };
-                comments.push(tmp);
-                // comments.set(doc.data().user, doc.data().comment);
-                // commentsObj.push
-            });
-            console.log('comments:', comments);
-            // comments.map((m) => {
-            //     return (
-            //         // <TableRow>
-            //         //     {console.log('m:', m.comment)}
-            //         //     <TableCell colSpan="3" align="center">
-            //         //         "{m.comment}" - {m.user}
-            //         //         asdsadas
-            //         //     </TableCell>
-            //         // </TableRow>
-            //         );
-            //     }
-            <CommentFactory obj={comments} />;
-            // console.log('Comments: ', comments.join(', '));
-        });
+        // console.log(comments);
+        if (comments !== null || comments !== undefined) {
+            return (
+                <>
+                    {comments.map((comment) => (
+                        <Comment commentObj={comment} owner={userObj.email} />
+                    ))}
+                    {/* <TableRow>
+                        <TableCell colSpan="3" align="center">
+                            "{comments.user}" - userId
+                            {console.log(comments)}
+                        </TableCell>
+                    </TableRow> */}
+                </>
+            );
+        } else return null;
     };
 
     const printMovieInfo = (movie) => {
         const actors = movie.actor.split('|');
         // console.log('userObj from printMovieInfo:', userObj.email);
         return (
-            <TableBody>
+            <>
                 <TableRow hover={true}>
                     <TableCell align="center" rowSpan="7" width="25%">
                         <a href={movie.link} rel="norefferer">
@@ -198,25 +217,13 @@ const ViewMovie = ({ movieNm, userObj }) => {
                         />
                     </TableCell>
                 </TableRow>
-                {printComments()}
                 {/* <TableRow>
-                    <TableCell colSpan="3" align="center">
-                        {' '}
-                        오 개쩐다{' '}
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell colSpan="3" align="center">
-                        {' '}
-                        오 개쩐다{' '}
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell colSpan="3" align="center">
-                        오 개쩐다{' '}
-                    </TableCell>
-                </TableRow> */}
-            </TableBody>
+                <TableCell colSpan="3" align="center">
+                    {' '}
+                    오 개쩐다{' '}
+                </TableCell>
+            </TableRow>*/}
+            </>
         );
     };
 
@@ -235,7 +242,16 @@ const ViewMovie = ({ movieNm, userObj }) => {
                             </TableCell>
                         </TableRow>
                     </TableHead>
-                    {printMovieInfo(movieInfo)}
+                    <TableBody>
+                        {printMovieInfo(movieInfo)}
+                        {comments !== null ? (
+                            printComments()
+                        ) : (
+                            <TableRow>
+                                <TableCell>로딩중...</TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
                 </>
             )}
         </Table>
