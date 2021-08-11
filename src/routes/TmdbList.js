@@ -17,6 +17,8 @@ class TmdbList extends React.Component {
             movies: '',
             open: false,
             date:'',
+            movieId: '436969',
+            castMember: [],
 
         };
         this.onClickHandle = this.onClickHandle.bind(this);
@@ -36,11 +38,26 @@ class TmdbList extends React.Component {
         console.log('COUNT', COUNT);
         this.setState({tmdbs:results, isLoading: false});
     };
+    
+    
+    getMovieCasts = async () => {
+        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const M_ID = this.state.movieId;
+        const {
+            data: {
+                cast,
+            },
+        } = await axios.get(`https://api.themoviedb.org/3/movie/${M_ID}/credits?api_key=${TMDB_API_KEY}`);
+        console.log('movie_Id', M_ID);
+        console.log('cast', cast);
+        this.setState({castMember: cast, isLoading: false});
+    }
 
     onClickHandle = (e) => {
+        // Click발생한 영화포스터의 제목, 영화정보(,로 split), 다이얼로그 상태변경
         this.setState({titles: e.target.title, movies: e.target.id.split(','), open: true});
         console.log('titles', this.state.titles);
-        console.log('poster_path', this.state.movies);
+        console.log('movies_posterClick', this.state.movies); // 클릭된 포스터의 영화정보 가져옴
     }
 
     onCloseHandle = () => {
@@ -49,6 +66,7 @@ class TmdbList extends React.Component {
 
     componentDidMount() {
         this.getTrendingMovies();
+        this.getMovieCasts();
     }
     
     render() {
