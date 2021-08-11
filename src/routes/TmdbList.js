@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import { TableCell, TableRow } from '@material-ui/core';
 
 class TmdbList extends React.Component {
     constructor(props) {
@@ -57,13 +58,25 @@ class TmdbList extends React.Component {
         tmdbs.map((m) => (
             <>
             <img src={url + m.poster_path} alt='img' onClick={this.onClickHandle}
-             id={[m.id, m.release_date, m.poster_path, m.overview]}
+             id={[m.id,m.vote_average, m.release_date, m.poster_path, m.overview]}
              title={m.title}
               />
-            <Dialog open={this.state.open} onClose={this.onCloseHandle}>
+            <Dialog open={this.state.open} onClose={this.onCloseHandle} >
                 <DialogTitle>{this.state.titles}</DialogTitle>
-                <DialogContent>{/*this.state.movies[3]*/}<br />
-                <img src={url + this.state.movies[2]} /></DialogContent>
+                <DialogContent>
+                    <TableRow>
+                        <TableCell><img src={url + this.state.movies[3]}/></TableCell>
+                        <TableRow>
+                        <TableCell>개봉일: {this.state.movies[2]}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                        <TableCell>평점: {this.state.movies[1]}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                        <TableCell>줄거리: <label>{this.state.movies[4]}</label></TableCell>
+                        </TableRow>
+                    </TableRow>
+                </DialogContent>
             </Dialog>
             </>
         ))
