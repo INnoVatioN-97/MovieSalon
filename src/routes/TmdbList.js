@@ -5,6 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { TableCell, TableRow } from '@material-ui/core';
+import { index } from 'cheerio/lib/api/traversing';
 
 class TmdbList extends React.Component {
     constructor(props) {
@@ -12,62 +13,55 @@ class TmdbList extends React.Component {
         this.state = {
             isLoading: true,
             tmdbs: [],
-            posters: [],
             titles: '',
             movies: '',
             open: false,
-            date: '',
-            movieId: '436969',
             castMember: [],
         };
         this.onOpenChange = this.onOpenChange.bind(this);
-        // this.onCloseHandle = this.onCloseHandle.bind(this);
+        this.onCloseHandle = this.onCloseHandle.bind(this);
     }
 
     getTrendingMovies = async () => {
         // Tmdb API 이용
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-        const COUNT = this.state.count;
         const {
             data: { results },
         } = await axios.get(`
         https://api.themoviedb.org/3/trending/movie/day?api_key=${TMDB_API_KEY}&language=ko`);
         console.log('trending_Movies', results);
-        console.log('COUNT', COUNT);
         this.setState({ tmdbs: results, isLoading: false });
     };
 
     getMovieCasts = async (id) => {
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-        const M_ID = this.state.movieId;
         const {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
-        // console.log('movie_Id', M_ID);
         console.log('cast', cast);
-
         this.setState({ castMember: cast, isLoading: false });
     };
 
     // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
     onOpenChange = (e) => {
         // Click발생한 영화포스터의 제목, 영화정보(,로 split), 다이얼로그 상태변경
-        this.setState({ open: !this.state.open });
-        const titles = e.target.title;
-        const movies = e.target.id.split(',');
-        console.log('titles', titles);
-        console.log('movies_posterClick', movies); // 클릭된 포스터의 영화정보 가져옴
-
-        if (this.state.open) this.getMovieCasts(movies[0]);
+        this.setState({ open: !this.state.open, titles: e.target.title, movies: e.target.id.split(',') });
+        console.log('titles', this.state.titles);
+        console.log('target값',e.target.id.substring(0,7)); 
+        console.log('movies_posterClick', this.state.movies); // 클릭된 포스터의 영화정보 가져옴
+        this.getMovieCasts(e.target.id.substring(0,7)); // 현재 state에서 가져오지 않고 바로 target에 잡힌 날것의 데이터 삽입
     };
+
+    onCloseHandle = () => {
+        this.setState({open: false});
+    }
 
     componentDidMount() {
         this.getTrendingMovies();
-        // this.getMovieCasts();
     }
 
     render() {
-        const { tmdbs } = this.state;
+        const { tmdbs, movies, castMember  } = this.state;
         let url = 'https://image.tmdb.org/t/p/w200';
         return tmdbs.map((m) => (
             <>
@@ -78,23 +72,30 @@ class TmdbList extends React.Component {
                     id={[m.id, m.vote_average, m.release_date, m.poster_path, m.overview]}
                     title={m.title}
                 />
-                <Dialog open={this.state.open} onClose={this.onOpenChange}>
+                <Dialog open={this.state.open} onClose={this.onCloseHandle}>
                     <DialogTitle>{this.state.titles}</DialogTitle>
                     <DialogContent>
                         <TableRow>
                             <TableCell>
-                                <img src={url + this.state.movies[3]} />
+                                <img src={url + movies[3]} />
                             </TableCell>
                             <TableRow>
-                                <TableCell>개봉일: {this.state.movies[2]}</TableCell>
+                                <TableCell>개봉일: {movies[2]}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>평점: {this.state.movies[1]}</TableCell>
+                                <TableCell>평점: {movies[1]}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    줄거리: <label>{this.state.movies[4]}</label>
+                                    줄거리: <label>{movies[4]}</label>
                                 </TableCell>
+                            </TableRow>
+                            <TableRow>
+                            {castMember.map((c) => (
+                            <TableCell>
+                                출연진: <label>{c.name}</label>
+                            </TableCell>
+                            ))}
                             </TableRow>
                         </TableRow>
                     </DialogContent>
