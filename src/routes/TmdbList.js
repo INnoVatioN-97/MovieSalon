@@ -39,7 +39,8 @@ class TmdbList extends React.Component {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
         console.log('cast', cast);
-        this.setState({ castMember: cast, isLoading: false });
+        this.setState({ castMember: cast.slice(0,5), isLoading: false }); // 출연진 5명만 추출(slice())
+        
     };
 
     // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
@@ -91,11 +92,10 @@ class TmdbList extends React.Component {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                            {castMember.map((c) => (
-                            <TableCell>
-                                출연진: <label>{c.name}</label>
-                            </TableCell>
+                            <TableCell>출연진: {castMember.map((c) => (
+                            <label>{c.name},&nbsp;</label>
                             ))}
+                            </TableCell>
                             </TableRow>
                         </TableRow>
                     </DialogContent>
