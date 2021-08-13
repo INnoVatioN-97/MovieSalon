@@ -110,9 +110,8 @@ const ViewMovie = ({ movieNm, userObj }) => {
     };
 
     const addComment = async (event) => {
-        if (event.keyCode === 13) {
-            // console.log(`\"${comment}\", ${userObj.email}`);
-
+        console.log('event.keyCode:', event.code);
+        if (event.code === 'Enter') {
             //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
             //한줄평 필드를 비운다.
             if (comment === '') {
@@ -154,15 +153,10 @@ const ViewMovie = ({ movieNm, userObj }) => {
         if (comments !== null || comments !== undefined) {
             return (
                 <>
+                    {/* comments 배열을 map을 사용해 하나씩 렌더링. */}
                     {comments.map((comment) => (
                         <Comment commentObj={comment} owner={userObj.email} />
                     ))}
-                    {/* <TableRow>
-                        <TableCell colSpan="3" align="center">
-                            "{comments.user}" - userId
-                            {console.log(comments)}
-                        </TableCell>
-                    </TableRow> */}
                 </>
             );
         } else return null;
@@ -213,7 +207,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                             size="medium"
                             value={comment}
                             onChange={handleChange}
-                            onKeyDown={addComment}
+                            onKeyPress={addComment}
                         />
                     </TableCell>
                 </TableRow>

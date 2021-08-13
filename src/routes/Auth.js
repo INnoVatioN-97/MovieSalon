@@ -55,7 +55,6 @@ const Auth = ({ userObj, isLoggedIn }) => {
         const data = await authService.signInWithPopup(provider);
         history.push('/');
         console.log(data.user.email);
-        // console.log(data.email);
     };
 
     return (
