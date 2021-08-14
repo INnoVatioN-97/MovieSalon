@@ -1,6 +1,7 @@
 import { authService, firebaseInstance } from 'fbase';
 import { useState } from 'react';
 import { createHashHistory } from 'history';
+// import '../css/Profile.css';
 
 export const history = createHashHistory();
 
