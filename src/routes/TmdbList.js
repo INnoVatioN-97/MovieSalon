@@ -8,7 +8,17 @@ import { Table, TableCell, TableRow } from '@material-ui/core';
 import { index } from 'cheerio/lib/api/traversing';
 import '../css/Dialog.css';
 
-const url = 'https://image.tmdb.org/t/p/w200';
+/**
+ * 박스오피스 / 개봉 예정작 버튼에 각각 ID값을 줘
+ * 이를 처리하는 onOpenChange에서 id값에 따라 state값을 바꾸도록 설정. (line 71 참조)
+ *
+ *  Dialog를 중복해서 출력하는게 아니라
+ * viewChange 여부에 따라 화면에 렌더링할 배열을 그에 맞게 설정하고 (line 152 부근 참조)
+ * 그 후에 Dialog를 출력하는 함수를 하나만 if문 밖에 배치해서 코드 최적화 했음.
+ * 출연진 : 기존 5명 출력에서 6명으로 늘리고 텍스트를 "주요 출연진"으로 바꿨음.
+ *
+ * 캐스팅 목록 그리드형 배치 위해 9번 줄에 Dialog 전담 css 파일 생성 후 적용.
+ */
 
 class TmdbList extends React.Component {
     constructor(props) {
@@ -54,7 +64,7 @@ class TmdbList extends React.Component {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
         console.log('cast', cast);
-        this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 5명만 추출(slice())
+        this.setState({ castMember: cast.slice(0, 6), isLoading: false }); // 출연진 5명만 추출(slice())
     };
 
     // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
@@ -82,7 +92,7 @@ class TmdbList extends React.Component {
         this.getUpcommingMovies();
     }
 
-    printDialog = (castMember, movies) => {
+    printDialog = (castMember, movies, url) => {
         return (
             <Dialog open={this.state.open} onClose={this.onCloseHandle}>
                 <DialogTitle>{this.state.titles}</DialogTitle>
@@ -102,7 +112,7 @@ class TmdbList extends React.Component {
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell align="center">출연진</TableCell>
+                            <TableCell align="center">주요 출연진</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>
@@ -129,6 +139,7 @@ class TmdbList extends React.Component {
 
     render() {
         const { tmdbs, movies, castMember, upcommings, viewChange } = this.state;
+        const url = 'https://image.tmdb.org/t/p/w200';
         return (
             <>
                 <button id="btnBoxOffice" onClick={this.onClickHandles}>
@@ -140,99 +151,24 @@ class TmdbList extends React.Component {
                 <br />
                 {viewChange
                     ? upcommings.map((u) => (
-                          <>
-                              <img
-                                  src={url + u.poster_path}
-                                  alt="img"
-                                  onClick={this.onOpenChange}
-                                  id={[u.id, u.vote_average, u.release_date, u.poster_path, u.overview]}
-                                  title={u.title}
-                              />
-                              {/* <Dialog open={this.state.open} onClose={this.onCloseHandle}>
-                                  <DialogTitle>{this.state.titles}</DialogTitle>
-                                  <DialogContent>
-                                      <Table>
-                                          <TableRow>
-                                              <TableCell>
-                                                  <img src={url + movies[3]} />
-                                              </TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>개봉예정일: {movies[2]}</TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>
-                                                  줄거리: <label>{movies.slice(4)}</label>
-                                              </TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell align="center">출연진</TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>
-                                                  {castMember.map((c) => (
-                                                      <label>
-                                                          <img src={url + c.profile_path} width="60" height="60"></img>
-                                                          <br />
-                                                          {c.name}
-                                                          <br />
-                                                      </label>
-                                                  ))}
-                                              </TableCell>
-                                          </TableRow>
-                                      </Table>
-                                  </DialogContent>
-                              </Dialog> */}
-                              {this.printDialog(castMember, movies)}
-                          </>
+                          <img
+                              src={url + u.poster_path}
+                              alt="img"
+                              onClick={this.onOpenChange}
+                              id={[u.id, u.vote_average, u.release_date, u.poster_path, u.overview]}
+                              title={u.title}
+                          />
                       ))
                     : tmdbs.map((m) => (
-                          <>
-                              <img
-                                  src={url + m.poster_path}
-                                  alt="img"
-                                  onClick={this.onOpenChange}
-                                  id={[m.id, m.vote_average, m.release_date, m.poster_path, m.overview]}
-                                  title={m.title}
-                              />
-                              {/* <Dialog open={this.state.open} onClose={this.onCloseHandle}>
-                                  <DialogTitle>{this.state.titles}</DialogTitle>
-                                  <DialogContent>
-                                      <Table>
-                                          <TableRow>
-                                              <TableCell>
-                                                  <img src={url + movies[3]} />
-                                              </TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>개봉예정일: {movies[2]}</TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>
-                                                  줄거리: <label>{movies.slice(4)}</label>
-                                              </TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell align="center">출연진</TableCell>
-                                          </TableRow>
-                                          <TableRow>
-                                              <TableCell>
-                                                  {castMember.map((c) => (
-                                                      <label>
-                                                          <img src={url + c.profile_path} width="60" height="60"></img>
-                                                          <br />
-                                                          {c.name}
-                                                          <br />
-                                                      </label>
-                                                  ))}
-                                              </TableCell>
-                                          </TableRow>
-                                      </Table>
-                                  </DialogContent>
-                              </Dialog> */}
-                              {this.printDialog(castMember, movies)}
-                          </>
+                          <img
+                              src={url + m.poster_path}
+                              alt="img"
+                              onClick={this.onOpenChange}
+                              id={[m.id, m.vote_average, m.release_date, m.poster_path, m.overview]}
+                              title={m.title}
+                          />
                       ))}
+                {this.printDialog(castMember, movies, url)}
             </>
         );
     }
