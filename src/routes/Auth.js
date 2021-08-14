@@ -60,10 +60,58 @@ const Auth = ({ userObj, isLoggedIn }) => {
     return (
         <>
             {isLoggedIn ? (
-                <>
-                    <p>{userObj.email}님 안녕하세요</p>
-                    <button onClick={onLogOutClick}>Log Out</button>
-                </>
+                // <>
+                <aside className="profile-card">
+                    <header>
+                        {/* <!-- here’s the avatar --> */}
+                        <a target="_blank" href="#">
+                            <img src={userObj.photoURL} className="hoverZoomLink" alt="profile" />
+                        </a>
+
+                        {/* <!-- the username --> */}
+                        <h1>{userObj.displayName}</h1>
+
+                        {/* <!-- and role or location --> */}
+                        <h2>{userObj.email}</h2>
+                    </header>
+
+                    {/* <!-- bit of a bio; who are you? --> */}
+                    <div className="profile-bio">
+                        <p>프로필 메시지</p>
+                    </div>
+
+                    {/* <!-- some social links to show off --> */}
+                    {/* <ul class="profile-social-links">
+                        <li>
+                            <a target="_blank" href="https://www.facebook.com/creativedonut">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://twitter.com/dropyourbass">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://github.com/vipulsaxena">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.behance.net/vipulsaxena">
+                                <i class="fa fa-behance"></i>
+                            </a>
+                        </li>
+                    </ul> */}
+                    {/* <div></div>
+  <p>
+      <img src={userObj.photoURL} alt="profile" />
+  </p>
+  
+  <p>{userObj.email}님 안녕하세요</p>
+  <button onClick={onLogOutClick}>Log Out</button> */}
+                    {/* </> */}
+                </aside>
             ) : (
                 <div>
                     <form onSubmit={onSubmit}>
