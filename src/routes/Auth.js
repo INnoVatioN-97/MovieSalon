@@ -81,6 +81,10 @@ const Auth = ({ userObj, isLoggedIn }) => {
                         <p>프로필 메시지</p>
                     </div>
 
+                    <div>
+                        <button onClick={onLogOutClick}>로그아웃</button>
+                    </div>
+
                     {/* <!-- some social links to show off --> */}
                     {/* <ul class="profile-social-links">
                         <li>
