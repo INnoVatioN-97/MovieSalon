@@ -19,8 +19,7 @@ import '../css/Dialog.css';
  * 출연진 : 기존 5명 출력에서 6명으로 늘리고 텍스트를 "주요 출연진"으로 바꿨음.
  *
  * 캐스팅 목록 그리드형 배치 위해 9번 줄에 Dialog 전담 css 파일 생성 후 적용.
- */
- document.cookie = "safeCookie1=foo; SameSite=Lax"; 
+ */ 
 class TmdbList extends React.Component {
     constructor(props) {
         super(props);
