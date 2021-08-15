@@ -170,7 +170,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
                 <TableRow hover={true}>
                     <TableCell align="center" rowSpan="7" width="25%">
                         <a href={movie.link} rel="norefferer">
-                            {/* {console.log('hqPoster', hqPoster)} */}
                             <img className="posterCell__posterImg" src={hqPoster} alt={movie.title} />
                         </a>
                     </TableCell>
@@ -211,12 +210,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
                         />
                     </TableCell>
                 </TableRow>
-                {/* <TableRow>
-                <TableCell colSpan="3" align="center">
-                    {' '}
-                    오 개쩐다{' '}
-                </TableCell>
-            </TableRow>*/}
             </>
         );
     };

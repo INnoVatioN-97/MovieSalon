@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Table, TableCell, TableRow } from '@material-ui/core';
 import { index } from 'cheerio/lib/api/traversing';
+import ReactPlayer from 'react-player';
 import '../css/Dialog.css';
 
 /**
@@ -19,7 +20,7 @@ import '../css/Dialog.css';
  *
  * 캐스팅 목록 그리드형 배치 위해 9번 줄에 Dialog 전담 css 파일 생성 후 적용.
  */
-
+ document.cookie = "safeCookie1=foo; SameSite=Lax"; 
 class TmdbList extends React.Component {
     constructor(props) {
         super(props);
@@ -32,11 +33,13 @@ class TmdbList extends React.Component {
             castMember: [],
             upcommings: [],
             viewChange: false,
+            trailers: [],
         };
         this.onOpenChange = this.onOpenChange.bind(this);
         this.onCloseHandle = this.onCloseHandle.bind(this);
         this.onClickHandles = this.onClickHandles.bind(this);
     }
+    
 
     getTrendingMovies = async () => {
         // Tmdb API 이용
@@ -64,7 +67,18 @@ class TmdbList extends React.Component {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
         console.log('cast', cast);
-        this.setState({ castMember: cast.slice(0, 6), isLoading: false }); // 출연진 5명만 추출(slice())
+        this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 5명만 추출(slice())
+    };
+
+    getMovieVideos = async (id) => {
+        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const {
+            data: { results },
+        } = await axios.get(`
+        https://api.themoviedb.org/3/movie/${id}/videos?api_key=${TMDB_API_KEY}&language=en-US`);
+        console.log('videos', results);
+        this.setState({trailers: results.slice(0, 1)});
+        console.log('videos_slice', this.state.trailers);
     };
 
     // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
@@ -75,6 +89,7 @@ class TmdbList extends React.Component {
         console.log('target값', e.target.id.substring(0, 7));
         console.log('movies_posterClick', this.state.movies); // 클릭된 포스터의 영화정보 가져옴
         this.getMovieCasts(e.target.id.substring(0, 7)); // 현재 state에서 가져오지 않고 바로 target에 잡힌 날것의 데이터 삽입
+        this.getMovieVideos(e.target.id.substring(0,7));
     };
 
     onCloseHandle = () => {
@@ -92,44 +107,48 @@ class TmdbList extends React.Component {
         this.getUpcommingMovies();
     }
 
-    printDialog = (castMember, movies, url) => {
+    printDialog = (castMember, movies, url, trailer, trailers) => {
         return (
-            <Dialog open={this.state.open} onClose={this.onCloseHandle}>
+            <Dialog open={this.state.open} onClose={this.onCloseHandle} maxWidth='md'>
                 <DialogTitle>{this.state.titles}</DialogTitle>
                 <DialogContent>
                     <Table>
                         <TableRow>
-                            <TableCell>
+                            <TableCell align='center' rowSpan='4' width='25%'>
                                 <img src={url + movies[3]} alt="Poster" />
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>개봉예정일: {movies[2]}</TableCell>
+                            <TableCell><b>{movies[4]}</b></TableCell>
+                            <TableCell>  {movies[2]} <b>[{movies[1]}]</b></TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>
-                                줄거리: <label>{movies.slice(4)}</label>
-                            </TableCell>
+                            <TableCell><b>줄거리:</b></TableCell>
+                            <TableCell><label>{movies.slice(5)}</label></TableCell>
                         </TableRow>
-                        <TableRow>
-                            <TableCell align="center">주요 출연진</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                <div className="container">
+                    </Table>
+                    <Table>
+                    <TableRow>
+                        <div className="container">
                                     {castMember.map((c) => (
+                            <TableCell>
                                         <>
-                                            <span className="item">
-                                                <span>
-                                                    <img src={url + c.profile_path} alt="castingMembers" />
+                                                    <img className='item' src={c.profile_path ? url + c.profile_path : 'https://image.tmdb.org/t/p/w200/rAgsOIhqRS6tUthmHoqnqh9PIAE.jpg'} alt="castingMembers" width="100" height="100" />
                                                     <br />
-                                                </span>
-                                                <span>{c.name}</span>
-                                            </span>
+                                                <span><b>{c.name}</b></span>
+                                                <br/>[{c.character}] 
                                         </>
-                                    ))}
-                                </div>
                             </TableCell>
+                            ))}
+                            </div>
+                        </TableRow>
+                        <TableRow>
+                            {trailers.map((t) => (
+                                <TableCell>
+                                <ReactPlayer url={trailer + t.key} controls></ReactPlayer>                                
+                            </TableCell>
+                            ))}
+                        
                         </TableRow>
                     </Table>
                 </DialogContent>
@@ -138,8 +157,9 @@ class TmdbList extends React.Component {
     };
 
     render() {
-        const { tmdbs, movies, castMember, upcommings, viewChange } = this.state;
+        const { tmdbs, movies, castMember, upcommings, viewChange, trailers } = this.state;
         const url = 'https://image.tmdb.org/t/p/w200';
+        const trailer = 'https://www.youtube.com/embed/';
         return (
             <>
                 <button id="btnBoxOffice" onClick={this.onClickHandles}>
@@ -155,7 +175,7 @@ class TmdbList extends React.Component {
                               src={url + u.poster_path}
                               alt="img"
                               onClick={this.onOpenChange}
-                              id={[u.id, u.vote_average, u.release_date, u.poster_path, u.overview]}
+                              id={[u.id, u.vote_average, u.release_date, u.poster_path,u.original_title , u.overview]}
                               title={u.title}
                           />
                       ))
@@ -164,11 +184,11 @@ class TmdbList extends React.Component {
                               src={url + m.poster_path}
                               alt="img"
                               onClick={this.onOpenChange}
-                              id={[m.id, m.vote_average, m.release_date, m.poster_path, m.overview]}
+                              id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
                               title={m.title}
                           />
                       ))}
-                {this.printDialog(castMember, movies, url)}
+                {this.printDialog(castMember, movies, url, trailer, trailers)}
             </>
         );
     }
