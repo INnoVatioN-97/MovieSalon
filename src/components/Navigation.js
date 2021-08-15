@@ -5,6 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
+/**
+ * 8월 15일 개선점
+ * 기존 네비게이션 속 요소들을 따로 JSON 배열로 빼냈음. (데스크탑용 / 모바일용 반응형으로 구성하기 위해 )
+ *
+ *
+ */
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -88,6 +94,7 @@ const Navigation = ({ userObj }) => {
         drawerOpen: false,
     });
 
+    // 네비게이션바 안에 들어갈 요소들 목록. 후에 map 함수를 사용해 출력한다.
     const menuObj = [
         {
             url: '/#',
@@ -150,14 +157,19 @@ const Navigation = ({ userObj }) => {
     };
 
     const displayMobileView = () => {
+        // 모바일뷰 화면에서 三 버튼 클릭시 발생되는 함수 (드로워가 열릴 수 있도록 State를 변경.)
         const handleDrawerOpen = () => {
             setState((prevState) => ({ ...prevState, drawerOpen: true }));
             console.log('drawer open!');
         };
+
+        // 드로워가 열린 상태에서 바깥을 클릭하거나 메뉴 아이템을 클릭시 발생되는 함수 (앱 드로워 닫힘)
         const handleDrawerClose = () => {
             setState((prevState) => ({ ...prevState, drawerOpen: false }));
             console.log('drawerClosed');
         };
+
+        // Drawer가 열릴때 Drawer속 내용물을 표시함.
         const getDrawerChoices = () => {
             // console.log('getDrawerChoices 발생');
             return (
@@ -171,15 +183,16 @@ const Navigation = ({ userObj }) => {
                         </Link>
                     </ListItem>
                     <Divider />
-                    <ListItem>
-                        <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
-                            <MenuItem>박스 오피스 (영화 진흥위원회)</MenuItem>
-                        </Link>
-                    </ListItem>
 
                     <ListItem>
                         <Link href="/#" className={classes.link} variant="inherit" color="inherit">
                             <MenuItem>Home</MenuItem>
+                        </Link>
+                    </ListItem>
+
+                    <ListItem>
+                        <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
+                            <MenuItem>박스 오피스 (영화 진흥위원회)</MenuItem>
                         </Link>
                     </ListItem>
 
