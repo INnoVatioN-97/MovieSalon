@@ -143,11 +143,10 @@ class TmdbList extends React.Component {
                         </TableRow>
                         <TableRow>
                             {trailers.map((t) => (
-                                <TableCell>
-                                <ReactPlayer url={trailer + t.key} controls></ReactPlayer>                                
+                                <TableCell> {/*현재 어플리케이션을 돌리는 주소를 매핑 해야함(localhost) */}
+                                <ReactPlayer url={trailer + t.key + '&origin=https://localhost:3000'} controls></ReactPlayer>                                
                             </TableCell>
                             ))}
-                        
                         </TableRow>
                     </Table>
                 </DialogContent>
