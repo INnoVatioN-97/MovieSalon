@@ -56,10 +56,16 @@ const Home = ({ movies, isLoggedIn, userObj }) => {
 
     return (
         <>
-            <input type="text" name="keyword" value={keyword} onChange={handleChange} placeholder="검색" />
+            <input
+                type="text"
+                name="keyword"
+                value={keyword}
+                onChange={handleChange}
+                placeholder="검색"
+            />
             <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
             <Box className={classes.box}>{printTop3Movies()}</Box>
-            {isLoggedIn ? <p>{userObj.email}님 안녕하세요.</p> : alert('로그인 먼저 해주세요')}
+            {userObj ? <p>{userObj.email}님 안녕하세요.</p> : alert('로그인 먼저 해주세요')}
         </>
     );
 };
