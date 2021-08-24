@@ -54,46 +54,7 @@ const MovieList = ({ movies }) => {
         }
     };
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         try {
-    //             // console.log('movieInfo (line65):', movieInfo);
-
-    //             if (movieLink !== null || movieLink !== undefined) {
-    //                 let tmp = movieLink;
-    //                 setMovieCode(tmp.split('?code=')[1]);
-    //             }
-
-    //             // console.log(`code from line 72: ${code}`); //정확히 전달 됨.
-    //             return await axios.get(
-    //                 '/poster/movie/bi/mi/photoViewPopup.naver?movieCode=' + movieCode
-    //             );
-    //             // console.log(res);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     fetchData()
-    //         .then((res) => {
-    //             let $ = cheerio.load(res.data);
-    //             // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
-    //             const bodyList = $('#page_content').children('a').children('#targetImage');
-    //             // hqPoster = bodyList[0].attribs.src;
-    //             // console.log('bodyList[0].attribs.src:', bodyList[0].attribs.src);
-    //             let hqPoster = bodyList[0].attribs.src;
-    //             if (hqPoster !== null || hqPoster !== undefined) {
-    //                 setPoster(bodyList[0].attribs.src);
-    //                 console.log('poster:', poster);
-    //                 console.log('movieCode:', movieCode);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, [movieLink, movieCode]);
-
     const handleChange = (e) => {
-        // this.setState({ keyword: e.target.value });
         setKeyword(e.target.value);
     };
 

@@ -8,4 +8,9 @@
     padding: 12px;
     background: white;
     border-radius: 70%;
+} 
+ 
+.poster:hover {
+    transform: scale(1.4);
 }
+ 
