@@ -116,8 +116,8 @@ const Navigation = ({ userObj }) => {
             text: '박스 오피스 (영화 진흥위원회)',
         },
         {
-            url: '/#/allMovies',
-            text: '모든 영화 보기 (TMDB)',
+            url: '/#/Search',
+            text: '영화 검색',
         },
         {
             url: '/#/tmdbList',
@@ -228,12 +228,12 @@ const Navigation = ({ userObj }) => {
 
                     <ListItem>
                         <Link
-                            href="/#/allMovies"
+                            href="/#/Search"
                             className={classes.link}
                             variant="inherit"
                             color="inherit"
                         >
-                            <MenuItem>모든 영화 보기 (TMDB)</MenuItem>
+                            <MenuItem>영화 검색</MenuItem>
                         </Link>
                     </ListItem>
 

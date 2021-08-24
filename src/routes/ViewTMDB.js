@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { TableBody, Table, TableRow, TableCell } from '@material-ui/core';
-import Cast from 'components/Cast';
+import TMDB from 'components/TMDB';
 import '../css/App.css';
 
 class ViewTMDB extends React.Component {
@@ -35,8 +35,6 @@ class ViewTMDB extends React.Component {
         const { posters, movieInfo, genre} = this.state;
         const img = 'https://image.tmdb.org/t/p/w200'; // poster
         const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
-       // console.log(this.props.match)
-       //  console.log('casts', Cast.getMovies(436969));
         return (
             <>
             <Table>
@@ -53,7 +51,7 @@ class ViewTMDB extends React.Component {
                 <TableRow>
                     <TableCell align='center'><b>"{movieInfo[2]}"!</b><br/>{movieInfo[3]}</TableCell>
                 </TableRow>
-                <Cast id={this.props.match.params.id} />
+                <TMDB id={this.props.match.params.id} />
             </Table>
         </>
         );

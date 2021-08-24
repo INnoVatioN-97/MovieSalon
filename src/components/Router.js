@@ -5,7 +5,7 @@ import MovieList from 'routes/MovieList';
 import ViewMovie from 'routes/ViewMovie';
 import queryString from 'query-string';
 import Auth from 'routes/Auth';
-import AllMovies from 'routes/AllMovies';
+import Search from 'routes/Search';
 import TmdbList from 'routes/TmdbList';
 import ViewTMDB from 'routes/ViewTMDB';
 
@@ -34,8 +34,8 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
                 <Route exact path="/auth">
                     <Auth isLoggedIn={isLoggedIn} userObj={userObj} />
                 </Route>
-                <Route path="/allMovies">
-                    <AllMovies />
+                <Route path="/Search">
+                    <Search />
                 </Route>
                 <Route path="/tmdbList">
                     <TmdbList />

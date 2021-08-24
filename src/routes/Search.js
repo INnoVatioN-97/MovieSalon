@@ -13,7 +13,7 @@ const styles = (theme) => ({
     },
 });
 
-class AllMovies extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,4 +74,4 @@ class AllMovies extends React.Component {
     }
 }
 
-export default AllMovies;
+export default Search;
