@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Link, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    Link,
+    Drawer,
+    Divider,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    MenuItem,
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -122,7 +133,7 @@ const Navigation = ({ userObj }) => {
     const { mobileView, drawerOpen } = state;
     useEffect(() => {
         const setResponsiveView = () => {
-            return window.innerWidth < 900
+            return window.innerWidth < 980
                 ? setState((prevState) => ({ ...prevState, mobileView: true }))
                 : setState((prevState) => ({ ...prevState, mobileView: false }));
         };
@@ -141,9 +152,18 @@ const Navigation = ({ userObj }) => {
                     <Typography className={classes.title} variant="h6" noWrap>
                         {menuObj.map((m) => (
                             // {console.log(m.imgUrl)}
-                            <Link href={m.url} className={classes.link} variant="inherit" color="inherit">
+                            <Link
+                                href={m.url}
+                                className={classes.link}
+                                variant="inherit"
+                                color="inherit"
+                            >
                                 {m.imgUrl !== undefined ? (
-                                    <img src={userObj.photoURL} alt="profile" className={classes.appBarProfile} />
+                                    <img
+                                        src={userObj.photoURL}
+                                        alt="profile"
+                                        className={classes.appBarProfile}
+                                    />
                                 ) : (
                                     ''
                                 )}
@@ -175,7 +195,12 @@ const Navigation = ({ userObj }) => {
             return (
                 <List onClick={handleDrawerClose}>
                     <ListItem button key="text">
-                        <Link href="/#/auth" className={classes.link} variant="inherit" color="inherit">
+                        <Link
+                            href="/#/auth"
+                            className={classes.link}
+                            variant="inherit"
+                            color="inherit"
+                        >
                             <MenuItem>
                                 {' '}
                                 <img src={userObj.photoURL} alt="profile" /> {userObj.displayName}님{' '}
@@ -191,19 +216,34 @@ const Navigation = ({ userObj }) => {
                     </ListItem>
 
                     <ListItem>
-                        <Link href="/#/movieList" className={classes.link} variant="inherit" color="inherit">
+                        <Link
+                            href="/#/movieList"
+                            className={classes.link}
+                            variant="inherit"
+                            color="inherit"
+                        >
                             <MenuItem>박스 오피스 (영화 진흥위원회)</MenuItem>
                         </Link>
                     </ListItem>
 
                     <ListItem>
-                        <Link href="/#/allMovies" className={classes.link} variant="inherit" color="inherit">
+                        <Link
+                            href="/#/allMovies"
+                            className={classes.link}
+                            variant="inherit"
+                            color="inherit"
+                        >
                             <MenuItem>모든 영화 보기 (TMDB)</MenuItem>
                         </Link>
                     </ListItem>
 
                     <ListItem>
-                        <Link href="/#/tmdbList" className={classes.link} variant="inherit" color="inherit">
+                        <Link
+                            href="/#/tmdbList"
+                            className={classes.link}
+                            variant="inherit"
+                            color="inherit"
+                        >
                             <MenuItem>박스 오피스 (TMDB)</MenuItem>
                         </Link>
                     </ListItem>
@@ -231,7 +271,11 @@ const Navigation = ({ userObj }) => {
         );
     };
 
-    return <header className={classes.root}>{mobileView ? displayMobileView() : displayDesktopView()}</header>;
+    return (
+        <header className={classes.root}>
+            {mobileView ? displayMobileView() : displayDesktopView()}
+        </header>
+    );
 };
 
 export default Navigation;

@@ -1,9 +1,25 @@
 import { authService, firebaseInstance } from 'fbase';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createHashHistory } from 'history';
+import { makeStyles } from '@material-ui/styles';
 // import '../css/Profile.css';
 
 export const history = createHashHistory();
+
+const useStyles = makeStyles({
+    profileCard: {
+        // backgroundColor: 'red',
+        // color: 'blue',
+        textAlign: 'center',
+    },
+    profileImg: {
+        margin: '20px',
+        width: '30%',
+        border: '10px',
+        borderRadius: '70%',
+        boxShadow: '0px 0px 7px 8px rgba(0,0,0,0.76)',
+    },
+});
 
 const Auth = ({ userObj, isLoggedIn }) => {
     const [email, setEmail] = useState('');
@@ -58,74 +74,44 @@ const Auth = ({ userObj, isLoggedIn }) => {
         console.log(data.user.email);
     };
 
+    const classes = useStyles();
     return (
         <>
             {isLoggedIn ? (
                 // <>
-                <aside className="profile-card">
-                    <header>
-                        {/* <!-- here’s the avatar --> */}
-                        <a target="_blank" href="#">
-                            <img src={userObj.photoURL} className="hoverZoomLink" alt="profile" />
-                        </a>
-
-                        {/* <!-- the username --> */}
-                        <h1>{userObj.displayName}</h1>
-
-                        {/* <!-- and role or location --> */}
-                        <h2>{userObj.email}</h2>
-                    </header>
-
-                    {/* <!-- bit of a bio; who are you? --> */}
-                    <div className="profile-bio">
-                        <p>프로필 메시지</p>
-                    </div>
-
+                <div className={classes.profileCard}>
                     <div>
+                        <img src={userObj.photoURL} className={classes.profileImg} alt="profile" />
+                        <h1>{userObj.displayName}</h1>
+                        <h2>{userObj.email}</h2>
                         <button onClick={onLogOutClick}>로그아웃</button>
                     </div>
-
-                    {/* <!-- some social links to show off --> */}
-                    {/* <ul class="profile-social-links">
-                        <li>
-                            <a target="_blank" href="https://www.facebook.com/creativedonut">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="https://twitter.com/dropyourbass">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="https://github.com/vipulsaxena">
-                                <i class="fa fa-github"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="https://www.behance.net/vipulsaxena">
-                                <i class="fa fa-behance"></i>
-                            </a>
-                        </li>
-                    </ul> */}
-                    {/* <div></div>
-  <p>
-      <img src={userObj.photoURL} alt="profile" />
-  </p>
-  
-  <p>{userObj.email}님 안녕하세요</p>
-  <button onClick={onLogOutClick}>Log Out</button> */}
-                    {/* </> */}
-                </aside>
+                </div>
             ) : (
                 <div>
                     <form onSubmit={onSubmit}>
-                        <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange} />
-                        <input name="password" type="password" placeholder="Password" required value={password} onChange={onChange} />
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            required
+                            value={email}
+                            onChange={onChange}
+                        />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            required
+                            value={password}
+                            onChange={onChange}
+                        />
                         <input type="submit" value={newAccount ? 'Create Account' : 'Log In'} />
                         {error}
                     </form>
-                    <span onClick={toggleAccount}>{newAccount ? '==>Sign in<==' : '==>Create Account<=='}</span>
+                    <span onClick={toggleAccount}>
+                        {newAccount ? '==>Sign in<==' : '==>Create Account<=='}
+                    </span>
                     <div>
                         <button onClick={onSocialClick} name="google">
                             Continue with Google
