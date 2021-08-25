@@ -10,6 +10,7 @@ import TmdbList from 'routes/TmdbList';
 import ViewTMDB from 'routes/ViewTMDB';
 import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
+import Filmography from 'routes/Filmography';
 
 const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
@@ -46,6 +47,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
                             <TmdbList />
                         </Route>
                         <Route exact path="/viewTMDB/:id" component={ViewTMDB}></Route>
+                        <Route exact path="/Filmography/:id" component={Filmography}></Route>
                         <Route exact path="/profile">
                             <Profile userObj={userObj} refreshUser={refreshUser} />
                         </Route>

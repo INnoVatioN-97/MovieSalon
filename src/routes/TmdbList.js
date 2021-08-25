@@ -164,7 +164,7 @@ class TmdbList extends React.Component {
                                 {castMember.map((c) => (
                                     <TableCell>
                                         <>
-                                            <a href={'https://www.google.com/search?q=' + c.name}>
+                                            <Link to={'/Filmography/' + c.id}>
                                                 <img
                                                     className="item"
                                                     src={
@@ -176,7 +176,7 @@ class TmdbList extends React.Component {
                                                     width="100"
                                                     height="100"
                                                 />
-                                            </a>{' '}
+                                            </Link>{' '}
                                             <br />
                                             <span>
                                                 <b>{c.name}</b>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+
 class TMDB extends React.Component {
     constructor(props) {
         super(props);
@@ -39,6 +40,7 @@ class TMDB extends React.Component {
         const { castMember, similer } = this.state;
         const url = 'https://image.tmdb.org/t/p/w200';
         let qeuryUrl = '/viewTmdb/';
+        let castUrl = '/Filmography/'
         return(
             <>
             <TableRow>
@@ -51,7 +53,7 @@ class TMDB extends React.Component {
                                 'https://image.tmdb.org/t/p/w200/rAgsOIhqRS6tUthmHoqnqh9PIAE.jpg'} 
                             alt="castingMembers" width="100" height="100" />
                             <br />
-                            <span><b>{c.name}</b></span>
+                            <span><Link to={castUrl + c.id}><b>{c.name}</b></Link></span>
                             <br/>[{c.character}] 
                         </>
                     </TableCell>
@@ -61,7 +63,7 @@ class TMDB extends React.Component {
             <Table>
             <TableRow>
                 {similer.map((s) => (
-                <TableCell><Link to={qeuryUrl + s.id} ><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
+                <TableCell ><Link to={qeuryUrl + s.id} ><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
                 ))}
             </TableRow>
             </Table>
