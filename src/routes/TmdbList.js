@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { index } from 'cheerio/lib/api/traversing';
+import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import '../css/Dialog.css';
 
@@ -91,7 +92,7 @@ class TmdbList extends React.Component {
         } = await axios.get(
             `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`
         );
-        this.setState({ similer: results.slice(0, 3) });
+        this.setState({ similer: results.slice(0, 4) });
     };
 
     // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
@@ -207,7 +208,9 @@ class TmdbList extends React.Component {
                             <TableBody>
                                 {similer.map((s) => (
                                     <TableCell>
+                                        <Link to={'/viewTmdb/' + s.id} >
                                         <img src={url + s.poster_path} />
+                                        </Link>
                                     </TableCell>
                                 ))}
                             </TableBody>

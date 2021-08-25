@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 class TMDB extends React.Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class TMDB extends React.Component {
         const {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
-        this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 5명만 추출(slice())
+        this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 7명만 추출(slice())
     };
 
     getSimilerMovies = async (id) => {
@@ -37,6 +38,7 @@ class TMDB extends React.Component {
     render() {
         const { castMember, similer } = this.state;
         const url = 'https://image.tmdb.org/t/p/w200';
+        let qeuryUrl = '/viewTmdb/';
         return(
             <>
             <TableRow>
@@ -59,7 +61,7 @@ class TMDB extends React.Component {
             <Table>
             <TableRow>
                 {similer.map((s) => (
-                <TableCell><img src={url + s.poster_path}/><br/><b>{s.title}</b></TableCell>
+                <TableCell><Link to={qeuryUrl + s.id} ><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
                 ))}
             </TableRow>
             </Table>
