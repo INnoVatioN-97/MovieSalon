@@ -6,8 +6,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
-import Auth from 'routes/Auth';
-import { PinDropRounded } from '@material-ui/icons';
+import Auth from 'routes/login/Auth';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
@@ -20,33 +19,27 @@ const styles = makeStyles({
 });
 
 const App = () => {
-    const [isLoading, setIsLoading] = useState(true);
     const [movies, setMovies] = useState([]);
     const [init, setInit] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userObj, setUserObj] = useState([]);
 
     const classes = styles();
 
     useEffect(() => {
-        async function signInState() {
-            // login 상태 확인
-            authService.onAuthStateChanged((user) => {
-                if (user) {
-                    setIsLoggedIn(true);
-                    setUserObj(user);
-
-                    // this.userObj = user;
-                    // console.log(this.isLoggedIn);
-                    console.log('userObj_App', userObj.email);
-                } else {
-                    setIsLoggedIn(false);
-                    console.log(isLoggedIn);
-                }
-                // this.movies = [];
-            });
-        }
-        signInState();
+        // login 상태 확인
+        authService.onAuthStateChanged((user) => {
+            if (user) {
+                setUserObj({
+                    displayName: user.displayName,
+                    uid: user.uid,
+                    photoURL: user.photoURL,
+                    updateProfile: (args) => user.updateProfile(args),
+                });
+                console.log('userObj_App', userObj.email);
+            } else {
+                setUserObj(null);
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -66,33 +59,41 @@ const App = () => {
                 // console.log(dailyBoxOfficeList);
                 // this.setState({ movies: dailyBoxOfficeList, isLoading: false });
                 setMovies(dailyBoxOfficeList);
-                setIsLoading(false);
                 setInit(true);
             } catch (error) {
                 console.log('error!', error);
             }
         }
         getMovies();
-    }, [isLoggedIn]);
+    }, [userObj]);
 
-    // render() {
-    // const { isLoggedIn, movies, userObj } = this.state;
-    console.log(isLoggedIn);
-    console.log('usrObj', userObj);
-    // const { classes } = this.props;
+    const refreshUser = () => {
+        const user = authService.currentUser;
+        console.log('currentUser from App.js', user);
+        setUserObj({
+            displayName: user.displayName,
+            uid: user.uid,
+            photoURL: user.photoURL,
+            updateProfile: (args) => user.updateProfile(args),
+        });
+    };
+
+    // console.log(isLoggedIn);
+    // console.log('userObj', userObj);
 
     return (
         <>
-            {isLoggedIn && userObj ? (
+            {init ? (
                 <>
-                    <Navigation userObj={userObj} />
-                    <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} movies={movies} />
+                    <AppRouter
+                        refreshUser={refreshUser}
+                        isLoggedIn={Boolean(userObj)}
+                        userObj={userObj}
+                        movies={movies}
+                    />
                 </>
             ) : (
-                <>
-                    <Auth />
-                    <p>LogIn이 필요합니다.</p>
-                </>
+                '초기화중...'
             )}
         </>
     );

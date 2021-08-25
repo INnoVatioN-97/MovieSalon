@@ -1,15 +1,17 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from 'routes/Home';
 import MovieList from 'routes/MovieList';
 import ViewMovie from 'routes/ViewMovie';
 import queryString from 'query-string';
-import Auth from 'routes/Auth';
+import Auth from 'routes/login/Auth';
 import Search from 'routes/Search';
 import TmdbList from 'routes/TmdbList';
 import ViewTMDB from 'routes/ViewTMDB';
+import Navigation from './Navigation';
+import Profile from 'routes/login/Profile';
 
-const AppRouter = ({ movies, userObj, isLoggedIn }) => {
+const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
 
@@ -22,28 +24,39 @@ const AppRouter = ({ movies, userObj, isLoggedIn }) => {
     };
 
     return (
-        <HashRouter>
+        <Router>
+            {isLoggedIn && <Navigation userObj={userObj} />}
             <Switch>
-                <Route exact path="/">
-                    <Home movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
-                </Route>
-                <Route exact path="/movieList">
-                    <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
-                </Route>
-                <Route path="/viewMovie" component={viewMovie} />
-                <Route exact path="/auth">
-                    <Auth isLoggedIn={isLoggedIn} userObj={userObj} />
-                </Route>
-                <Route path="/Search">
-                    <Search />
-                </Route>
-                <Route path="/tmdbList">
-                    <TmdbList />
-                </Route> 
-                <Route exact path="/viewTMDB/:id" component={ViewTMDB}>
-                </Route>
+                {isLoggedIn ? (
+                    <div>
+                        <Route exact path="/">
+                            <Home movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
+                        </Route>
+                        <Route exact path="/movieList">
+                            <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
+                        </Route>
+                        <Route path="/viewMovie" component={viewMovie} />
+                        <Route exact path="/auth">
+                            <Auth isLoggedIn={isLoggedIn} userObj={userObj} />
+                        </Route>
+                        <Route path="/Search">
+                            <Search />
+                        </Route>
+                        <Route path="/tmdbList">
+                            <TmdbList />
+                        </Route>
+                        <Route exact path="/viewTMDB/:id" component={ViewTMDB}></Route>
+                        <Route exact path="/profile">
+                            <Profile userObj={userObj} refreshUser={refreshUser} />
+                        </Route>
+                    </div>
+                ) : (
+                    <Route exact path="/">
+                        <Auth />
+                    </Route>
+                )}
             </Switch>
-        </HashRouter>
+        </Router>
     );
 };
 

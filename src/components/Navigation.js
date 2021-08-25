@@ -100,40 +100,65 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navigation = ({ userObj }) => {
+    console.log('userObj from Navigation', userObj);
     const [state, setState] = useState({
         mobileView: false,
         drawerOpen: false,
     });
 
     // 네비게이션바 안에 들어갈 요소들 목록. 후에 map 함수를 사용해 출력한다.
-    const menuObj = [
-        {
-            url: '/#',
-            text: 'Home',
-        },
-        {
-            url: '/#/movieList',
-            text: '박스 오피스 (영화 진흥위원회)',
-        },
-        {
-            url: '/#/Search',
-            text: '영화 검색',
-        },
-        {
-            url: '/#/tmdbList',
-            text: '박스 오피스 (TMDB)',
-        },
-        {
-            url: '/#/auth',
-            text: `${userObj.displayName}님`,
-            imgUrl: userObj.photoURL,
-        },
-    ];
+    // userObj가 있으면 프로필을 띄우고 아니면 로그인하도록.
+    const menuObj = Boolean(userObj)
+        ? [
+              {
+                  url: '/#',
+                  text: 'Home',
+              },
+              {
+                  url: '/#/movieList',
+                  text: '박스 오피스 (영화 진흥위원회)',
+              },
+              {
+                  url: '/#/Search',
+                  text: '영화 검색',
+              },
+              {
+                  url: '/#/tmdbList',
+                  text: '박스 오피스 (TMDB)',
+              },
+              {
+                  url: '/#/profile',
+                  text: `${userObj.displayName}님`,
+                  imgUrl: userObj.photoURL,
+              },
+          ]
+        : [
+              {
+                  url: '/#',
+                  text: 'Home',
+              },
+              {
+                  url: '/#/movieList',
+                  text: '박스 오피스 (영화 진흥위원회)',
+              },
+              {
+                  url: '/#/Search',
+                  text: '영화 검색',
+              },
+              {
+                  url: '/#/tmdbList',
+                  text: '박스 오피스 (TMDB)',
+              },
+              {
+                  url: '/#/auth',
+                  text: '로그인 하기',
+              },
+          ];
 
     const { mobileView, drawerOpen } = state;
     useEffect(() => {
         const setResponsiveView = () => {
-            return window.innerWidth < 980
+            return window.innerWidth < 900
                 ? setState((prevState) => ({ ...prevState, mobileView: true }))
                 : setState((prevState) => ({ ...prevState, mobileView: false }));
         };
@@ -151,7 +176,7 @@ const Navigation = ({ userObj }) => {
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
                         {menuObj.map((m) => (
-                            // {console.log(m.imgUrl)}
+                            // {console.log(m.imgUrl)}\
                             <Link
                                 href={m.url}
                                 className={classes.link}
@@ -196,14 +221,21 @@ const Navigation = ({ userObj }) => {
                 <List onClick={handleDrawerClose}>
                     <ListItem button key="text">
                         <Link
-                            href="/#/auth"
+                            href="/#/Profile"
                             className={classes.link}
                             variant="inherit"
                             color="inherit"
                         >
                             <MenuItem>
-                                {' '}
-                                <img src={userObj.photoURL} alt="profile" /> {userObj.displayName}님{' '}
+                                {userObj.displayName ? (
+                                    <>
+                                        <img src={userObj.photoURL} alt="profile" />{' '}
+                                        {userObj.displayName}
+                                        님(Profile)
+                                    </>
+                                ) : (
+                                    'Profile'
+                                )}
                             </MenuItem>
                         </Link>
                     </ListItem>
