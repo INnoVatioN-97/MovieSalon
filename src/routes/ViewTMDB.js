@@ -19,9 +19,9 @@ class ViewTMDB extends React.Component {
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const id = this.props.match.params.id; // url에 포함된 쿼리스트링 정보(id값)
         const {
-            data: { original_title, overview, title, poster_path, backdrop_path, tagline, genres },
+            data: { original_title, overview, title, poster_path, backdrop_path, tagline, genres, release_date },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=ko`);
-        this.setState({movieInfo: [title, original_title, tagline, overview],
+        this.setState({movieInfo: [title, original_title, tagline, overview, release_date],
              posters: [poster_path, backdrop_path],
              isLoading: false,
              genre: genres});
@@ -46,7 +46,12 @@ class ViewTMDB extends React.Component {
             </Table>
             <Table>
                 <TableRow>
-                    <TableCell align='center' colSpan='2'><h1>{movieInfo[1]}</h1></TableCell>
+                    <TableCell align='center' colSpan='2'><h1>{movieInfo[1]}</h1>
+                    <br/><b>{movieInfo[4]}</b>
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <TableCell align='center'><b>{genre.map((g) => ('|'+g.name+'|'))}</b></TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align='center'><b>"{movieInfo[2]}"!</b><br/>{movieInfo[3]}</TableCell>

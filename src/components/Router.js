@@ -46,7 +46,10 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
                         <Route path="/tmdbList">
                             <TmdbList />
                         </Route>
-                        <Route exact path="/viewTMDB/:id" component={ViewTMDB}></Route>
+                        <Route exact path="/viewTMDB/:id" 
+                            render={({ match }) => (
+                                <ViewTMDB key={match.params.id} match={match} />
+                             )}></Route>
                         <Route exact path="/Filmography/:id" component={Filmography}></Route>
                         <Route exact path="/profile">
                             <Profile userObj={userObj} refreshUser={refreshUser} />

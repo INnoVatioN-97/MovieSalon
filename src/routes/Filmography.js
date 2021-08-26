@@ -14,10 +14,6 @@ class Filmography extends React.Component {
         };
     }
 
-    componentDidMount() {
-
-    }
-
     render() {
         return(
             <>

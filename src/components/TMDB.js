@@ -63,7 +63,7 @@ class TMDB extends React.Component {
             <Table>
             <TableRow>
                 {similer.map((s) => (
-                <TableCell ><Link to={qeuryUrl + s.id} ><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
+                <TableCell ><Link to={qeuryUrl + s.id}><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
                 ))}
             </TableRow>
             </Table>
