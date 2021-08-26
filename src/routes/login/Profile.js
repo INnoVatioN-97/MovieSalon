@@ -40,7 +40,29 @@ const Profile = ({ refreshUser, userObj }) => {
 
     const onSubmit = async (event) => {
         event.preventDefault(); //창 새로고침 막기.
-        if (userObj.displayName !== newDisplayName || userObj.photoURL !== attachment) {
+        if (userObj.displayName !== newDisplayName && userObj.photoURL === attachment) {
+            await userObj.updateProfile({
+                displayName: newDisplayName,
+                uid: userObj.uid,
+                photoURL: userObj.photoURL,
+                email: userObj.email,
+            });
+            console.log('별명만 바뀜');
+        } else if (userObj.photoURL !== attachment && userObj.displayName === newDisplayName) {
+            let attachmentUrl = '';
+            if (attachment !== '') {
+                const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+                const response = await attachmentRef.putString(attachment, 'data_url');
+                attachmentUrl = await response.ref.getDownloadURL();
+            }
+            await userObj.updateProfile({
+                displayName: userObj.displayName,
+                uid: userObj.uid,
+                photoURL: attachmentUrl,
+                email: userObj.email,
+            });
+            console.log('프사만 바뀜');
+        } else if (userObj.displayName !== newDisplayName && userObj.photoURL !== attachment) {
             let attachmentUrl = '';
             if (attachment !== '') {
                 const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
@@ -50,12 +72,14 @@ const Profile = ({ refreshUser, userObj }) => {
             await userObj.updateProfile({
                 displayName: newDisplayName,
                 uid: userObj.uid,
-                photoURL: attachmentUrl,
+                photoURL: attachment !== userObj.photoURL ? attachmentUrl : userObj.photoURL,
                 email: userObj.email,
             });
+            console.log('프사, 별명 둘다 바뀜');
         }
         refreshUser();
-        setAttachment('');
+        setAttachment(userObj.photoURL);
+        history.push('/');
     };
 
     const onFileChange = (event) => {
@@ -89,7 +113,7 @@ const Profile = ({ refreshUser, userObj }) => {
                         <span>Add photos</span>
                         <FontAwesomeIcon icon={faPlus} />
                     </label>
-                    {attachment ? (
+                    {attachment && userObj.photoURL !== attachment ? (
                         <img
                             src={attachment}
                             style={{

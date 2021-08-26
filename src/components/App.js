@@ -74,13 +74,15 @@ const App = () => {
     const refreshUser = () => {
         const user = authService.currentUser;
         console.log('currentUser from App.js', user);
-        setUserObj({
-            displayName: user.displayName,
-            uid: user.uid,
-            photoURL: user.photoURL,
-            email: user.email,
-            updateProfile: (args) => user.updateProfile(args),
-        });
+        if (Boolean(user)) {
+            setUserObj({
+                displayName: user.displayName,
+                uid: user.uid,
+                photoURL: user.photoURL,
+                email: user.email,
+                updateProfile: (args) => user.updateProfile(args),
+            });
+        }
     };
 
     // console.log(isLoggedIn);

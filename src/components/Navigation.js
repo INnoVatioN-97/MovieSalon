@@ -78,8 +78,9 @@ const useStyles = makeStyles((theme) => ({
     },
 
     appBarProfile_Mobile__img: {
-        minWidth: '50px',
-        maxWidth: '270px',
+        // minWidth: '50px',
+        // maxWidth: '270px',
+        width: '270px',
     },
     appBarProfile_Mobile: {
         textAlign: 'center',
