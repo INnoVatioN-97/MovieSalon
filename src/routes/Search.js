@@ -47,7 +47,7 @@ class Search extends React.Component {
         return (
             <>
                 <input type="text" name="keyword" value={this.state.keyword}
-                 onChange={this.handleChange} placeholder="검색" />
+                 onChange={this.handleChange} placeholder="검색"  />
                 {isLoading ? (
                     <h2>Search!!!</h2>
                 ) : (
