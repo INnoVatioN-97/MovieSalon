@@ -24,7 +24,6 @@ const useStyles = makeStyles({
 });
 
 const AuthForm = ({ userObj, isLoggedIn }) => {
-    const [newAccount, setNewAccount] = useState(true);
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -40,57 +39,81 @@ const AuthForm = ({ userObj, isLoggedIn }) => {
         }
     };
 
-    const onSubmit = async (event) => {
+    const signInSubmit = async (event) => {
         event.preventDefault();
         try {
             let data;
-            if (newAccount) {
-                // create account
-                data = await authService.createUserWithEmailAndPassword(email, password);
-            } else {
-                // log in
-                data = await authService.signInWithEmailAndPassword(email, password);
-            }
+            // log in
+            data = await authService.signInWithEmailAndPassword(email, password);
+            console.log('data from signInSubmit:', data);
+
             history.push('/');
             console.log(data);
         } catch (error) {
             setError(error.message);
         }
     };
-    const toggleAccount = () => setNewAccount((prev) => !prev);
+    const joinSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            let data;
+            // create account
+            data = await authService.createUserWithEmailAndPassword(email, password);
+            console.log('data from joinSubmit:', data);
+
+            history.push('/');
+            console.log(data);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
     const classes = useStyles();
     return (
         <>
             <div>
-                <form onSubmit={onSubmit}>
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        required
-                        value={email}
-                        onChange={onChange}
-                    />
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        required
-                        value={password}
-                        onChange={onChange}
-                        className="authInput" // CSS 적용해야.
-                    />
-                    <input
-                        type="submit"
-                        className="authInput authSubmit"
-                        value={newAccount ? 'Create Account' : 'Log In'}
-                    />
+                <form onSubmit={signInSubmit}>
+                    <div>
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            required
+                            value={email}
+                            onChange={onChange}
+                        />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            required
+                            value={password}
+                            onChange={onChange}
+                            className="authInput" // CSS 적용해야.
+                        />
+                    </div>
+                    <div>
+                        <input
+                            id="signInSubmit"
+                            type="submit"
+                            className="authInput authSubmit"
+                            value={'Sign In'}
+                            // onSubmit={signInSubmit}
+                        />
+                        <input
+                            id="joinSubmit"
+                            type="button"
+                            className="authInput authSubmit"
+                            value={'Create Account'}
+                            // onSubmit={joinSubmit}
+                            onClick={joinSubmit}
+                        />
+                    </div>
                     {error}
                 </form>
-                <span onClick={toggleAccount}>
+                {/* <span onClick={toggleAccount}>
                     {newAccount ? '==>Sign in<==' : '==>Create Account<=='}
-                </span>
+                </span> */}
             </div>
         </>
     );
