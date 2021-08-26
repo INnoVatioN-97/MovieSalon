@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Link,
-    Drawer,
-    Divider,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    MenuItem,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 
-/**
- * 8월 15일 개선점
- * 기존 네비게이션 속 요소들을 따로 JSON 배열로 빼냈음. (데스크탑용 / 모바일용 반응형으로 구성하기 위해 )
- *
- *
- */
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -32,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
     appbarMobile: {
         alignItems: 'left',
+        // width: '20%',
     },
     // '@media (max-width: 900px)': {
     //     alignItems: 'left',
@@ -47,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     link: {
-        // marginLeft: 6,
-        // marginRight: 3,
-        // marginBottom: 10,
         paddingLeft: 10,
         paddingRight: 3,
     },
@@ -92,15 +73,24 @@ const useStyles = makeStyles((theme) => ({
             },
         },
     },
+
     appBarProfile: {
         margin: 'auto',
         width: '40px',
         borderRadius: '20px',
     },
+
+    appBarProfile_Mobile__img: {
+        minWidth: '50px',
+        maxWidth: '270px',
+    },
+    appBarProfile_Mobile: {
+        textAlign: 'center',
+    },
 }));
 
 const Navigation = ({ userObj }) => {
-    console.log('userObj from Navigation', userObj);
+    // console.log('userObj from Navigation', userObj);
     const [state, setState] = useState({
         mobileView: false,
         drawerOpen: false,
@@ -111,25 +101,31 @@ const Navigation = ({ userObj }) => {
     const menuObj = Boolean(userObj)
         ? [
               {
+                  isProfile: true,
+                  key: 'profile',
+                  url: '/#/profile',
+                  text: `${Boolean(userObj.displayName) ? userObj.displayName : userObj.email}님`,
+                  imgUrl: userObj.photoURL,
+              },
+              {
+                  key: 'Home',
                   url: '/#',
                   text: 'Home',
               },
               {
+                  key: 'movieList',
                   url: '/#/movieList',
                   text: '박스 오피스 (영화 진흥위원회)',
               },
               {
+                  key: 'Search',
                   url: '/#/Search',
                   text: '영화 검색',
               },
               {
+                  key: 'tmdbList',
                   url: '/#/tmdbList',
                   text: '박스 오피스 (TMDB)',
-              },
-              {
-                  url: '/#/profile',
-                  text: `${userObj.displayName}님`,
-                  imgUrl: userObj.photoURL,
               },
           ]
         : [
@@ -140,6 +136,7 @@ const Navigation = ({ userObj }) => {
           ];
 
     const { mobileView, drawerOpen } = state;
+    // 창 폭에 따라 모바일 뷰, 데스크톱 뷰로 체인지 (900 전후로)
     useEffect(() => {
         const setResponsiveView = () => {
             return window.innerWidth < 900
@@ -169,7 +166,7 @@ const Navigation = ({ userObj }) => {
                             >
                                 {m.imgUrl !== undefined ? (
                                     <img
-                                        src={userObj.photoURL}
+                                        src={m.imgUrl}
                                         alt="profile"
                                         className={classes.appBarProfile}
                                     />
@@ -202,67 +199,39 @@ const Navigation = ({ userObj }) => {
         const getDrawerChoices = () => {
             // console.log('getDrawerChoices 발생');
             return (
+                /**
+                 * 맨위에 정의한 menuObj에 각 요소를 매핑해 드로워(모바일뷰), 앱 바(데스크탑 뷰)를 출력.
+                 * 요소 내 isProfile의 여부에 따라 프로필 아이템의 이미지, Divider 처리를 하도록 설정함.
+                 */
                 <List onClick={handleDrawerClose}>
-                    <ListItem button key="text">
-                        <Link
-                            href="/#/Profile"
-                            className={classes.link}
-                            variant="inherit"
-                            color="inherit"
-                        >
-                            <MenuItem>
-                                {Boolean(userObj) ? (
-                                    <>
-                                        <img src={userObj.photoURL} alt="profile" />{' '}
-                                        {userObj.displayName}
-                                        님(Profile)
-                                    </>
-                                ) : (
-                                    'Profile'
-                                )}
+                    {menuObj.map((m) => (
+                        <>
+                            <MenuItem key={m.key}>
+                                <Link
+                                    href={m.url}
+                                    className={classes.link}
+                                    variant="inherit"
+                                    color="inherit"
+                                >
+                                    {m.isProfile ? (
+                                        <div className={classes.appBarProfile_Mobile}>
+                                            <div>
+                                                <img
+                                                    src={m.imgUrl}
+                                                    alt={m.key}
+                                                    className={classes.appBarProfile_Mobile__img}
+                                                />
+                                            </div>
+                                            <div>{m.text}</div>
+                                        </div>
+                                    ) : (
+                                        `${m.text}`
+                                    )}
+                                </Link>
                             </MenuItem>
-                        </Link>
-                    </ListItem>
-                    <Divider />
-
-                    <ListItem>
-                        <Link href="/#" className={classes.link} variant="inherit" color="inherit">
-                            <MenuItem>Home</MenuItem>
-                        </Link>
-                    </ListItem>
-
-                    <ListItem>
-                        <Link
-                            href="/#/movieList"
-                            className={classes.link}
-                            variant="inherit"
-                            color="inherit"
-                        >
-                            <MenuItem>박스 오피스 (영화 진흥위원회)</MenuItem>
-                        </Link>
-                    </ListItem>
-
-                    <ListItem>
-                        <Link
-                            href="/#/Search"
-                            className={classes.link}
-                            variant="inherit"
-                            color="inherit"
-                        >
-                            <MenuItem>영화 검색</MenuItem>
-                        </Link>
-                    </ListItem>
-
-                    <ListItem>
-                        <Link
-                            href="/#/tmdbList"
-                            className={classes.link}
-                            variant="inherit"
-                            color="inherit"
-                        >
-                            <MenuItem>박스 오피스 (TMDB)</MenuItem>
-                        </Link>
-                    </ListItem>
+                            {m.isProfile ? <Divider /> : ''}
+                        </>
+                    ))}
                 </List>
             );
         };
@@ -278,10 +247,14 @@ const Navigation = ({ userObj }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
+                    <Drawer
+                        anchor="left"
+                        open={drawerOpen}
+                        onClose={handleDrawerClose}
+                        className={classes.Drawer}
+                    >
                         <div>{getDrawerChoices()}</div>
                     </Drawer>
-                    {/* {console.log('mobileView!')} */}
                 </Toolbar>
             </AppBar>
         );

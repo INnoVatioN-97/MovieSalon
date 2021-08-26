@@ -7,6 +7,7 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
 import Auth from 'routes/login/Auth';
+import DefaultProfileImage from 'images/DefaultProfileImage.png';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
@@ -30,12 +31,13 @@ const App = () => {
         authService.onAuthStateChanged((user) => {
             if (user) {
                 setUserObj({
-                    displayName: user.displayName,
+                    displayName: user.displayName ? user.displayName : user.email,
                     uid: user.uid,
-                    photoURL: user.photoURL,
+                    photoURL: user.photoURL ? user.photoURL : DefaultProfileImage,
+                    email: user.email,
                     updateProfile: (args) => user.updateProfile(args),
                 });
-                console.log('userObj_App', userObj.email);
+                // console.log('userObj_App', userObj.email);
             } else {
                 setUserObj(null);
             }
