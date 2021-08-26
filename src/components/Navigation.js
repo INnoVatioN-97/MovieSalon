@@ -15,15 +15,12 @@ const useStyles = makeStyles((theme) => ({
 
     appbarMobile: {
         alignItems: 'left',
-        // width: '20%',
     },
-    // '@media (max-width: 900px)': {
-    //     alignItems: 'left',
-    // },
     menuButton: {
         marginRight: theme.spacing(2),
     },
     title: {
+        // color: '#000000',
         flexGrow: 1,
         display: 'none',
         [theme.breakpoints.up('sm')]: {
@@ -153,7 +150,11 @@ const Navigation = ({ userObj }) => {
     const classes = useStyles();
     const displayDesktopView = () => {
         return (
-            <AppBar position="static" className={classes.appbar}>
+            <AppBar
+                position="static"
+                className={classes.appbar}
+                // style={{ background: 'transparent' }}
+            >
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
                         {menuObj.map((m) => (

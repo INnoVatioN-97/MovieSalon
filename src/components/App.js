@@ -30,13 +30,15 @@ const App = () => {
         // login 상태 확인
         authService.onAuthStateChanged((user) => {
             if (user) {
+                console.log('이전 userObj: ', userObj);
                 setUserObj({
-                    displayName: user.displayName ? user.displayName : user.email,
+                    displayName: Boolean(user.displayName) ? user.displayName : user.email,
                     uid: user.uid,
-                    photoURL: user.photoURL ? user.photoURL : DefaultProfileImage,
+                    photoURL: Boolean(user.photoURL) ? user.photoURL : DefaultProfileImage,
                     email: user.email,
                     updateProfile: (args) => user.updateProfile(args),
                 });
+                console.log('바뀐 userObj: ', userObj);
                 // console.log('userObj_App', userObj.email);
             } else {
                 setUserObj(null);
@@ -76,6 +78,7 @@ const App = () => {
             displayName: user.displayName,
             uid: user.uid,
             photoURL: user.photoURL,
+            email: user.email,
             updateProfile: (args) => user.updateProfile(args),
         });
     };
