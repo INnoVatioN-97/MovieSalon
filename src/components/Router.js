@@ -53,9 +53,12 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
                         </Route>
                     </div>
                 ) : (
-                    <Route exact path="/">
-                        <Auth />
-                    </Route>
+                    <>
+                        <Navigation />
+                        <Route exact path="/">
+                            <Auth />
+                        </Route>
+                    </>
                 )}
             </Switch>
         </Router>

@@ -134,23 +134,7 @@ const Navigation = ({ userObj }) => {
           ]
         : [
               {
-                  url: '/#',
-                  text: 'Home',
-              },
-              {
-                  url: '/#/movieList',
-                  text: '박스 오피스 (영화 진흥위원회)',
-              },
-              {
-                  url: '/#/Search',
-                  text: '영화 검색',
-              },
-              {
-                  url: '/#/tmdbList',
-                  text: '박스 오피스 (TMDB)',
-              },
-              {
-                  url: '/#/auth',
+                  url: '/#/',
                   text: '로그인 하기',
               },
           ];
@@ -227,7 +211,7 @@ const Navigation = ({ userObj }) => {
                             color="inherit"
                         >
                             <MenuItem>
-                                {userObj.displayName ? (
+                                {Boolean(userObj) ? (
                                     <>
                                         <img src={userObj.photoURL} alt="profile" />{' '}
                                         {userObj.displayName}

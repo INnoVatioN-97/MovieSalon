@@ -8,18 +8,24 @@ export const history = createHashHistory();
 
 const SocialLogin = () => {
     const onSocialClick = async (event) => {
-        const {
-            target: { name },
-        } = event; //ES6
-        let provider;
-        if (name === 'google') {
-            provider = new firebaseInstance.auth.GoogleAuthProvider();
-        } else if (name === 'github') {
-            provider = new firebaseInstance.auth.GithubAuthProvider();
+        try {
+            const {
+                target: { name },
+            } = event; //ES6
+            let provider;
+            if (name === 'google') {
+                provider = new firebaseInstance.auth.GoogleAuthProvider();
+            } else if (name === 'github') {
+                provider = new firebaseInstance.auth.GithubAuthProvider();
+            }
+            const data = await authService.signInWithPopup(provider);
+            history.push('/');
+            console.log(data.user.email);
+        } catch (error) {
+            alert(
+                '로그인에 문제가 발생했습니다. 혹시 같은 아이디에 다른 플랫폼으로 로그인을 시도하셨나요??'
+            );
         }
-        const data = await authService.signInWithPopup(provider);
-        history.push('/');
-        console.log(data.user.email);
     };
 
     return (
