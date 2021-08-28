@@ -15,7 +15,7 @@ const styles = makeStyles({
 });
 
 const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten }) => {
-    console.log('movieCode from Movie:', movieCode);
+    // console.log('movieCode from Movie:', movieCode);
     const classes = styles();
     let url = '/viewMovie?movieNm=';
 

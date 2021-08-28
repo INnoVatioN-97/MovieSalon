@@ -46,7 +46,7 @@ const App = () => {
 
     useEffect(() => {
         getKobisMovies().then((res) => {
-            console.log('res:', res);
+            // console.log('res:', res);
             setMovies(res);
         });
         setInit(true);
