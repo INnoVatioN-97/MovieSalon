@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { index } from 'cheerio/lib/api/traversing';
+import { Grid, Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import '../css/Dialog.css';
@@ -21,6 +22,17 @@ import '../css/Dialog.css';
  *
  * 캐스팅 목록 그리드형 배치 위해 9번 줄에 Dialog 전담 css 파일 생성 후 적용.
  */
+ const styles = theme => ({
+    root: {
+      padding: theme.spacing(3),
+      background: '#eeeeee'
+    },
+    margins: {
+        padding:'2,3,4,5',
+    },
+  });
+
+
 class TmdbList extends React.Component {
     constructor(props) {
         super(props);
@@ -223,6 +235,7 @@ class TmdbList extends React.Component {
 
     render() {
         const { tmdbs, movies, castMember, upcommings, viewChange, trailers, similer } = this.state;
+        const { classes } = this.props
         const url = 'https://image.tmdb.org/t/p/w200';
         const trailer = 'https://www.youtube.com/embed/';
         return (
@@ -252,9 +265,12 @@ class TmdbList extends React.Component {
                               title={u.title}
                           />
                       ))
-                    : tmdbs.map((m, index) => (
-                          <>
-                              <img
+                    :<div className="child" >   
+                    <Grid container spacing={3} align='center'>
+                                  {tmdbs.map((m, index) => (
+                                      <>
+                                      <Grid item xs={2}>
+                                  <img
                                   className="poster"
                                   src={url + m.poster_path}
                                   alt="img"
@@ -269,8 +285,12 @@ class TmdbList extends React.Component {
                                   ]}
                                   title={m.title}
                               />
-                          </>
-                      ))}
+                              </Grid>
+                              </>
+                              ))}    
+                              </Grid>
+                          </div>
+    } 
                 {this.printDialog(castMember, movies, url, trailer, trailers, similer)}
             </>
         );
