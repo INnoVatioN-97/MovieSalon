@@ -14,14 +14,7 @@ export const getKobisMovies = async () => {
         } = await axios.get(
             `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
         );
-        // console.log(dailyBoxOfficeList);
-        // this.setState({ movies: dailyBoxOfficeList, isLoading: false });
-        // console.log('dailyBoxOfficeList:', dailyBoxOfficeList);
-        const result = Boolean(dailyBoxOfficeList) ? dailyBoxOfficeList : null;
-        // console.log('result:', result);
-        if (result !== null || result !== undefined) {
-            return result;
-        }
+        return dailyBoxOfficeList;
     } catch (error) {
         console.log('error!', error);
     }
