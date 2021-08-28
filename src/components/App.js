@@ -1,13 +1,11 @@
 import '../css/App.css';
 import React, { useEffect, useState } from 'react';
-import Navigation from './Navigation';
 import AppRouter from './Router';
-import moment from 'moment';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
-import Auth from 'routes/login/Auth';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
+
+import { getKobisMovies } from './APIs/KobisAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 
@@ -47,28 +45,11 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        async function getMovies() {
-            try {
-                //어제 기준 박스오피스 상위 10위권 출력.
-                const yesterday = moment().subtract(1, 'days').format('YYYYMMDD');
-                // console.log(yesterday);
-                const API_KEY = process.env.REACT_APP_KOBIS_API_KEY;
-                const {
-                    data: {
-                        boxOfficeResult: { dailyBoxOfficeList },
-                    },
-                } = await axios.get(
-                    `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
-                );
-                // console.log(dailyBoxOfficeList);
-                // this.setState({ movies: dailyBoxOfficeList, isLoading: false });
-                setMovies(dailyBoxOfficeList);
-                setInit(true);
-            } catch (error) {
-                console.log('error!', error);
-            }
-        }
-        getMovies();
+        getKobisMovies().then((res) => {
+            console.log('res:', res);
+            setMovies(res);
+        });
+        setInit(true);
     }, [userObj]);
 
     const refreshUser = () => {

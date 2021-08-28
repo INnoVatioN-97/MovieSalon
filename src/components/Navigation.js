@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     link: {
+        // margin: 10,
         paddingLeft: 10,
         paddingRight: 3,
     },
@@ -72,7 +73,9 @@ const useStyles = makeStyles((theme) => ({
     },
 
     appBarProfile: {
-        margin: 'auto',
+        // margin: 10,
+        // marginRight: '30px',
+        // marginRight: '1%',
         width: '40px',
         borderRadius: '20px',
     },
@@ -158,26 +161,35 @@ const Navigation = ({ userObj }) => {
             >
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        {menuObj.map((m) => (
+                        {menuObj.map((m) =>
                             // {console.log(m.imgUrl)}\
-                            <Link
-                                href={m.url}
-                                className={classes.link}
-                                variant="inherit"
-                                color="inherit"
-                            >
-                                {m.imgUrl !== undefined ? (
-                                    <img
-                                        src={m.imgUrl}
-                                        alt="profile"
-                                        className={classes.appBarProfile}
-                                    />
-                                ) : (
-                                    ''
-                                )}
-                                {m.text}
-                            </Link>
-                        ))}
+                            m.isProfile ? (
+                                <Link
+                                    href={m.url}
+                                    className={classes.link}
+                                    variant="inherit"
+                                    color="inherit"
+                                >
+                                    <>
+                                        <img
+                                            src={m.imgUrl}
+                                            alt="profile"
+                                            className={classes.appBarProfile}
+                                        />
+                                        {m.text}
+                                    </>
+                                </Link>
+                            ) : (
+                                <Link
+                                    href={m.url}
+                                    className={classes.link}
+                                    variant="inherit"
+                                    color="inherit"
+                                >
+                                    {m.text}
+                                </Link>
+                            )
+                        )}
                     </Typography>
                 </Toolbar>
             </AppBar>
