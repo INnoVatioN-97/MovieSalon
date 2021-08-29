@@ -29,9 +29,10 @@ const useStyles = makeStyles({
     },
 });
 
-const Home = ({ movies, isLoggedIn, userObj }) => {
+const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const [keyword, setKeyword] = useState('');
     const classes = useStyles();
+    const url = 'https://image.tmdb.org/t/p/w500';
 
     const handleChange = (e) => {
         // this.setState({ keyword: e.target.value });
@@ -67,6 +68,12 @@ const Home = ({ movies, isLoggedIn, userObj }) => {
             <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
             <Box className={classes.box}>{printTop3Movies()}</Box>
             {userObj ? <p>{userObj.email}님 안녕하세요.</p> : alert('로그인 먼저 해주세요')}
+            <div>
+                {tmdbHome.slice(0,3).map((tmdb) => (
+                    <img src={url + tmdb.backdrop_path} alert={tmdb.title}>
+                    </img>
+                ))}
+                </div>
         </>
     );
 };

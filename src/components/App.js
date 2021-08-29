@@ -4,7 +4,7 @@ import AppRouter from './Router';
 import { makeStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
-
+import { getTmdbBoxOffice, getUpcommingMovies } from './APIs/TmdbAPI';
 import { getKobisMovies } from './APIs/KobisAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
@@ -21,6 +21,8 @@ const App = () => {
     const [movies, setMovies] = useState([]);
     const [init, setInit] = useState(false);
     const [userObj, setUserObj] = useState([]);
+    const [tmdbHome, setTmdbHome] = useState([]);
+    const [upcomming, setUpcomming] = useState([]);
 
     const classes = styles();
 
@@ -52,6 +54,21 @@ const App = () => {
         setInit(true);
     }, [userObj]);
 
+    useEffect(() =>{
+        getTmdbBoxOffice().then((res) => {
+            console.log('res_tmdb', res);
+            setTmdbHome(res);
+        });
+        setInit(true);
+    }, [userObj]);
+
+    useEffect(() => {
+        getUpcommingMovies().then((res) => {
+            setUpcomming(res);
+        });
+        setInit(true);
+    }, [userObj]);
+
     const refreshUser = () => {
         const user = authService.currentUser;
         console.log('currentUser from App.js', user);
@@ -78,6 +95,8 @@ const App = () => {
                         isLoggedIn={Boolean(userObj)}
                         userObj={userObj}
                         movies={movies}
+                        tmdbHome={tmdbHome}
+                        upcomming={upcomming}
                     />
                 </>
             ) : (

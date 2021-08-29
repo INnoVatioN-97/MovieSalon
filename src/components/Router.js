@@ -12,7 +12,7 @@ import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
 import Filmography from 'routes/Filmography';
 
-const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
+const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
 
@@ -31,7 +31,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
                 {isLoggedIn ? (
                     <div>
                         <Route exact path="/">
-                            <Home movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
+                            <Home movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} tmdbHome={tmdbHome} />
                         </Route>
                         <Route exact path="/movieList">
                             <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
@@ -44,7 +44,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn }) => {
                             <Search />
                         </Route>
                         <Route path="/tmdbList">
-                            <TmdbList />
+                            <TmdbList tmdbHome={tmdbHome} upcomming={upcomming} />
                         </Route>
                         <Route exact path="/viewTMDB/:id" 
                             render={({ match }) => (

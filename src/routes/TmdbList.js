@@ -38,44 +38,22 @@ class TmdbList extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            tmdbs: [],
+            open: false,
+            viewChange: false,
             titles: '',
             movies: '',
-            open: false,
             castMember: [],
-            upcommings: [],
-            viewChange: false,
             trailers: [],
             similer: [],
+            tmdbs: props.tmdbHome,
+            upcommings: props.upcomming,
         };
         this.onOpenChange = this.onOpenChange.bind(this);
         this.onCloseHandle = this.onCloseHandle.bind(this);
         this.onClickHandles = this.onClickHandles.bind(this);
     }
 
-    getTrendingMovies = async () => {
-        // Tmdb API 이용
-        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-        const {
-            data: { results },
-        } = await axios.get(`
-        https://api.themoviedb.org/3/trending/movie/day?api_key=${TMDB_API_KEY}&language=ko`);
-        console.log('trending_Movies', results);
-        this.setState({ tmdbs: results, isLoading: false });
-    };
-
-    getUpcommingMovies = async () => {
-        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-        const {
-            data: { results },
-        } = await axios.get(
-            `https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_API_KEY}&language=ko&page=1&region=kr`
-        );
-        console.log('upcomming_movies', results);
-        this.setState({ upcommings: results, isLoading: false });
-    };
-
-    getMovieCasts = async (id) => {
+    getMovieCasts = async (id) => { // 출연진 정보
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
             data: { cast },
@@ -86,7 +64,7 @@ class TmdbList extends React.Component {
         this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 5명만 추출(slice())
     };
 
-    getMovieVideos = async (id) => {
+    getMovieVideos = async (id) => { // 트레일러
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
             data: { results },
@@ -97,7 +75,7 @@ class TmdbList extends React.Component {
         console.log('videos_slice', this.state.trailers);
     };
 
-    getSimilerMovies = async (id) => {
+    getSimilerMovies = async (id) => { // 유사한 영화
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
             data: { results },
@@ -135,11 +113,6 @@ class TmdbList extends React.Component {
         console.log('viewChange', this.state.viewChange);
         console.log('event:', event.target.id);
     };
-
-    componentDidMount() {
-        this.getTrendingMovies();
-        this.getUpcommingMovies();
-    }
 
     printDialog = (castMember, movies, url, trailer, trailers, similer) => {
         return (
@@ -289,8 +262,7 @@ class TmdbList extends React.Component {
                               </>
                               ))}    
                               </Grid>
-                          </div>
-    } 
+                          </div>} 
                 {this.printDialog(castMember, movies, url, trailer, trailers, similer)}
             </>
         );
