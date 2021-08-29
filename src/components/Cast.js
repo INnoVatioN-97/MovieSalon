@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import DefaultProfileImage from 'images/DefaultProfileImage.png';
 
 class Cast extends React.Component {
 constructor(props) {
@@ -42,7 +43,8 @@ constructor(props) {
         return(
             <>
             <TableRow>
-                <TableCell><img src={imgUrl + castInfo[5]} alt={castInfo[1]}/></TableCell>
+                <TableCell><img src={ castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage} alt={castInfo[1]}
+                width="150" height="150"/></TableCell>
                     <TableCell>
                         <TableRow><h2>{castInfo[1]}</h2></TableRow>
                         <TableRow>{castInfo[3]}</TableRow>

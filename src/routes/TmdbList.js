@@ -6,6 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { index } from 'cheerio/lib/api/traversing';
+import DefaultProfileImage from 'images/DefaultProfileImage.png';
+import NoImageAvailable from 'images/NoImageAvailable.png';
 import { Grid, Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
@@ -122,7 +124,8 @@ class TmdbList extends React.Component {
                     <Table>
                         <TableRow>
                             <TableCell align="center" rowSpan="4" width="25%">
-                                <img src={url + movies[3]} alt="Poster" />
+                                <img src={movies[3] ? url + movies[3] : NoImageAvailable} alt="Poster"
+                                width="200" height="300" />
                             </TableCell>
                         </TableRow>
                         <TableRow>
@@ -155,7 +158,7 @@ class TmdbList extends React.Component {
                                                     src={
                                                         c.profile_path
                                                             ? url + c.profile_path
-                                                            : 'https://image.tmdb.org/t/p/w200/rAgsOIhqRS6tUthmHoqnqh9PIAE.jpg'
+                                                            : DefaultProfileImage
                                                     }
                                                     alt="castingMembers"
                                                     width="100"
@@ -221,10 +224,15 @@ class TmdbList extends React.Component {
                 </button>
                 <br />
                 {viewChange
-                    ? upcommings.map((u) => (
+                    ?
+                    <div className="child">
+                    <Grid container spacing={3} align='center'>
+                    {upcommings.map((u) => (
+                        <>
+                        <Grid item xs={2}>
                           <img
                               className="poster"
-                              src={url + u.poster_path}
+                              src={u.poster_path ? url + u.poster_path : NoImageAvailable}
                               alt="img"
                               onClick={this.onOpenChange}
                               id={[
@@ -236,8 +244,14 @@ class TmdbList extends React.Component {
                                   u.overview,
                               ]}
                               title={u.title}
+                              width="200"
+                              height="300"
                           />
-                      ))
+                          </Grid>
+                          </>
+                      ))}
+                    </Grid>
+                    </div> 
                     :<div className="child" >   
                     <Grid container spacing={3} align='center'>
                                   {tmdbs.map((m, index) => (

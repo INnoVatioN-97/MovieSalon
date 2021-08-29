@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import DefaultProfileImage from 'images/DefaultProfileImage.png';
 
 
 class TMDB extends React.Component {
@@ -50,11 +51,11 @@ class TMDB extends React.Component {
                         <>
                             <img className='item' 
                             src={c.profile_path ? url + c.profile_path : 
-                                'https://image.tmdb.org/t/p/w200/rAgsOIhqRS6tUthmHoqnqh9PIAE.jpg'} 
+                                DefaultProfileImage} 
                             alt="castingMembers" width="100" height="100" />
                             <br />
                             <span><Link to={castUrl + c.id}><b>{c.name}</b></Link></span>
-                            <br/>[{c.character}] 
+                            <br/>{c.character} 역
                         </>
                     </TableCell>
                 ))}

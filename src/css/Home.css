@@ -1,0 +1,18 @@
+.childs {
+    display: grid;
+    position: relative;
+  }
+
+.posters {
+    border-radius: 5%;
+    box-shadow: 10px 5px 5px rgb(153, 153, 167);
+    position: relative;
+}
+
+.posters .texts {
+  position: absolute;
+  top:50%;
+  left:50%;
+  text-align: center;
+  
+}
