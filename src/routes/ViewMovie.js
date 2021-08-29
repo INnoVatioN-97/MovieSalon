@@ -26,7 +26,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
     //code 의 값 변경이 감지되면 (영화정보를 가져와 거기서 영화코드추출이 끝남을 인지하면) 실행되는 훅.
     // 고화질 포스터를 가져온다.
     useEffect(() => {
-        getHighQualityPosterLink(movieInfo)
+        getHighQualityPosterLink(code)
             .then((res) => {
                 let $ = cheerio.load(res.data);
                 // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장

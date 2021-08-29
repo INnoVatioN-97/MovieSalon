@@ -29,9 +29,7 @@ export const getNaverSearchResult = async (movieName) => {
  * 이를 cheerio를 통해 이미지만 파싱해서 쓴다.
  * (이 작업은 해당 페이지에서)
  */
-export const getHighQualityPosterLink = async (movieInfo) => {
-    const { link } = movieInfo;
-    const code = link.split('?code=')[1];
+export const getHighQualityPosterLink = async (code) => {
     try {
         return await axios.get('/poster/movie/bi/mi/photoViewPopup.naver?movieCode=' + code);
         // console.log(res);
