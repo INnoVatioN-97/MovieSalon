@@ -1,36 +1,23 @@
 import '../css/App.css';
 import React, { useEffect, useState } from 'react';
 import AppRouter from './Router';
-import { makeStyles } from '@material-ui/styles';
 import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
-import { getTmdbBoxOffice, getUpcommingMovies } from './APIs/TmdbAPI';
 import { getKobisMovies } from './APIs/KobisAPI';
+import { getTmdbBoxOffice, getUpcommingMovies } from './APIs/TmdbAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
-
-const styles = makeStyles({
-    paper: {
-        marginTop: 15,
-        marginLeft: 24,
-        marginRight: 24,
-    },
-});
-
 const App = () => {
     const [movies, setMovies] = useState([]);
-    const [init, setInit] = useState(false);
+    const [init, setInit] = useState(true);
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
     const [upcomming, setUpcomming] = useState([]);
-
-    const classes = styles();
 
     useEffect(() => {
         // login 상태 확인
         authService.onAuthStateChanged((user) => {
             if (user) {
-                console.log('이전 userObj: ', userObj);
                 setUserObj({
                     displayName: Boolean(user.displayName) ? user.displayName : user.email,
                     uid: user.uid,
@@ -38,8 +25,6 @@ const App = () => {
                     email: user.email,
                     updateProfile: (args) => user.updateProfile(args),
                 });
-                console.log('바뀐 userObj: ', userObj);
-                // console.log('userObj_App', userObj.email);
             } else {
                 setUserObj(null);
             }
@@ -51,22 +36,16 @@ const App = () => {
             // console.log('res:', res);
             setMovies(res);
         });
-        setInit(true);
-    }, [userObj]);
 
-    useEffect(() =>{
         getTmdbBoxOffice().then((res) => {
-            console.log('res_tmdb', res);
+            // console.log('res_tmdb', res);
             setTmdbHome(res);
         });
-        setInit(true);
-    }, [userObj]);
 
-    useEffect(() => {
         getUpcommingMovies().then((res) => {
             setUpcomming(res);
         });
-        setInit(true);
+        setInit(false);
     }, [userObj]);
 
     const refreshUser = () => {
@@ -89,6 +68,8 @@ const App = () => {
     return (
         <>
             {init ? (
+                '초기화중...'
+            ) : (
                 <>
                     <AppRouter
                         refreshUser={refreshUser}
@@ -99,8 +80,6 @@ const App = () => {
                         upcomming={upcomming}
                     />
                 </>
-            ) : (
-                '초기화중...'
             )}
         </>
     );

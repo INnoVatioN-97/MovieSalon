@@ -31,7 +31,12 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                 {isLoggedIn ? (
                     <div>
                         <Route exact path="/">
-                            <Home movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} tmdbHome={tmdbHome} />
+                            <Home
+                                movies={movies.slice(0, 3)}
+                                isLoggedIn={isLoggedIn}
+                                userObj={userObj}
+                                tmdbHome={tmdbHome}
+                            />
                         </Route>
                         <Route exact path="/movieList">
                             <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
@@ -46,10 +51,11 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         <Route path="/tmdbList">
                             <TmdbList tmdbHome={tmdbHome} upcomming={upcomming} />
                         </Route>
-                        <Route exact path="/viewTMDB/:id" 
-                            render={({ match }) => (
-                                <ViewTMDB key={match.params.id} match={match} />
-                             )}></Route>
+                        <Route
+                            exact
+                            path="/viewTMDB/:id"
+                            render={({ match }) => <ViewTMDB key={match.params.id} match={match} />}
+                        ></Route>
                         <Route exact path="/Filmography/:id" component={Filmography}></Route>
                         <Route exact path="/profile">
                             <Profile userObj={userObj} refreshUser={refreshUser} />

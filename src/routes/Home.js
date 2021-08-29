@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Grid, Paper } from '@material-ui/core';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
 import '../css/Home.css';
+import { getHighQualityPosterLink, getNaverSearchResult } from 'components/APIs/NaverSearchAPI';
+const cheerio = require('cheerio');
 
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
@@ -33,10 +35,28 @@ const useStyles = makeStyles({
 });
 
 const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
+    const [posters, setPosters] = useState([]);
+    const [codes, setCodes] = useState([]);
     const [keyword, setKeyword] = useState('');
     const classes = useStyles();
     const url = 'https://image.tmdb.org/t/p/w500';
     const linkURL = '/viewTmdb/';
+
+    useEffect(() => {
+        let tmpCodes = [];
+        movies.map((movie) =>
+            getNaverSearchResult(movie.movieNm).then((res) => {
+                // console.log(res.title);
+                const { link, title } = res;
+                tmpCodes.push({
+                    title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
+                    code: link.split('?code=')[1],
+                });
+                // console.log('tmpCodes:', tmpCodes);
+            })
+        );
+        setCodes(tmpCodes);
+    }, [movies]);
 
     const handleChange = (e) => {
         // this.setState({ keyword: e.target.value });
@@ -45,6 +65,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const printTop3Movies = () => {
         // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
         console.log('movies from printTop3Movies:', movies);
+        console.log('codes:', codes);
         let tmp = movies.slice(0, 3);
 
         return tmp.map((m) => (
@@ -72,25 +93,26 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
             <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
             <Box className={classes.box}>{printTop3Movies()}</Box>
             {userObj ? <p>{userObj.email}님 안녕하세요.</p> : alert('로그인 먼저 해주세요')}
-                <div className="childs" >   
-                    <Grid container spacing={3} align='center'>
-                        {tmdbHome.slice(0,3).map((tmdb) => (
-                            <>
-                                <Grid item xs={4}>
-                                    <Link to={ linkURL + tmdb.id}>
+            <div className="childs">
+                <Grid container spacing={3} align="center">
+                    {tmdbHome.slice(0, 3).map((tmdb) => (
+                        <>
+                            <Grid item xs={4}>
+                                <Link to={linkURL + tmdb.id}>
                                     <img
-                                    className="posters"
-                                    src={url + tmdb.backdrop_path}
-                                    alt={tmdb.title}
-                                    /></Link>
-                                    <span className="texts">
+                                        className="posters"
+                                        src={url + tmdb.backdrop_path}
+                                        alt={tmdb.title}
+                                    />
+                                </Link>
+                                <span className="texts">
                                     <h3>{tmdb.title}</h3>
-                                    </span>
-                                </Grid>
-                            </>
-                        ))}    
-                    </Grid>
-                </div>
+                                </span>
+                            </Grid>
+                        </>
+                    ))}
+                </Grid>
+            </div>
         </>
     );
 };
