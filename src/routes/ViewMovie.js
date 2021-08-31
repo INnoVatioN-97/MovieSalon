@@ -32,6 +32,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                 // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
                 const bodyList = $('#page_content').children('a').children('#targetImage');
                 setHqPoster(bodyList[0].attribs.src);
+               // console.log(bodyList[0].attribs.src);
                 setIsLoading(false);
             })
             .catch((err) => {
