@@ -38,7 +38,7 @@ const App = () => {
         const getMovieInfos = async (movies) => {
             let tmpCodes = [];
             let cnt = 0;
-            movies.slice(0, 3).map((movie) =>
+            movies.slice(0, 6).map((movie) =>
                 getNaverSearchResult(movie.movieNm).then((res) => {
                     const { image, title } = res;
                     tmpCodes[cnt++] = {

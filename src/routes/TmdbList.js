@@ -216,12 +216,14 @@ class TmdbList extends React.Component {
         const trailer = 'https://www.youtube.com/embed/';
         return (
             <>
-                <button id="btnBoxOffice" onClick={this.onClickHandles}>
+            <div align="center">
+                <button className="button" id="btnBoxOffice" onClick={this.onClickHandles}>
                     BoxOffice
                 </button>
-                <button id="btnUpcomingRelease" onClick={this.onClickHandles}>
+                <button className="button" id="btnUpcomingRelease" onClick={this.onClickHandles}>
                     개봉예정작
                 </button>
+            </div>
                 <br />
                 {viewChange
                     ?

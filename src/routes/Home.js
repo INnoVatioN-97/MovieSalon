@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
 import '../css/Home.css';
+import { getHighQualityPosterLink } from 'components/APIs/NaverSearchAPI';
 
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
@@ -47,13 +48,13 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
                 </div>
                 <Grid container spacing={3} align="center">
                     {movies.map((m) => (
-                        <Grid item xs={4}>
+                        <Grid item xs={2}>
                             <Link to={kobisViewURL + m.title}>
-                                <img className="posters" src={m.image} alt={m.title} />
+                                <img className="posters" src={m.image} alt={m.title} width="150" />
                             </Link>
                             <span className="texts">
                                 <h3>
-                                    {m.rank}위 {m.title}
+                                     {m.title}
                                 </h3>
                             </span>
                         </Grid>
@@ -76,6 +77,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
                             <Link to={tmdbViewURL + tmdb.id}>
                                 <img
                                     className="posters"
+                                    width="400"
                                     src={tmdbPosterURL + tmdb.backdrop_path}
                                     alt={tmdb.title}
                                 />
@@ -93,8 +95,8 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     return (
         <>
             <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
-            <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
-            <Box className={classes.box}>{printTop3Movies_TMDB()}</Box>
+            <span>{printTop3Movies_KOBIS()}</span>
+            {printTop3Movies_TMDB()}
         </>
     );
 };
