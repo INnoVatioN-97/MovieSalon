@@ -5,10 +5,12 @@ import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import { getKobisMovies } from './APIs/KobisAPI';
 import { getTmdbBoxOffice, getUpcommingMovies } from './APIs/TmdbAPI';
+import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 const App = () => {
     const [movies, setMovies] = useState([]);
+    const [top3Movies, setTop3Movies] = useState([]);
     const [init, setInit] = useState(true);
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
@@ -33,20 +35,39 @@ const App = () => {
 
     useEffect(() => {
         getKobisMovies().then((res) => {
-            // console.log('res:', res);
             setMovies(res);
         });
 
         getTmdbBoxOffice().then((res) => {
-            // console.log('res_tmdb', res);
             setTmdbHome(res);
         });
 
         getUpcommingMovies().then((res) => {
             setUpcomming(res);
         });
-        setInit(false);
     }, [userObj]);
+
+    useEffect(() => {
+        const getMovieInfos = async () => {
+            let tmpCodes = [];
+            movies.slice(0, 3).map((movie) =>
+                getNaverSearchResult(movie.movieNm).then((res) => {
+                    const { image, title } = res;
+                    tmpCodes.push({
+                        //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
+                        title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
+                        image: image,
+                        rank: movie.rank,
+                    });
+                })
+            );
+            return tmpCodes;
+        };
+        getMovieInfos().then((res) => {
+            setTop3Movies(res);
+            setInit(false);
+        });
+    }, [movies]);
 
     const refreshUser = () => {
         const user = authService.currentUser;
@@ -62,9 +83,6 @@ const App = () => {
         }
     };
 
-    // console.log(isLoggedIn);
-    // console.log('userObj', userObj);
-
     return (
         <>
             {init ? (
@@ -76,6 +94,7 @@ const App = () => {
                         isLoggedIn={Boolean(userObj)}
                         userObj={userObj}
                         movies={movies}
+                        top3Movies={top3Movies}
                         tmdbHome={tmdbHome}
                         upcomming={upcomming}
                     />

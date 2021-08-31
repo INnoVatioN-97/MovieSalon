@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
 import '../css/Home.css';
-import { getHighQualityPosterLink, getNaverSearchResult } from 'components/APIs/NaverSearchAPI';
-const cheerio = require('cheerio');
 
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
@@ -34,72 +32,69 @@ const useStyles = makeStyles({
     },
 });
 
-const Home = ({ movies, isLoggedIn, userObj, tmdbHome, }) => {
-    const [codes, setCodes] = useState([]);
+const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const classes = useStyles();
-    const url = 'https://image.tmdb.org/t/p/w500';
-    const linkURL = '/viewTmdb/';
+    const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
+    const tmdbViewURL = '/viewTmdb/';
+    const kobisViewURL = '/viewMovie?movieNm=';
 
-    useEffect(() => {
-        // homePoster(movies);
-        let tmpCodes = [];
-        movies.map((movie) =>
-            getNaverSearchResult(movie.movieNm).then((res) => {
-                // console.log(res.title);
-                const { image, title } = res;
-                tmpCodes.push({ //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
-                    title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
-                    image: image 
-                });
-                // console.log('tmpCodes:', tmpCodes);
-            })
-        );
-        setCodes(tmpCodes);
-    }, [userObj]);
-
-    const printTop3Movies = () => {
-        // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
-        //console.log('movies from printTop3Movies:', movies);
-        /* console.log('codes:', codes.map((c) => (
-            c.image
-        )));*/
-        console.log('codes', codes)
-        let tmp = movies.slice(0, 3);
-        return( 
-            <div>
-                <>
-                {codes.title ? (codes.map((c) => ( 
-                    <img src={c.image} key={c.title}/>
-                ))) : (<p>사진 못가져옴</p>)
-                }
-                </>
-            </div>);
-    };
-
-    return (
-        <>
-            <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
-            <Box className={classes.box}>{printTop3Movies()}</Box>
+    const printTop3Movies_KOBIS = () => {
+        return (
             <div className="childs">
+                <div>
+                    <h2>박스오피스 (국내)</h2>
+                </div>
                 <Grid container spacing={3} align="center">
-                    {tmdbHome.slice(0, 3).map((tmdb) => (
+                    {movies.map((m) => (
                         <>
                             <Grid item xs={4}>
-                                <Link to={linkURL + tmdb.id}>
-                                    <img
-                                        className="posters"
-                                        src={url + tmdb.backdrop_path}
-                                        alt={tmdb.title}
-                                    />
+                                <Link to={kobisViewURL + m.title}>
+                                    <img className="posters" src={m.image} alt={m.title} />
                                 </Link>
                                 <span className="texts">
-                                    <h3>{tmdb.title}</h3>
+                                    <h3>
+                                        {m.rank}위 {m.title}
+                                    </h3>
                                 </span>
                             </Grid>
                         </>
                     ))}
                 </Grid>
             </div>
+        );
+    };
+
+    const printTop3Movies_TMDB = () => {
+        return (
+            <div className="childs">
+                <div>
+                    <h2>박스오피스 (해외)</h2>
+                </div>
+                <Grid container spacing={3} align="center">
+                    {tmdbHome.slice(0, 3).map((tmdb) => (
+                        <Grid item xs={4}>
+                            <Link to={tmdbViewURL + tmdb.id}>
+                                <img
+                                    className="posters"
+                                    src={tmdbPosterURL + tmdb.backdrop_path}
+                                    alt={tmdb.title}
+                                />
+                            </Link>
+                            <span className="texts">
+                                <h3>{tmdb.title}</h3>
+                            </span>
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
+        );
+    };
+
+    return (
+        <>
+            <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
+            <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
+            <Box className={classes.box}>{printTop3Movies_TMDB()}</Box>
         </>
     );
 };

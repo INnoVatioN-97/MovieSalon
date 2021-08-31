@@ -12,15 +12,20 @@ import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
 import Filmography from 'routes/Filmography';
 
-const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming }) => {
+const AppRouter = ({
+    refreshUser,
+    movies,
+    userObj,
+    isLoggedIn,
+    tmdbHome,
+    upcomming,
+    top3Movies,
+}) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
-
     const viewMovie = (e) => {
         const { search } = e.location;
-        // console.log(search);
         const queryObj = queryString.parse(search);
-        // console.log(queryObj.movieNm);
         return <ViewMovie movieNm={queryObj.movieNm} userObj={userObj} />;
     };
 
@@ -32,7 +37,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                     <div>
                         <Route exact path="/">
                             <Home
-                                movies={movies.slice(0, 3)}
+                                movies={top3Movies}
                                 isLoggedIn={isLoggedIn}
                                 userObj={userObj}
                                 tmdbHome={tmdbHome}
