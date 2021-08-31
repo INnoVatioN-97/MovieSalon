@@ -39,6 +39,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const kobisViewURL = '/viewMovie?movieNm=';
 
     const printTop3Movies_KOBIS = () => {
+        console.log('movies:', movies);
         return (
             <div className="childs">
                 <div>
@@ -46,18 +47,16 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
                 </div>
                 <Grid container spacing={3} align="center">
                     {movies.map((m) => (
-                        <>
-                            <Grid item xs={4}>
-                                <Link to={kobisViewURL + m.title}>
-                                    <img className="posters" src={m.image} alt={m.title} />
-                                </Link>
-                                <span className="texts">
-                                    <h3>
-                                        {m.rank}위 {m.title}
-                                    </h3>
-                                </span>
-                            </Grid>
-                        </>
+                        <Grid item xs={4}>
+                            <Link to={kobisViewURL + m.title}>
+                                <img className="posters" src={m.image} alt={m.title} />
+                            </Link>
+                            <span className="texts">
+                                <h3>
+                                    {m.rank}위 {m.title}
+                                </h3>
+                            </span>
+                        </Grid>
                     ))}
                 </Grid>
             </div>
@@ -65,13 +64,14 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     };
 
     const printTop3Movies_TMDB = () => {
+        console.log('tmdbHome:', tmdbHome);
         return (
             <div className="childs">
                 <div>
                     <h2>박스오피스 (해외)</h2>
                 </div>
                 <Grid container spacing={3} align="center">
-                    {tmdbHome.slice(0, 3).map((tmdb) => (
+                    {tmdbHome.map((tmdb) => (
                         <Grid item xs={4}>
                             <Link to={tmdbViewURL + tmdb.id}>
                                 <img

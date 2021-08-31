@@ -40,7 +40,7 @@ const AppRouter = ({
                                 movies={top3Movies}
                                 isLoggedIn={isLoggedIn}
                                 userObj={userObj}
-                                tmdbHome={tmdbHome}
+                                tmdbHome={tmdbHome.slice(0, 3)}
                             />
                         </Route>
                         <Route exact path="/movieList">

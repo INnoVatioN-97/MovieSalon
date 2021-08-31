@@ -11,10 +11,11 @@ import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 const App = () => {
     const [movies, setMovies] = useState([]);
     const [top3Movies, setTop3Movies] = useState([]);
-    const [init, setInit] = useState(true);
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
     const [upcomming, setUpcomming] = useState([]);
+
+    const [init, setInit] = useState(true);
 
     useEffect(() => {
         // login 상태 확인
@@ -34,9 +35,22 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        getKobisMovies().then((res) => {
-            setMovies(res);
-        });
+        const getMovieInfos = async (movies) => {
+            let tmpCodes = [];
+            let cnt = 0;
+            movies.slice(0, 3).map((movie) =>
+                getNaverSearchResult(movie.movieNm).then((res) => {
+                    const { image, title } = res;
+                    tmpCodes[cnt++] = {
+                        //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
+                        title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
+                        image: image,
+                        rank: movie.rank,
+                    };
+                })
+            );
+            return tmpCodes;
+        };
 
         getTmdbBoxOffice().then((res) => {
             setTmdbHome(res);
@@ -45,29 +59,37 @@ const App = () => {
         getUpcommingMovies().then((res) => {
             setUpcomming(res);
         });
-    }, [userObj]);
 
-    useEffect(() => {
-        const getMovieInfos = async () => {
-            let tmpCodes = [];
-            movies.slice(0, 3).map((movie) =>
-                getNaverSearchResult(movie.movieNm).then((res) => {
-                    const { image, title } = res;
-                    tmpCodes.push({
-                        //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
-                        title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
-                        image: image,
-                        rank: movie.rank,
-                    });
-                })
-            );
-            return tmpCodes;
-        };
-        getMovieInfos().then((res) => {
-            setTop3Movies(res);
-            setInit(false);
+        getKobisMovies().then((res) => {
+            getMovieInfos(res).then((res) => {
+                setTop3Movies(res);
+                setInit(false);
+            });
+            setMovies(res);
         });
-    }, [movies]);
+    }, []);
+
+    // useEffect(() => {
+    //     const getMovieInfos = async () => {
+    //         let tmpCodes = [];
+    //         movies.slice(0, 3).map((movie) =>
+    //             getNaverSearchResult(movie.movieNm).then((res) => {
+    //                 const { image, title } = res;
+    //                 tmpCodes.push({
+    //                     //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
+    //                     title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
+    //                     image: image,
+    //                     rank: movie.rank,
+    //                 });
+    //             })
+    //         );
+    //         return tmpCodes;
+    //     };
+    //     getMovieInfos().then((res) => {
+    //         setTop3Movies(res);
+    //         setInit(false);
+    //     });
+    // }, [movies]);
 
     const refreshUser = () => {
         const user = authService.currentUser;
