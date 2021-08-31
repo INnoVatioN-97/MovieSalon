@@ -3,6 +3,7 @@ import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
+import NoImageAvailable from 'images/NoImageAvailable.png';
 
 class Cast extends React.Component {
 constructor(props) {
@@ -54,7 +55,7 @@ constructor(props) {
             </TableRow>
             <TableRow>
                 {movies.map((m) => (
-                    <TableCell><Link to={ queryUrl + m.id }><img src={imgUrl + m.poster_path}/></Link></TableCell>
+                    <TableCell><Link to={ queryUrl + m.id }><img src={m.poster_path ? imgUrl + m.poster_path : NoImageAvailable }/></Link></TableCell>
                 ))}
             </TableRow>
             

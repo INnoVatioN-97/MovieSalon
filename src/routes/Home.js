@@ -34,65 +34,52 @@ const useStyles = makeStyles({
     },
 });
 
-const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
-    const [posters, setPosters] = useState([]);
+const Home = ({ movies, isLoggedIn, userObj, tmdbHome, }) => {
     const [codes, setCodes] = useState([]);
-    const [keyword, setKeyword] = useState('');
     const classes = useStyles();
     const url = 'https://image.tmdb.org/t/p/w500';
     const linkURL = '/viewTmdb/';
 
     useEffect(() => {
+        // homePoster(movies);
         let tmpCodes = [];
         movies.map((movie) =>
             getNaverSearchResult(movie.movieNm).then((res) => {
                 // console.log(res.title);
-                const { link, title } = res;
-                tmpCodes.push({
+                const { image, title } = res;
+                tmpCodes.push({ //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
                     title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
-                    code: link.split('?code=')[1],
+                    image: image 
                 });
                 // console.log('tmpCodes:', tmpCodes);
             })
         );
         setCodes(tmpCodes);
-    }, [movies]);
+    }, [userObj]);
 
-    const handleChange = (e) => {
-        // this.setState({ keyword: e.target.value });
-        setKeyword(e.target.value);
-    };
     const printTop3Movies = () => {
         // TypeError 발생 최소화 (함수밖에서 movies가 선언이 되어있기 때문에 파라미터 존재 필요X)
-        console.log('movies from printTop3Movies:', movies);
-        console.log('codes:', codes);
+        //console.log('movies from printTop3Movies:', movies);
+        /* console.log('codes:', codes.map((c) => (
+            c.image
+        )));*/
+        console.log('codes', codes)
         let tmp = movies.slice(0, 3);
-
-        return tmp.map((m) => (
-            <Box>
-                {m.movieNm.indexOf(keyword) > -1 ? (
-                    <p>
-                        {m.rank}위, {m.movieNm},
-                    </p>
-                ) : (
-                    <p></p>
-                )}
-            </Box>
-        ));
+        return( 
+            <div>
+                <>
+                {codes.title ? (codes.map((c) => ( 
+                    <img src={c.image} key={c.title}/>
+                ))) : (<p>사진 못가져옴</p>)
+                }
+                </>
+            </div>);
     };
 
     return (
         <>
-            <input
-                type="text"
-                name="keyword"
-                value={keyword}
-                onChange={handleChange}
-                placeholder="검색"
-            />
             <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
             <Box className={classes.box}>{printTop3Movies()}</Box>
-            {userObj ? <p>{userObj.email}님 안녕하세요.</p> : alert('로그인 먼저 해주세요')}
             <div className="childs">
                 <Grid container spacing={3} align="center">
                     {tmdbHome.slice(0, 3).map((tmdb) => (
