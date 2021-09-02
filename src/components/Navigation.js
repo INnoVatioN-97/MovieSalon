@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem } from '@material-ui/core';
+import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem, Button } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -78,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
         // marginRight: '1%',
         width: '40px',
         borderRadius: '20px',
+        verticalAlign: 'middle',
     },
 
     appBarProfile_Mobile__img: {
@@ -161,35 +162,44 @@ const Navigation = ({ userObj }) => {
             >
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        {menuObj.map((m) =>
+                        {menuObj.map((m) => (
                             // {console.log(m.imgUrl)}\
-                            m.isProfile ? (
-                                <Link
-                                    href={m.url}
-                                    className={classes.link}
-                                    variant="inherit"
-                                    color="inherit"
-                                >
+                            <Button color="inherit">
+                                {m.isProfile ? (
                                     <>
-                                        <img
-                                            src={m.imgUrl}
-                                            alt="profile"
-                                            className={classes.appBarProfile}
-                                        />
-                                        {m.text}
+                                        <Link
+                                            href={m.url}
+                                            className={classes.link}
+                                            variant="inherit"
+                                            color="inherit"
+                                        >
+                                            <img
+                                                src={m.imgUrl}
+                                                alt="profile"
+                                                className={classes.appBarProfile}
+                                            />
+                                        </Link>
+                                        <Link
+                                            href={m.url}
+                                            className={classes.link}
+                                            variant="inherit"
+                                            color="inherit"
+                                        >
+                                            {m.text}
+                                        </Link>
                                     </>
-                                </Link>
-                            ) : (
-                                <Link
-                                    href={m.url}
-                                    className={classes.link}
-                                    variant="inherit"
-                                    color="inherit"
-                                >
-                                    {m.text}
-                                </Link>
-                            )
-                        )}
+                                ) : (
+                                    <Link
+                                        href={m.url}
+                                        className={classes.link}
+                                        variant="inherit"
+                                        color="inherit"
+                                    >
+                                        {m.text}
+                                    </Link>
+                                )}
+                            </Button>
+                        ))}
                     </Typography>
                 </Toolbar>
             </AppBar>
