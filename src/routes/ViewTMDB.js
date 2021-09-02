@@ -25,17 +25,20 @@ const ViewTMDB = ({match, userObj}) => {
 
     useEffect(() => {
         const getData = dbService
-        .collection(`comment_movieCode=${id}`)
-        .orderBy('createAt', 'desc')
-        .onSnapshot((snapshot) => {
-            const commentsArray = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setComments(commentsArray);
-        });
+            .collection(`comment_movieCode=${id}`)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot((snapshot) => {
+                const commentsArray = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setComments(commentsArray);
+                // console.log(comments);
+            });
         return () => getData();
     }, [id, comments]);
+
+    
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -73,7 +76,7 @@ const ViewTMDB = ({match, userObj}) => {
     };
 
     const printComments = () => {
-        // console.log(comments);
+        // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
             return (
                 <>
