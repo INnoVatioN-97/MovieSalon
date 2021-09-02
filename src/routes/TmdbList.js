@@ -161,12 +161,14 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         <Table>
                             <TableRow>
                                 <TableCell align="center" rowSpan="4" width="25%">
+                                    <Link to={'/viewTmdb/' + id } >
                                     <img
                                         src={poster_path ? url + poster_path : NoImageAvailable}
                                         alt="Poster"
                                         width="200"
                                         height="300"
                                     />
+                                    </Link>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
