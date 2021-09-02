@@ -24,11 +24,12 @@ const useStyles = makeStyles({
         justifyContent: 'center',
     },
     box: {
-        display: 'flex',
+        display: 'grid',
         flexWrap: 'nowrap',
         p: 1,
         m: 1,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#150A52',
+        color: "#F4F3F7",
         sx: { maxWidth: 300 },
     },
 });
@@ -94,8 +95,8 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
 
     return (
         <>
-            <div className={classes.pageTitle}>어제의 Top 3 영화들</div>
-            <span>{printTop3Movies_KOBIS()}</span>
+            <div className={classes.pageTitle}>Movie Salon</div>
+            <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
             {printTop3Movies_TMDB()}
         </>
     );
