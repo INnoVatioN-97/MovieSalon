@@ -59,7 +59,7 @@ const AppRouter = ({
                         <Route
                             exact
                             path="/viewTMDB/:id"
-                            render={({ match }) => <ViewTMDB key={match.params.id} match={match} />}
+                            render={({ match }) => <ViewTMDB key={match.params.id} match={match} userObj={userObj} />}
                         ></Route>
                         <Route exact path="/Filmography/:id" component={Filmography}></Route>
                         <Route exact path="/profile">
