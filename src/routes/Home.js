@@ -83,7 +83,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
                                 />
                             </Link>
                             <span className="texts">
-                                <h3>{tmdb.title}</h3>
+                                <h2>{tmdb.title}</h2>
                             </span>
                         </Grid>
                     ))}

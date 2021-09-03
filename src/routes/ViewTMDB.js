@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TableBody, Table, TableRow, TableCell, TextField } from '@material-ui/core';
+import { TableBody, Table, TableRow, TableCell, TextField, Grid } from '@material-ui/core';
 import { dbService } from 'fbase';
 import Comment from 'components/Comment';
 import TMDB from 'components/TMDB';
@@ -92,10 +92,10 @@ const ViewTMDB = ({match, userObj}) => {
 
     const getMovieInfo = async () => {
         const {
-            data: { original_title, overview, title, poster_path, backdrop_path, tagline, genres, release_date },
+            data: { original_title, overview, title, poster_path, backdrop_path, tagline, genres, release_date, runtime, vote_average },
         } = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=ko`);
-        setMovieInfo({ title: title, original_title: original_title, tagline: tagline, overview: overview
-        , release_date: release_date});
+        setMovieInfo({ title: title, original_title: original_title, tagline: tagline, overview: overview.substring(0,350)
+        , release_date: release_date, runtime: runtime, vote_average: vote_average });
         setPosters({
             poster_path: poster_path,
             backdrop_path: backdrop_path,
@@ -115,12 +115,37 @@ const ViewTMDB = ({match, userObj}) => {
             <img src={img + posters.poster_path}/>
             </div>
             <div className="lb-text">
-                <h1>{movieInfo.original_title}</h1>
+                <span><h1>{movieInfo.original_title}</h1></span>
                 <br/>
                 <h3>"{movieInfo.tagline}"</h3>
                 <div>
                     <p>{movieInfo.overview}</p>
                 </div>
+                <div className="lb-cols">
+                    <TableRow>
+                        <TableCell>
+                            Runtime:<br/>
+                            <span>{movieInfo.runtime}Min.</span>
+                        </TableCell>
+                        <TableCell>
+                            release_date:<br/>
+                            <span>{movieInfo.release_date}</span>
+                        </TableCell>
+                        <TableCell>
+                            vote_average:<br/>
+                            <span>{movieInfo.vote_average}/10</span>
+                        </TableCell>
+                        <TableCell>
+                            Genres:<br/>
+                            <span>
+                            {genre.map((g) => (
+                                g.name+'|'
+                            ))}
+                            </span>
+                        </TableCell>
+                    </TableRow>
+                </div>
+                       
             </div>
         </div>
         <Table>

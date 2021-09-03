@@ -1,6 +1,6 @@
 
 .lb-wrap {
-    width: 1517px;
+    width: 100%;
     border: 1px solid #000000;
     position: relative;
   }
@@ -10,13 +10,15 @@
   }
 .lb-poster {
     position: absolute;
+    width:400px;
+    height: 500px;
     top: 15%;
     left: 18%;
   }
 
   .lb-text {
-    width: 600px;
-    height: 600px;
+    width: 41%;
+    height: 83%;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(12, 12, 12, 0.9);
@@ -35,4 +37,19 @@
     color: #fff;
     text-align: justify; 
     position: relative;
+    font-size: 20px;
+}
+
+.lb-cols{
+  color: rgb(39, 253, 10);
+  text-align: justify;
+  position: relative;
+  font-size: 25px;
+}
+
+.lb-cols span{
+  color: rgb(249, 252, 253);
+  text-align: justify; 
+  position: relative;
+  font-size: 25px;
 }
