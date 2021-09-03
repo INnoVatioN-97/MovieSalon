@@ -246,7 +246,7 @@ const Navigation = ({ userObj }) => {
                                                     className={classes.appBarProfile_Mobile__img}
                                                 />
                                             </div>
-                                            <div>{m.text}</div>
+                                            <div style={{ fontWeight: 'bold' }}>{m.text}</div>
                                         </div>
                                     ) : (
                                         `${m.text}`

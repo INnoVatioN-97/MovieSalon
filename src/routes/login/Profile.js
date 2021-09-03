@@ -1,83 +1,15 @@
 import { authService, storageService } from 'fbase';
 import React, { useState } from 'react';
 import { createHashHistory } from 'history';
-import { makeStyles } from '@material-ui/styles';
 import { v4 as uuidv4 } from 'uuid';
+
+//makeStyles 너무 길어서 css폴더로 이동.
+import ProfileCSS from 'css/ProfileCSS';
+
 export const history = createHashHistory();
 
-const useStyles = makeStyles((theme) => ({
-    profileCard: {
-        backgroundColor: '#eeeeee',
-        color: '#000000',
-        textAlign: 'center',
-        height: '100%',
-    },
-    profileCard__up: {
-        // backgroundColor: 'red',
-        background: 'linear-gradient(90deg, #3389D4 30%, #EFBAA8 90%)',
-        height: '20%',
-    },
-    profileCard__down: {
-        // alignItems: 'center',
-        // textAlign: 'center',
-        margin: 'auto',
-        width: '50%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    profileImg: {
-        position: 'relative',
-        margin: '20px',
-        marginTop: '5%',
-        marginBottom: '2%',
-        // transform: 'translate(50, 50)',
-        width: '20%',
-        height: '20%',
-
-        // objectFit: 'cover',
-        border: '10px',
-        borderRadius: '70%',
-        boxShadow: '0px 0px 7px 8px rgba(0,0,0,0.5)',
-    },
-    formInput: {
-        cursor: 'pointer',
-        width: '100%',
-        padding: '10px 20px',
-        borderRadius: '20px',
-        border: '2px solid black',
-        textAlign: 'center',
-        backgroundColor: 'white',
-        color: 'black',
-        boxSizing: 'border-box',
-        marginBottom: '3%',
-    },
-    formBtn: {
-        cursor: 'pointer',
-        width: '100%',
-        padding: '10px 20px',
-        border: '2px solid black',
-        textAlign: 'center',
-        color: 'white',
-        borderRadius: '20px',
-        backgroundColor: '#04aaff',
-        marginBottom: '3%',
-    },
-
-    cancelBtn: {
-        cursor: 'pointer',
-        width: '100%',
-        padding: '10px 20px',
-        border: '2px solid black',
-        textAlign: 'center',
-        color: 'white',
-        borderRadius: '20px',
-        backgroundColor: 'tomato',
-        marginBottom: '3%',
-    },
-}));
-
 const Profile = ({ refreshUser, userObj }) => {
-    const classes = useStyles();
+    const classes = ProfileCSS();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const [attachment, setAttachment] = useState(userObj.photoURL);
     const [isChange, setIsChange] = useState(false);
