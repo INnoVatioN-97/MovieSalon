@@ -4,7 +4,8 @@ import { TableBody, Table, TableRow, TableCell, TextField } from '@material-ui/c
 import { dbService } from 'fbase';
 import Comment from 'components/Comment';
 import TMDB from 'components/TMDB';
-import '../css/App.css';
+import '../css/View.css';
+
 
 const ViewTMDB = ({match, userObj}) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +17,7 @@ const ViewTMDB = ({match, userObj}) => {
 
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
     const id = match.params.id;
-    const img = 'https://image.tmdb.org/t/p/w200'; // poster
+    const img = 'https://image.tmdb.org/t/p/w400'; // poster
     const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
 
     useEffect(() => {
@@ -106,25 +107,23 @@ const ViewTMDB = ({match, userObj}) => {
 
     return (
         <>
+        <div className="lb-wrap">
+            <div className="lb-image">
+            <img className="backposter" src={backImg + posters.backdrop_path} height="720" width="1520" />
+            </div>
+            <div className="lb-poster">
+            <img src={img + posters.poster_path}/>
+            </div>
+            <div className="lb-text">
+                <h1>{movieInfo.original_title}</h1>
+                <br/>
+                <h3>"{movieInfo.tagline}"</h3>
+                <div>
+                    <p>{movieInfo.overview}</p>
+                </div>
+            </div>
+        </div>
         <Table>
-        <TableRow hover={true} background={backImg + posters.backdrop_path} align='center' >
-            <TableCell align="center">
-                    <img src={img + posters.poster_path} alt={movieInfo.title} />
-            </TableCell>
-        </TableRow>
-        </Table>
-        <Table>
-            <TableRow>
-                <TableCell align='center' colSpan='2'><h1>{movieInfo.original_title}</h1>
-                <br/><b>{movieInfo.release_date}</b>
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell align='center'><b>{genre.map((g) => ('|'+g.name+'|'))}</b></TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell align='center'><b>"{movieInfo.tagline}"!</b><br/>{movieInfo.overview}</TableCell>
-            </TableRow>
             <TMDB id={id} />
         </Table>
         <Table>

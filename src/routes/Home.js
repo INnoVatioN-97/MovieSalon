@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
 import '../css/Home.css';
-import { getHighQualityPosterLink } from 'components/APIs/NaverSearchAPI';
 
 //https://material-ui.com/system/flexbox/#flex-wrap 에서
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
+import NoImageAvailable from 'images/NoImageAvailable.png'; 
 
 
 class TMDB extends React.Component {
@@ -64,7 +65,7 @@ class TMDB extends React.Component {
             <Table>
             <TableRow>
                 {similer.map((s) => (
-                <TableCell ><Link to={qeuryUrl + s.id}><img src={url + s.poster_path}/></Link><br/><b>{s.title}</b></TableCell>
+                <TableCell ><Link to={qeuryUrl + s.id}><img src={s.poster_path ? url + s.poster_path : NoImageAvailable }/></Link><br/><b>{s.title}</b></TableCell>
                 ))}
             </TableRow>
             </Table>

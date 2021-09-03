@@ -1,0 +1,38 @@
+
+.lb-wrap {
+    width: 1517px;
+    border: 1px solid #000000;
+    position: relative;
+  }
+.lb-wrap img {
+    width: 100%;
+    vertical-align: middle;
+  }
+.lb-poster {
+    position: absolute;
+    top: 15%;
+    left: 18%;
+  }
+
+  .lb-text {
+    width: 600px;
+    height: 600px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgba(12, 12, 12, 0.9);
+    position: absolute;
+    top: 15%;
+    left: 44%; 
+  }
+
+.lb-text h1,h3{
+    color: rgb(255, 255, 255);
+    text-align: center; 
+    position: relative;
+}
+
+.lb-text p{
+    color: #fff;
+    text-align: justify; 
+    position: relative;
+}
