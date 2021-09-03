@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
-import { Grid, Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import ReactPlayer from 'react-player';
@@ -23,17 +22,31 @@ import '../css/Dialog.css';
  *
  * 캐스팅 목록 그리드형 배치 위해 9번 줄에 Dialog 전담 css 파일 생성 후 적용.
  */
-const styles = makeStyles((theme) => ({
+
+const useStyles = makeStyles((theme) => ({
     root: {
-        padding: theme.spacing(3),
+        margin: 'auto',
         background: '#eeeeee',
+        alignItems: 'center',
+        textAlign: 'center',
     },
-    margins: {
-        padding: '2,3,4,5',
+    container: {
+        alignItems: 'center',
+        textAlign: 'center',
+    },
+    posters: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+    },
+    posters__poster: {
+        margin: '2%',
     },
 }));
 
 const TmdbList = ({ tmdbHome, upcomming }) => {
+    const classes = useStyles();
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [viewChange, setViewChange] = useState(false);
@@ -161,13 +174,13 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         <Table>
                             <TableRow>
                                 <TableCell align="center" rowSpan="4" width="25%">
-                                    <Link to={'/viewTmdb/' + id } >
-                                    <img
-                                        src={poster_path ? url + poster_path : NoImageAvailable}
-                                        alt="Poster"
-                                        width="200"
-                                        height="300"
-                                    />
+                                    <Link to={'/viewTmdb/' + id}>
+                                        <img
+                                            src={poster_path ? url + poster_path : NoImageAvailable}
+                                            alt="Poster"
+                                            width="200"
+                                            height="300"
+                                        />
                                     </Link>
                                 </TableCell>
                             </TableRow>
@@ -191,7 +204,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         </Table>
                         <Table>
                             <TableRow>
-                                <div className="container">
+                                <div>
                                     {castMember.map((c) => (
                                         <TableCell>
                                             <>
@@ -225,6 +238,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                         <ReactPlayer
                                             url={trailer + t.key + '&origin=https://localhost:3000'}
                                             controls
+                                            width="100%"
                                         ></ReactPlayer>
                                     </TableCell>
                                 ))}
@@ -255,13 +269,12 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
             </Dialog>
         );
     };
-    const { classes } = styles();
     const url = 'https://image.tmdb.org/t/p/w200';
     const trailer = 'https://www.youtube.com/embed/';
     return (
-        <>
+        <div className={classes.root}>
             <br />
-            <div align="center">
+            <div className={classes.buttonsContainer}>
                 <button className="button" id="btnBoxOffice" onClick={onClickHandles}>
                     BoxOffice
                 </button>
@@ -271,60 +284,54 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
             </div>
             <br />
             {viewChange ? (
-                <div className="child">
-                    <Grid container spacing={3} align="center">
-                        {upcommings.map((u) => (
-                            <Grid item xs={2}>
-                                <img
-                                    className="poster"
-                                    src={u.poster_path ? url + u.poster_path : NoImageAvailable}
-                                    alt="img"
-                                    onClick={onOpenChange}
-                                    id={[
-                                        u.id,
-                                        u.vote_average,
-                                        u.release_date,
-                                        u.poster_path,
-                                        u.original_title,
-                                        u.overview,
-                                    ]}
-                                    title={u.title}
-                                    width="200"
-                                    height="300"
-                                />
-                            </Grid>
-                        ))}
-                    </Grid>
+                <div className={classes.posters}>
+                    {upcommings.map((u) => (
+                        <span className={classes.posters__poster}>
+                            <img
+                                className="poster"
+                                src={u.poster_path ? url + u.poster_path : NoImageAvailable}
+                                alt="img"
+                                onClick={onOpenChange}
+                                id={[
+                                    u.id,
+                                    u.vote_average,
+                                    u.release_date,
+                                    u.poster_path,
+                                    u.original_title,
+                                    u.overview,
+                                ]}
+                                title={u.title}
+                                width="200"
+                                height="300"
+                            />
+                        </span>
+                    ))}
                 </div>
             ) : (
-                <div className="child">
-                    <Grid container spacing={3} align="center">
-                        {tmdbs.map((m, index) => (
-                            <>
-                                <Grid item xs={2}>
-                                    <img
-                                        className="poster"
-                                        src={url + m.poster_path}
-                                        alt="img"
-                                        onClick={onOpenChange}
-                                        id={[
-                                            m.id,
-                                            m.vote_average,
-                                            m.release_date,
-                                            m.poster_path,
-                                            m.original_title,
-                                            m.overview,
-                                        ]}
-                                        title={m.title}
-                                    />
-                                </Grid>
-                            </>
-                        ))}
-                    </Grid>
+                <div className={classes.posters}>
+                    {tmdbs.map((m, index) => (
+                        <span className={classes.posters__poster}>
+                            <img
+                                className="poster"
+                                src={url + m.poster_path}
+                                alt="img"
+                                onClick={onOpenChange}
+                                id={[
+                                    m.id,
+                                    m.vote_average,
+                                    m.release_date,
+                                    m.poster_path,
+                                    m.original_title,
+                                    m.overview,
+                                ]}
+                                title={m.title}
+                            />
+                        </span>
+                    ))}
                 </div>
             )}
             {Boolean(movie) ? printDialog(castMember, url, trailer, trailers, similars) : ''}
-        </>
+        </div>
     );
 };
 

@@ -6,15 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 export const history = createHashHistory();
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        Width: '50%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
     profileCard: {
-        // backgroundColor: 'red',
-        // color: 'blue',
+        backgroundColor: '#eeeeee',
+        color: '#000000',
         textAlign: 'center',
+        height: '100%',
     },
     profileCard__up: {
         // backgroundColor: 'red',
@@ -25,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         // alignItems: 'center',
         // textAlign: 'center',
         margin: 'auto',
-        width: '70%',
+        width: '50%',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -48,29 +44,35 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         padding: '10px 20px',
         borderRadius: '20px',
-        border: '1px solid black',
+        border: '2px solid black',
         textAlign: 'center',
         backgroundColor: 'white',
         color: 'black',
+        boxSizing: 'border-box',
+        marginBottom: '3%',
     },
     formBtn: {
         cursor: 'pointer',
         width: '100%',
-        padding: '7px 20px',
+        padding: '10px 20px',
+        border: '2px solid black',
         textAlign: 'center',
         color: 'white',
         borderRadius: '20px',
         backgroundColor: '#04aaff',
+        marginBottom: '3%',
     },
 
     cancelBtn: {
         cursor: 'pointer',
         width: '100%',
-        padding: '7px 20px',
+        padding: '10px 20px',
+        border: '2px solid black',
         textAlign: 'center',
         color: 'white',
         borderRadius: '20px',
         backgroundColor: 'tomato',
+        marginBottom: '3%',
     },
 }));
 
@@ -220,12 +222,12 @@ const Profile = ({ refreshUser, userObj }) => {
                     {isChange ? (
                         <>
                             <input
-                                className={classes.formInput}
                                 onChange={onChangeDisplayName}
                                 type="text"
                                 autoFocus
                                 placeholder="별명 바꾸기"
                                 value={newDisplayName}
+                                className={classes.formInput}
                             />
 
                             <input
@@ -235,6 +237,7 @@ const Profile = ({ refreshUser, userObj }) => {
                                 disabled={Boolean(userObj.displayName === newDisplayName)}
                             />
                             <input
+                                type="button"
                                 onClick={onChangeProfile}
                                 className={classes.cancelBtn}
                                 value="취소"
@@ -253,13 +256,15 @@ const Profile = ({ refreshUser, userObj }) => {
                         </>
                     ) : (
                         <>
-                            <h3>{newDisplayName}</h3>
+                            <h3 style={{ color: '#000000' }}>{newDisplayName}</h3>
                             <input
+                                type="button"
                                 onClick={onChangeProfile}
                                 className={classes.formBtn}
                                 value="프로필 정보 변경"
                             />
                             <input
+                                type="button"
                                 onClick={onLogOutClick}
                                 className={classes.cancelBtn}
                                 value="로그아웃"

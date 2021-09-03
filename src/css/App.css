@@ -53,7 +53,7 @@
     width: 100%;
 }
 
-.background_img{
+.background_img {
     background-image: url('https://image.tmdb.org/t/p/w1280/zPo7SQ20IqcZK6JPjCWg2GzOCQp.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -64,4 +64,6 @@
     vertical-align: middle;
 }
 
-
+body {
+    background-color: #eeeeee;
+}
