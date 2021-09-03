@@ -98,7 +98,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
     };
 
     const printComments = () => {
-        // console.log(comments);
+        // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
             return (
                 <>
