@@ -26,7 +26,6 @@ import '../css/Dialog.css';
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
-        background: '#eeeeee',
         alignItems: 'center',
         textAlign: 'center',
     },
@@ -65,9 +64,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
             const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
             const {
                 data: { cast },
-            } = await axios.get(
-                `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`
-            );
+            } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
             // console.log('cast', cast);
             setCastMember(cast.slice(0, 5));
             // setIsLoading(false);
@@ -91,9 +88,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
             const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
             const {
                 data: { results },
-            } = await axios.get(
-                `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`
-            );
+            } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`);
             setSimilars(results.slice(0, 4));
         };
 
@@ -211,11 +206,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                                 <Link to={'/Filmography/' + c.id}>
                                                     <img
                                                         className="item"
-                                                        src={
-                                                            c.profile_path
-                                                                ? url + c.profile_path
-                                                                : DefaultProfileImage
-                                                        }
+                                                        src={c.profile_path ? url + c.profile_path : DefaultProfileImage}
                                                         alt="castingMembers"
                                                         width="100"
                                                         height="100"
@@ -253,11 +244,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                     {similer.map((s) => (
                                         <TableCell>
                                             <Link to={'/viewTmdb/' + s.id}>
-                                                <img
-                                                    id={s.id}
-                                                    src={url + s.poster_path}
-                                                    alt={url + s.poster_path}
-                                                />
+                                                <img id={s.id} src={url + s.poster_path} alt={url + s.poster_path} />
                                             </Link>
                                         </TableCell>
                                     ))}
@@ -292,14 +279,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 src={u.poster_path ? url + u.poster_path : NoImageAvailable}
                                 alt="img"
                                 onClick={onOpenChange}
-                                id={[
-                                    u.id,
-                                    u.vote_average,
-                                    u.release_date,
-                                    u.poster_path,
-                                    u.original_title,
-                                    u.overview,
-                                ]}
+                                id={[u.id, u.vote_average, u.release_date, u.poster_path, u.original_title, u.overview]}
                                 title={u.title}
                                 width="200"
                                 height="300"
@@ -316,14 +296,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 src={url + m.poster_path}
                                 alt="img"
                                 onClick={onOpenChange}
-                                id={[
-                                    m.id,
-                                    m.vote_average,
-                                    m.release_date,
-                                    m.poster_path,
-                                    m.original_title,
-                                    m.overview,
-                                ]}
+                                id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
                                 title={m.title}
                             />
                         </span>

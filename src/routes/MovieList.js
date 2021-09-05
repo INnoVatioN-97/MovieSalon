@@ -14,9 +14,9 @@ const styles = makeStyles({
         backgroundColor: '#a29bfe',
     },
     paper: {
-        marginTop: 15,
-        marginLeft: 24,
-        marginRight: 24,
+        margin: '2% 10% 10% 10%',
+        padding: '2%',
+        borderRadius: '20px',
     },
 });
 
@@ -33,13 +33,7 @@ const MovieList = ({ movies }) => {
         <Paper className={classes.paper}>
             <Table className={classes.table}>
                 <TableBody>
-                    <InputBase
-                        type="text"
-                        name="keyword"
-                        value={keyword}
-                        onChange={handleChange}
-                        placeholder="검색"
-                    />
+                    <InputBase type="text" name="keyword" value={keyword} onChange={handleChange} placeholder="검색" />
                     {movies.map((movie) => {
                         // console.log('movie_list',movie);
                         return (

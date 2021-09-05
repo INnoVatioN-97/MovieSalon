@@ -11,16 +11,44 @@ const useStyles = makeStyles((theme) => ({
     },
     appbar: {
         alignItems: 'center',
+        backgroundColor: '#2f3640',
+        color: '#10FF00',
     },
 
     appbarMobile: {
         alignItems: 'left',
+        backgroundColor: '#2f3640',
+        color: '#10FF00',
+        // '&:hover': {
+        //     color: '#ffffff',
+        //     fontSize: '1.4rem',
+        // },
+        height: '100%',
+    },
+    appBarProfile: {
+        // margin: 10,
+        // marginRight: '30px',
+        // marginRight: '1%',
+        width: '40px',
+        borderRadius: '20px',
+        verticalAlign: 'middle',
+    },
+
+    appBarProfile_Mobile__img: {
+        // minWidth: '50px',
+        // maxWidth: '270px',
+        width: '270px',
+        borderRadius: '20px',
+    },
+    appBarProfile_Mobile: {
+        textAlign: 'center',
+        backgroundColor: '',
     },
     menuButton: {
         marginRight: theme.spacing(2),
     },
     title: {
-        // color: '#000000',
+        // color: '#10FF00',
         flexGrow: 1,
         display: 'none',
         [theme.breakpoints.up('sm')]: {
@@ -31,6 +59,11 @@ const useStyles = makeStyles((theme) => ({
         // margin: 10,
         paddingLeft: 10,
         paddingRight: 3,
+        fontSize: '1.2rem',
+        '&:hover': {
+            color: '#ffffff',
+            fontSize: '1.4rem',
+        },
     },
     search: {
         position: 'relative',
@@ -70,24 +103,6 @@ const useStyles = makeStyles((theme) => ({
                 width: '20ch',
             },
         },
-    },
-
-    appBarProfile: {
-        // margin: 10,
-        // marginRight: '30px',
-        // marginRight: '1%',
-        width: '40px',
-        borderRadius: '20px',
-        verticalAlign: 'middle',
-    },
-
-    appBarProfile_Mobile__img: {
-        // minWidth: '50px',
-        // maxWidth: '270px',
-        width: '270px',
-    },
-    appBarProfile_Mobile: {
-        textAlign: 'center',
     },
 }));
 
@@ -167,34 +182,15 @@ const Navigation = ({ userObj }) => {
                             <Button color="inherit">
                                 {m.isProfile ? (
                                     <>
-                                        <Link
-                                            href={m.url}
-                                            className={classes.link}
-                                            variant="inherit"
-                                            color="inherit"
-                                        >
-                                            <img
-                                                src={m.imgUrl}
-                                                alt="profile"
-                                                className={classes.appBarProfile}
-                                            />
+                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
+                                            <img src={m.imgUrl} alt="profile" className={classes.appBarProfile} />
                                         </Link>
-                                        <Link
-                                            href={m.url}
-                                            className={classes.link}
-                                            variant="inherit"
-                                            color="inherit"
-                                        >
+                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
                                             {m.text}
                                         </Link>
                                     </>
                                 ) : (
-                                    <Link
-                                        href={m.url}
-                                        className={classes.link}
-                                        variant="inherit"
-                                        color="inherit"
-                                    >
+                                    <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
                                         {m.text}
                                     </Link>
                                 )}
@@ -227,24 +223,15 @@ const Navigation = ({ userObj }) => {
                  * 맨위에 정의한 menuObj에 각 요소를 매핑해 드로워(모바일뷰), 앱 바(데스크탑 뷰)를 출력.
                  * 요소 내 isProfile의 여부에 따라 프로필 아이템의 이미지, Divider 처리를 하도록 설정함.
                  */
-                <List onClick={handleDrawerClose}>
+                <List onClick={handleDrawerClose} className={classes.appbarMobile}>
                     {menuObj.map((m) => (
                         <>
                             <MenuItem key={m.key}>
-                                <Link
-                                    href={m.url}
-                                    className={classes.link}
-                                    variant="inherit"
-                                    color="inherit"
-                                >
+                                <Link href={m.url} className={classes.link} variant="inherit" color="inherit">
                                     {m.isProfile ? (
                                         <div className={classes.appBarProfile_Mobile}>
                                             <div>
-                                                <img
-                                                    src={m.imgUrl}
-                                                    alt={m.key}
-                                                    className={classes.appBarProfile_Mobile__img}
-                                                />
+                                                <img src={m.imgUrl} alt={m.key} className={classes.appBarProfile_Mobile__img} />
                                             </div>
                                             <div style={{ fontWeight: 'bold' }}>{m.text}</div>
                                         </div>
@@ -271,24 +258,15 @@ const Navigation = ({ userObj }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Drawer
-                        anchor="left"
-                        open={drawerOpen}
-                        onClose={handleDrawerClose}
-                        className={classes.Drawer}
-                    >
-                        <div>{getDrawerChoices()}</div>
+                    <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose} className={classes.drawer}>
+                        {getDrawerChoices()}
                     </Drawer>
                 </Toolbar>
             </AppBar>
         );
     };
 
-    return (
-        <header className={classes.root}>
-            {mobileView ? displayMobileView() : displayDesktopView()}
-        </header>
-    );
+    return <header className={classes.root}>{mobileView ? displayMobileView() : displayDesktopView()}</header>;
 };
 
 export default Navigation;
