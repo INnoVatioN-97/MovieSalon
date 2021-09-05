@@ -5,10 +5,18 @@ import { Link } from 'react-router-dom';
 
 const styles = makeStyles({
     movieTitle: {
-        fontSize: '2.0rem',
-        textAlign: 'center',
+        margin: 'auto',
+        color: '#10ff00',
+        fontSize: '1.5rem',
+        // textAlign: 'center',
+        textDecoration: 'none',
+    },
+    rank: {
+        //
+        //
     },
     movieInfo: {
+        color: 'white',
         fontSize: '1.0rem',
         textAlign: 'center',
     },
@@ -44,8 +52,10 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
     return (
         <>
             <TableRow hover={true}>
-                <TableCell colSpan="2" className={classes.movieTitle}>
-                    <Link to={url + movieNm}>{movieNm}</Link>
+                <TableCell colSpan="2">
+                    <Link to={url + movieNm} className={classes.movieTitle}>
+                        {movieNm}
+                    </Link>
                 </TableCell>
                 <TableCell className={classes.movieInfo}> {rank}위 </TableCell>
                 <TableCell colSpan="2" className={classes.movieInfo}>
@@ -58,7 +68,9 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
                 <TableCell colSpan="2" className={classes.movieInfo}>
                     {printRankInten()}
                 </TableCell>
-                <TableCell colSpan="2">{'전일 대비 ' + printAudiIten()}</TableCell>
+                <TableCell colSpan="2" className={classes.movieInfo}>
+                    {'전일 대비 ' + printAudiIten()}
+                </TableCell>
             </TableRow>
         </>
     );

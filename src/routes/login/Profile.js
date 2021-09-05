@@ -148,9 +148,9 @@ const Profile = ({ refreshUser, userObj }) => {
                     )}
                 </div>
             </div>
-            <h2>{userObj.email}</h2>
             <form onSubmit={onSubmit}>
                 <div className={classes.profileCard__down}>
+                    <h2>{userObj.email}</h2>
                     {isChange ? (
                         <>
                             <input
@@ -166,14 +166,9 @@ const Profile = ({ refreshUser, userObj }) => {
                                 type="submit"
                                 value="정보 수정 확인"
                                 className={classes.formBtn}
-                                disabled={Boolean(userObj.displayName === newDisplayName)}
+                                disabled={Boolean(userObj.displayName === newDisplayName) && Boolean(userObj.photoURL === attachment)}
                             />
-                            <input
-                                type="button"
-                                onClick={onChangeProfile}
-                                className={classes.cancelBtn}
-                                value="취소"
-                            />
+                            <input type="button" onClick={onChangeProfile} className={classes.cancelBtn} value="취소" />
                             <input
                                 id="attach-file"
                                 type="file"
@@ -188,19 +183,9 @@ const Profile = ({ refreshUser, userObj }) => {
                         </>
                     ) : (
                         <>
-                            <h3 style={{ color: '#000000' }}>{newDisplayName}</h3>
-                            <input
-                                type="button"
-                                onClick={onChangeProfile}
-                                className={classes.formBtn}
-                                value="프로필 정보 변경"
-                            />
-                            <input
-                                type="button"
-                                onClick={onLogOutClick}
-                                className={classes.cancelBtn}
-                                value="로그아웃"
-                            />
+                            <h3>{newDisplayName}</h3>
+                            <input type="button" onClick={onChangeProfile} className={classes.formBtn} value="프로필 정보 변경" />
+                            <input type="button" onClick={onLogOutClick} className={classes.cancelBtn} value="로그아웃" />
                         </>
                     )}
                 </div>

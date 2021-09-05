@@ -11,12 +11,15 @@ import InputBase from '@material-ui/core/InputBase';
 */
 const styles = makeStyles({
     root: {
-        backgroundColor: '#a29bfe',
+        // backgroundColor: '#1e272e',
     },
     paper: {
         margin: '2% 10% 10% 10%',
         padding: '2%',
         borderRadius: '20px',
+        backgroundColor: '#1e272e',
+        alignItems: 'center',
+        textAlign: 'center',
     },
 });
 

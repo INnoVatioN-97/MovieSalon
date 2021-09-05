@@ -33,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
         verticalAlign: 'middle',
     },
-
+    appbarDrawer: {
+        color: '#10FF00',
+        backgroundColor: '#202124',
+        height: '100%',
+    },
     appBarProfile_Mobile__img: {
         // minWidth: '50px',
         // maxWidth: '270px',
@@ -42,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarProfile_Mobile: {
         textAlign: 'center',
-        backgroundColor: '',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -223,7 +226,7 @@ const Navigation = ({ userObj }) => {
                  * 맨위에 정의한 menuObj에 각 요소를 매핑해 드로워(모바일뷰), 앱 바(데스크탑 뷰)를 출력.
                  * 요소 내 isProfile의 여부에 따라 프로필 아이템의 이미지, Divider 처리를 하도록 설정함.
                  */
-                <List onClick={handleDrawerClose} className={classes.appbarMobile}>
+                <List onClick={handleDrawerClose} className={classes.appbarDrawer}>
                     {menuObj.map((m) => (
                         <>
                             <MenuItem key={m.key}>
