@@ -12,24 +12,60 @@ import '../css/Home.css';
 // Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
 
 const useStyles = makeStyles({
+    root: {
+        textAlign: 'center',
+        // background: '#485460',
+        height: '100%',
+    },
+
     pageTitle: {
         textAlign: 'center',
         fontSize: '4.2rem',
-        marginTop: 15,
-        marginBottom: 15,
-    },
-    top3List: {
-        listStyle: 'none',
-        justifyContent: 'center',
+        marginTop: '2%',
+        color: '#fff',
+        // marginBottom: 15,
     },
     box: {
         display: 'grid',
-        flexWrap: 'nowrap',
-        p: 1,
-        m: 1,
         backgroundColor: '#20232a',
-        color: "#F4F3F7",
-        sx: { maxWidth: 300 },
+        color: '#10FF00',
+        // sx: { maxWidth: 300 },
+    },
+
+    topMovieContainer: {
+        margin: '2% 15% 5% 15%',
+        display: 'flex',
+        flexDirection: 'row',
+        // padding: '5% 0 5% 0',
+        justifyContent: 'center',
+        height: '80%',
+    },
+
+    topMovieContainer__container: {
+        marginRight: '3%',
+        marginLeft: ' 3%',
+        width: '100%',
+        height: '100%',
+    },
+    posters: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        // width: '50%',
+    },
+
+    posters__poster: {
+        color: 'white',
+        margin: '4% 4% 3% 4%',
+        '&:hover': {
+            transform: 'scale(1.4)',
+        },
+    },
+    movieTitle: {
+        color: 'white',
+        fontSize: '1.3rem',
+        textDecoration: 'none',
     },
 });
 
@@ -42,24 +78,20 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const printTop3Movies_KOBIS = () => {
         console.log('movies:', movies);
         return (
-            <div className="childs">
+            <div>
                 <div>
-                    <h2>박스오피스 (국내)</h2>
+                    <h2>박스오피스 (국내) 🇰🇷</h2>
                 </div>
-                <Grid container spacing={3} align="center">
+                <div className={classes.posters}>
                     {movies.map((m) => (
-                        <Grid item xs={2}>
-                            <Link to={kobisViewURL + m.title}>
-                                <img className="posters" src={m.image} alt={m.title} width="150" />
+                        <span className={classes.posters__poster}>
+                            <Link to={kobisViewURL + m.title} className={classes.movieTitle}>
+                                <img width="100%" height="100%" src={m.image} alt={m.title} width="150" />
+                                <div>{m.title}</div>
                             </Link>
-                            <span className="texts">
-                                <h3>
-                                     {m.title}
-                                </h3>
-                            </span>
-                        </Grid>
+                        </span>
                     ))}
-                </Grid>
+                </div>
             </div>
         );
     };
@@ -67,37 +99,36 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
     const printTop3Movies_TMDB = () => {
         console.log('tmdbHome:', tmdbHome);
         return (
-            <div className="childs">
+            <div>
                 <div>
-                    <h2>박스오피스 (해외)</h2>
+                    <h2>박스오피스 (해외) 🇺🇸</h2>
                 </div>
-                <Grid container spacing={3} align="center">
+                <div className={classes.posters}>
                     {tmdbHome.map((tmdb) => (
-                        <Grid item xs={4}>
-                            <Link to={tmdbViewURL + tmdb.id}>
-                                <img
-                                    className="posters"
-                                    width="400"
-                                    src={tmdbPosterURL + tmdb.backdrop_path}
-                                    alt={tmdb.title}
-                                />
+                        <span className={classes.posters__poster}>
+                            <Link to={tmdbViewURL + tmdb.id} className={classes.movieTitle}>
+                                <img width="100%" height="100%" src={tmdbPosterURL + tmdb.backdrop_path} alt={tmdb.title} />
+                                <div>{tmdb.title}</div>
                             </Link>
-                            <span className="texts">
-                                <h2>{tmdb.title}</h2>
-                            </span>
-                        </Grid>
+                        </span>
                     ))}
-                </Grid>
+                </div>
             </div>
         );
     };
 
     return (
-        <>
-            <div className={classes.pageTitle}>Movie Salon</div>
-            <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
-            {printTop3Movies_TMDB()}
-        </>
+        <div className={classes.root}>
+            <div className={classes.pageTitle}>Movie Salon🎥</div>
+            <div className={classes.topMovieContainer}>
+                <div className={classes.topMovieContainer__container}>
+                    <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
+                </div>
+                <div className={classes.topMovieContainer__container}>
+                    <Box className={classes.box}>{printTop3Movies_TMDB()}</Box>
+                </div>
+            </div>
+        </div>
     );
 };
 export default Home;

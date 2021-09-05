@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
     },
     appbar: {
         alignItems: 'center',
-        backgroundColor: '#20232a',
+        backgroundColor: '#2f3640',
         color: '#10FF00',
     },
 
     appbarMobile: {
         alignItems: 'left',
-        backgroundColor: '#20232a',
+        backgroundColor: '#2f3640',
         color: '#10FF00',
         // '&:hover': {
         //     color: '#ffffff',
@@ -161,7 +161,7 @@ const Navigation = ({ userObj }) => {
         const setResponsiveView = () => {
             return window.innerWidth < 900
                 ? setState((prevState) => ({ ...prevState, mobileView: true }))
-                : setState((prevState) => ({ ...prevState, mobileView: false }));
+                : setState((prevState) => ({ ...prevState, mobileView: false, drawerOpen: false }));
         };
         setResponsiveView();
         window.addEventListener('resize', () => setResponsiveView());
