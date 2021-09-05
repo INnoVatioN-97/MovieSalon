@@ -4,7 +4,7 @@ import AppRouter from './Router';
 import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import { getKobisMovies } from './APIs/KobisAPI';
-import { getTmdbBoxOffice, getUpcommingMovies } from './APIs/TmdbAPI';
+import { getTmdbBoxOffice, getUpcommingMovies, getHotWeekMovies } from './APIs/TmdbAPI';
 import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
@@ -14,6 +14,7 @@ const App = () => {
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
     const [upcomming, setUpcomming] = useState([]);
+    const [hotMovie, setHotMovie] = useState([]);
 
     const [init, setInit] = useState(true);
 
@@ -38,7 +39,7 @@ const App = () => {
         const getMovieInfos = async (movies) => {
             let tmpCodes = [];
             let cnt = 0;
-            movies.slice(0, 3).map((movie) =>
+            movies.slice(0, 4).map((movie) =>
                 getNaverSearchResult(movie.movieNm).then((res) => {
                     const { image, title } = res;
                     tmpCodes[cnt++] = {
@@ -58,6 +59,10 @@ const App = () => {
 
         getUpcommingMovies().then((res) => {
             setUpcomming(res);
+        });
+
+        getHotWeekMovies().then((res) => {
+            setHotMovie(res);
         });
 
         getKobisMovies().then((res) => {
@@ -119,6 +124,7 @@ const App = () => {
                         top3Movies={top3Movies}
                         tmdbHome={tmdbHome}
                         upcomming={upcomming}
+                        hotMovie={hotMovie}
                     />
                 </>
             )}

@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     },
 
     topMovieContainer: {
-        margin: '2% 15% 5% 15%',
+        margin: '2% 15% 2% 15%',
         display: 'flex',
         flexDirection: 'row',
         // padding: '5% 0 5% 0',
@@ -49,27 +49,51 @@ const useStyles = makeStyles({
     },
     posters: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
         // width: '50%',
     },
-
     posters__poster: {
         color: 'white',
-        margin: '4% 4% 3% 4%',
+        margin: '4% 4% 5% 4%',
         '&:hover': {
             transform: 'scale(1.4)',
         },
+    },
+    posters2: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'center',
+        // width: '50%',
+    },
+    posters2__poster: {
+        color: 'white',
+        margin: '4% 4% 5% 4%',
+        '&:hover': {
+            transform: 'scale(1.4)',
+        },
+    },
+    posters_border: {
+        borderRadius: "4px 4px 4px 4px",
     },
     movieTitle: {
         color: 'white',
         fontSize: '1.3rem',
         textDecoration: 'none',
     },
+    hottest: {
+        color: 'white',
+        
+    },
+    backdrop: {
+        width: '40%',
+        borderRadius: "12px 12px 12px 12px",
+    },
 });
 
-const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
+const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
     const classes = useStyles();
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';
@@ -103,27 +127,43 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome }) => {
                 <div>
                     <h2>박스오피스 (해외) 🇺🇸</h2>
                 </div>
-                <div className={classes.posters}>
+                <div className={classes.posters2}>
                     {tmdbHome.map((tmdb) => (
-                        <span className={classes.posters__poster}>
+                        <span className={classes.posters2__poster}>
                             <Link to={tmdbViewURL + tmdb.id} className={classes.movieTitle}>
-                                <img width="100%" height="100%" src={tmdbPosterURL + tmdb.backdrop_path} alt={tmdb.title} />
+                                <img className={classes.posters_border} width="100%" src={tmdbPosterURL + tmdb.backdrop_path} alt={tmdb.title} />
                                 <div>{tmdb.title}</div>
                             </Link>
-                        </span>
+                       </span> 
                     ))}
                 </div>
             </div>
+        );
+    };
+    
+    const printMainMovie = () => {
+        return (
+            <div className={classes.hottest}>
+                <p>The hottest Movie of The Week </p>
+                <Link to={tmdbViewURL + hotMovie.id} >
+                <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
+                </Link>
+                <p>{hotMovie.title}</p>
+            </div>
+
         );
     };
 
     return (
         <div className={classes.root}>
             <div className={classes.pageTitle}>Movie Salon🎥</div>
+            <div><span>{printMainMovie()}</span></div>
             <div className={classes.topMovieContainer}>
                 <div className={classes.topMovieContainer__container}>
                     <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
                 </div>
+            </div>
+            <div className={classes.topMovieContainer}>
                 <div className={classes.topMovieContainer__container}>
                     <Box className={classes.box}>{printTop3Movies_TMDB()}</Box>
                 </div>
