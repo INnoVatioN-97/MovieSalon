@@ -4,15 +4,16 @@
     border: 1px solid #000000;
     position: relative;
   }
-.lb-wrap img {
 
-    width: 100%;
+.lb-wrap img {
+    width:100%;
     vertical-align: middle;
+    position: relative;
   }
-.lb-poster {
+.lb-poster img {
     position: absolute;
-    width:400px;
-    height: 500px;
+    width: 25%;
+    height: auto;
     top: 15%;
     left: 18%;
   }
@@ -20,38 +21,44 @@
   .lb-text {
     display: grid;
     width: 41%;
-    height: 83%;
+    height: 67%;
     padding-left: 10px;
     padding-right: 10px;
     background-color: rgba(12, 12, 12, 0.9);
     position: absolute;
     top: 15%;
     left: 44%; 
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
 .lb-text h1,h3{
     color: rgb(255, 255, 255);
     text-align: center; 
     position: relative;
+    font-size: 1.2rem;
 }
 
 .lb-text p{
     color: #fff;
     text-align: justify; 
     position: relative;
-    font-size: 20px;
+    font-size: 1.2rem;
 }
 
 .lb-cols{
   color: #00FC87;
   text-align: justify;
   position: relative;
-  font-size: 25px;
+  font-size: 1.2rem;
+}
+
+.lb-cols table{
 }
 
 .lb-cols span{
   color: rgb(249, 252, 253);
   text-align: justify; 
   position: relative;
-  font-size: 25px;
+  font-size: 1.2rem;
 }
