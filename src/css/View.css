@@ -5,6 +5,7 @@
     position: relative;
   }
 .lb-wrap img {
+
     width: 100%;
     vertical-align: middle;
   }
@@ -17,6 +18,7 @@
   }
 
   .lb-text {
+    display: grid;
     width: 41%;
     height: 83%;
     padding-left: 10px;
@@ -41,7 +43,7 @@
 }
 
 .lb-cols{
-  color: rgb(39, 253, 10);
+  color: #00FC87;
   text-align: justify;
   position: relative;
   font-size: 25px;

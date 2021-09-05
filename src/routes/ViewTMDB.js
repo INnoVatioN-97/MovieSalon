@@ -109,23 +109,22 @@ const ViewTMDB = ({match, userObj}) => {
         <>
         <div className="lb-wrap">
             <div className="lb-image">
-            <img className="backposter" src={backImg + posters.backdrop_path} height="720" width="1520" />
+                <img className="backposter" src={backImg + posters.backdrop_path} height="720" width="1520" />
             </div>
+
             <div className="lb-poster">
-            <img src={img + posters.poster_path}/>
+                <img src={img + posters.poster_path}/>
             </div>
+
             <div className="lb-text">
                 <span><h1>{movieInfo.original_title}</h1></span>
-                <br/>
                 <h3>"{movieInfo.tagline}"</h3>
-                <div>
-                    <p>{movieInfo.overview}</p>
-                </div>
+                <p>{movieInfo.overview}</p>
                 <div className="lb-cols">
                     <TableRow>
                         <TableCell>
                             Runtime:<br/>
-                            <span>{movieInfo.runtime}Min.</span>
+                            <span>{movieInfo.runtime}mins</span>
                         </TableCell>
                         <TableCell>
                             release_date:<br/>
@@ -144,8 +143,7 @@ const ViewTMDB = ({match, userObj}) => {
                             </span>
                         </TableCell>
                     </TableRow>
-                </div>
-                       
+                </div>      
             </div>
         </div>
         <Table>

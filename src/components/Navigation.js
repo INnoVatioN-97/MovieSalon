@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
     },
     appbar: {
         alignItems: 'center',
-        backgroundColor: '#2f3640',
+        backgroundColor: '#20232a',
         color: '#10FF00',
     },
 
     appbarMobile: {
         alignItems: 'left',
-        backgroundColor: '#2f3640',
+        backgroundColor: '#20232a',
         color: '#10FF00',
         // '&:hover': {
         //     color: '#ffffff',

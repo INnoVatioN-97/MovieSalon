@@ -27,7 +27,7 @@ const useStyles = makeStyles({
         flexWrap: 'nowrap',
         p: 1,
         m: 1,
-        backgroundColor: '#150A52',
+        backgroundColor: '#20232a',
         color: "#F4F3F7",
         sx: { maxWidth: 300 },
     },
