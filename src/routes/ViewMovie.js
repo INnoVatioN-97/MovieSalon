@@ -4,7 +4,35 @@ import { TableBody, Table, TableRow, TableCell, TableHead, TextField } from '@ma
 import { dbService } from 'fbase';
 import Comment from 'components/Comment';
 import { getNaverSearchResult, getHighQualityPosterLink } from 'components/APIs/NaverSearchAPI';
+import { makeStyles } from '@material-ui/styles';
 const cheerio = require('cheerio');
+
+const styles = makeStyles({
+    root: {
+        margin: '2% 5% 5% 5% ',
+    },
+    movieTable: {
+        backgroundColor: '#636e72',
+        borderRadius: '20px',
+    },
+    /**
+     * .movieInfoTable {
+    text-align: center;
+    padding: auto;
+// }
+
+// .posterCell {
+//     /* align-items: center; */
+    //     /* justify-content: center; */
+    //     /* align-content: center; */
+    //     /* margin: auto; */
+
+    // .posterCell__posterImg {
+    //     width: 100%;
+    // }
+
+    // * /
+});
 
 const ViewMovie = ({ movieNm, userObj }) => {
     const [movieInfo, setMovieInfo] = useState([]);
@@ -14,13 +42,15 @@ const ViewMovie = ({ movieNm, userObj }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
 
+    const classes = styles();
+
     useEffect(() => {
         getNaverSearchResult(movieNm).then((res) => {
             setMovieInfo(res);
             let tmp = res.link;
             setCode(tmp.split('?code=')[1]);
         });
-    }, [movieNm]);
+    }, []);
 
     //code 의 값 변경이 감지되면 (영화정보를 가져와 거기서 영화코드추출이 끝남을 인지하면) 실행되는 훅.
     // 고화질 포스터를 가져온다.
@@ -117,21 +147,15 @@ const ViewMovie = ({ movieNm, userObj }) => {
         return (
             <>
                 <TableRow hover={true}>
-                    <TableCell align="center" rowSpan="7" width="25%">
+                    <TableCell align="center" rowSpan="6" width="45%">
                         <a href={movie.link} rel="norefferer">
-                            <img
-                                className="posterCell__posterImg"
-                                src={hqPoster}
-                                alt={movie.title}
-                            />
+                            <img src={hqPoster} alt={movie.title} width="100%" />
                         </a>
                     </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="center">제목</TableCell>
-                    <TableCell align="center">
-                        {movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}
-                    </TableCell>
+                    <TableCell align="center">{movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell align="center">감독</TableCell>
@@ -170,34 +194,35 @@ const ViewMovie = ({ movieNm, userObj }) => {
     };
 
     return (
-        <Table className="movieInfoTable">
-            {isLoading ? (
-                <TableHead>
-                    <TableRow>Loading..</TableRow>
-                </TableHead>
-            ) : (
-                <>
+        <div className={classes.root}>
+            <Table className={classes.movieTable}>
+                {isLoading ? (
                     <TableHead>
-                        <TableRow>
-                            <TableCell colSpan="4" align="center">
-                                포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트
-                                됩니다.
-                            </TableCell>
-                        </TableRow>
+                        <TableRow>Loading..</TableRow>
                     </TableHead>
-                    <TableBody>
-                        {printMovieInfo(movieInfo)}
-                        {comments !== null ? (
-                            printComments()
-                        ) : (
+                ) : (
+                    <>
+                        <TableHead>
                             <TableRow>
-                                <TableCell>로딩중...</TableCell>
+                                <TableCell colSpan="4" align="center">
+                                    포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.
+                                </TableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </>
-            )}
-        </Table>
+                        </TableHead>
+                        <TableBody>
+                            {printMovieInfo(movieInfo)}
+                            {comments !== null ? (
+                                printComments()
+                            ) : (
+                                <TableRow>
+                                    <TableCell>로딩중...</TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </>
+                )}
+            </Table>
+        </div>
     );
 };
 

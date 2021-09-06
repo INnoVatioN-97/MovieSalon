@@ -76,7 +76,7 @@ const useStyles = makeStyles({
         },
     },
     posters_border: {
-        borderRadius: "4px 4px 4px 4px",
+        borderRadius: '4px 4px 4px 4px',
     },
     movieTitle: {
         color: 'white',
@@ -85,11 +85,11 @@ const useStyles = makeStyles({
     },
     hottest: {
         color: 'white',
-        
     },
     backdrop: {
         width: '40%',
-        borderRadius: "12px 12px 12px 12px",
+        borderRadius: '15px',
+        boxShadow: '5px 5px 15px 5px #000000',
     },
 });
 
@@ -131,33 +131,39 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
                     {tmdbHome.map((tmdb) => (
                         <span className={classes.posters2__poster}>
                             <Link to={tmdbViewURL + tmdb.id} className={classes.movieTitle}>
-                                <img className={classes.posters_border} width="100%" src={tmdbPosterURL + tmdb.backdrop_path} alt={tmdb.title} />
+                                <img
+                                    className={classes.posters_border}
+                                    width="100%"
+                                    src={tmdbPosterURL + tmdb.backdrop_path}
+                                    alt={tmdb.title}
+                                />
                                 <div>{tmdb.title}</div>
                             </Link>
-                       </span> 
+                        </span>
                     ))}
                 </div>
             </div>
         );
     };
-    
+
     const printMainMovie = () => {
         return (
             <div className={classes.hottest}>
                 <p>The hottest Movie of The Week </p>
-                <Link to={tmdbViewURL + hotMovie.id} >
-                <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
+                <Link to={tmdbViewURL + hotMovie.id}>
+                    <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
                 </Link>
                 <p>{hotMovie.title}</p>
             </div>
-
         );
     };
 
     return (
         <div className={classes.root}>
             <div className={classes.pageTitle}>Movie Salon🎥</div>
-            <div><span>{printMainMovie()}</span></div>
+            <div>
+                <span>{printMainMovie()}</span>
+            </div>
             <div className={classes.topMovieContainer}>
                 <div className={classes.topMovieContainer__container}>
                     <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
