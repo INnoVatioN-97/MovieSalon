@@ -12,26 +12,33 @@ const styles = makeStyles({
         margin: '2% 5% 5% 5% ',
     },
     movieTable: {
-        backgroundColor: '#636e72',
+        // backgroundColor: '#636e72',
         borderRadius: '20px',
+        backgroundColor: 'rgba(12, 12, 12, 0.9)',
+        color: '#FFFFFF',
     },
-    /**
-     * .movieInfoTable {
-    text-align: center;
-    padding: auto;
-// }
-
-// .posterCell {
-//     /* align-items: center; */
-    //     /* justify-content: center; */
-    //     /* align-content: center; */
-    //     /* margin: auto; */
-
-    // .posterCell__posterImg {
-    //     width: 100%;
-    // }
-
-    // * /
+    tableHeader: {
+        fontSize: '1.0rem',
+        color: '#FFFFFF',
+    },
+    movieTitle: {
+        fontWeight: '700',
+        fontSize: '2.5rem',
+        borderBottom: 'none',
+        color: '#10FF00',
+    },
+    tableCell: {
+        fontWeight: '400',
+        fontSize: '1.2rem',
+        borderBottom: 'none',
+        color: '#FFFFFF',
+    },
+    posterCell: { margin: 0, padding: '1%' },
+    posterImg: {
+        width: '100%',
+        borderRadius: '10px',
+        boxShadow: '.05rem .05rem .05rem .05rem #000000',
+    },
 });
 
 const ViewMovie = ({ movieNm, userObj }) => {
@@ -45,30 +52,43 @@ const ViewMovie = ({ movieNm, userObj }) => {
     const classes = styles();
 
     useEffect(() => {
+        console.log('네이버 API 접근!');
         getNaverSearchResult(movieNm).then((res) => {
             setMovieInfo(res);
-            let tmp = res.link;
-            setCode(tmp.split('?code=')[1]);
+            const tmpCode = res.link.split('?code=')[1];
+            setCode(tmpCode);
+            getHighQualityPosterLink(tmpCode)
+                .then((res) => {
+                    let $ = cheerio.load(res.data);
+                    // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
+                    const bodyList = $('#page_content').children('a').children('#targetImage');
+                    setHqPoster(bodyList[0].attribs.src);
+                    setIsLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         });
     }, []);
 
     //code 의 값 변경이 감지되면 (영화정보를 가져와 거기서 영화코드추출이 끝남을 인지하면) 실행되는 훅.
     // 고화질 포스터를 가져온다.
-    useEffect(() => {
-        getHighQualityPosterLink(code)
-            .then((res) => {
-                let $ = cheerio.load(res.data);
-                // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
-                const bodyList = $('#page_content').children('a').children('#targetImage');
-                setHqPoster(bodyList[0].attribs.src);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [code]);
+    // useEffect(() => {
+    //     getHighQualityPosterLink(code)
+    //         .then((res) => {
+    //             let $ = cheerio.load(res.data);
+    //             // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
+    //             const bodyList = $('#page_content').children('a').children('#targetImage');
+    //             setHqPoster(bodyList[0].attribs.src);
+    //             setIsLoading(false);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, [code]);
 
     useEffect(() => {
+        console.log('dbService 접근!');
         const getData = dbService
             .collection(`comment_movieCode=${code}`)
             .orderBy('createdAt', 'desc')
@@ -80,8 +100,8 @@ const ViewMovie = ({ movieNm, userObj }) => {
                 setComments(commentsArray);
                 // console.log(comments);
             });
-        return () => getData();
-    }, [code, comments]);
+        getData();
+    }, [code]);
 
     const printActors = (actors) => {
         let text = '';
@@ -131,12 +151,8 @@ const ViewMovie = ({ movieNm, userObj }) => {
         // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
             return (
-                <>
-                    {/* comments 배열을 map을 사용해 하나씩 렌더링. */}
-                    {comments.map((comment) => (
-                        <Comment commentObj={comment} owner={userObj.email} />
-                    ))}
-                </>
+                /* comments 배열을 map을 사용해 하나씩 렌더링. */
+                comments.map((comment) => <Comment commentObj={comment} owner={userObj.email} />)
             );
         } else return null;
     };
@@ -147,34 +163,51 @@ const ViewMovie = ({ movieNm, userObj }) => {
         return (
             <>
                 <TableRow hover={true}>
-                    <TableCell align="center" rowSpan="6" width="45%">
+                    <TableCell align="center" rowSpan="6" width="45%" className={classes.posterCell}>
                         <a href={movie.link} rel="norefferer">
-                            <img src={hqPoster} alt={movie.title} width="100%" />
+                            <img src={hqPoster} alt={movie.title} className={classes.posterImg} />
                         </a>
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center">제목</TableCell>
-                    <TableCell align="center">{movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}</TableCell>
+                    <TableCell colSpan="2" align="center" className={classes.movieTitle}>
+                        {movie.title.replace(/<b>/gi, '').replace(/<\/b>/gi, '')}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center">감독</TableCell>
-                    <TableCell align="center">{movie.director.replace('|', '')}</TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        감독
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        {movie.director.replace('|', '')}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center">개봉</TableCell>
-                    <TableCell align="center">{movie.pubDate}</TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        개봉
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        {movie.pubDate}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center">출연진</TableCell>
-                    <TableCell align="center">{printActors(actors)}</TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        출연진
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        {printActors(actors)}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center">평점</TableCell>
-                    <TableCell align="center">{movie.userRating}</TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        평점
+                    </TableCell>
+                    <TableCell align="center" className={classes.tableCell}>
+                        ⭐x{movie.userRating}
+                    </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell align="center" colSpan="3">
+                    <TableCell align="center" colSpan="3" className={classes.tableCell}>
                         <TextField
                             id="commentField"
                             fullWidth={true}
@@ -204,7 +237,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     <>
                         <TableHead>
                             <TableRow>
-                                <TableCell colSpan="4" align="center">
+                                <TableCell colSpan="4" align="center" className={classes.tableHeader}>
                                     포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.
                                 </TableCell>
                             </TableRow>
@@ -215,7 +248,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                                 printComments()
                             ) : (
                                 <TableRow>
-                                    <TableCell>로딩중...</TableCell>
+                                    <TableCell className={classes.tableCell}>로딩중...</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
