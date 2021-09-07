@@ -182,7 +182,7 @@ const Navigation = ({ userObj }) => {
                     <Typography className={classes.title} variant="h6" noWrap>
                         {menuObj.map((m) => (
                             // {console.log(m.imgUrl)}\
-                            <Button color="inherit">
+                            <Button color="inherit" key={m.key}>
                                 {m.isProfile ? (
                                     <>
                                         <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">

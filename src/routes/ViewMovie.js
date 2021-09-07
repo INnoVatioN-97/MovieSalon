@@ -69,39 +69,26 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     console.log(err);
                 });
         });
-    }, []);
-
-    //code 의 값 변경이 감지되면 (영화정보를 가져와 거기서 영화코드추출이 끝남을 인지하면) 실행되는 훅.
-    // 고화질 포스터를 가져온다.
-    // useEffect(() => {
-    //     getHighQualityPosterLink(code)
-    //         .then((res) => {
-    //             let $ = cheerio.load(res.data);
-    //             // ul.list--posts를 찾고 그 children 노드를 bodyList에 저장
-    //             const bodyList = $('#page_content').children('a').children('#targetImage');
-    //             setHqPoster(bodyList[0].attribs.src);
-    //             setIsLoading(false);
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // }, [code]);
+    }, [movieNm]);
 
     useEffect(() => {
-        console.log('dbService 접근!');
-        const getData = dbService
-            .collection(`comment_movieCode=${code}`)
-            .orderBy('createdAt', 'desc')
-            .onSnapshot((snapshot) => {
-                const commentsArray = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setComments(commentsArray);
-                // console.log(comments);
-            });
-        getData();
-    }, [code]);
+        console.log(comments);
+        if (comments.length === 0) {
+            const getData = dbService
+                .collection(`comment_movieCode=${code}`)
+                .orderBy('createdAt', 'desc')
+                .onSnapshot((snapshot) => {
+                    const commentsArray = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setComments(commentsArray);
+                    // console.log(comments);
+                    console.log('dbService 접근!', comments);
+                });
+            return () => getData();
+        }
+    }, [code, comments]);
 
     const printActors = (actors) => {
         let text = '';
@@ -137,13 +124,14 @@ const ViewMovie = ({ movieNm, userObj }) => {
                 .set(commentObj)
                 .then(() => {
                     console.log('Document successfully written!');
+                    setComment('');
+                    setComments([]);
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
-                });
 
-            setComment('');
-            setComments([]);
+                    setComments([]);
+                });
         }
     };
 
@@ -214,7 +202,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                             label="한줄평"
                             placeholder="한줄평 남기기"
                             // multiline
-                            variant="filled"
+                            variant="outlined"
                             size="medium"
                             value={comment}
                             onChange={handleChange}

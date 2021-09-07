@@ -13,12 +13,11 @@ const ViewTMDB = ({ match, userObj }) => {
     const [posters, setPosters] = useState([]);
     const [comment, setComment] = useState(''); // 글작성
     const [comments, setComments] = useState([]); // 모든 코멘트 저장소
-    const [id, setId] = useState(match.params.id);
 
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-    // const id = match.params.id;
-    const posterImageRoot = 'https://image.tmdb.org/t/p/w400'; // poster
-    const backdropImageRoot = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
+    const id = match.params.id;
+    const img = 'https://image.tmdb.org/t/p/w400'; // poster
+    const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
 
     useEffect(() => {
         const getMovieInfo = async () => {
@@ -43,22 +42,25 @@ const ViewTMDB = ({ match, userObj }) => {
             //  console.log(posters.poster_path);
         };
         getMovieInfo();
-    }, []);
+    }, [TMDB_API_KEY, id]);
 
     useEffect(() => {
-        const getData = dbService
-            .collection(`comment_movieCode=${id}`)
-            .orderBy('createdAt', 'desc')
-            .onSnapshot((snapshot) => {
-                const commentsArray = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setComments(commentsArray);
-                // console.log(comments);
-            });
-        return () => getData();
-    }, [id]);
+        console.log(comments);
+        if (comments.length === 0) {
+            const getData = dbService
+                .collection(`comment_movieCode=${id}`)
+                .orderBy('createdAt', 'desc')
+                .onSnapshot((snapshot) => {
+                    const commentsArray = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setComments(commentsArray);
+                    // console.log(comments);
+                });
+            return () => getData();
+        }
+    }, [id, comments]);
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -86,13 +88,13 @@ const ViewTMDB = ({ match, userObj }) => {
                 .set(commentObj) // insert
                 .then(() => {
                     console.log('Document successfully written!');
+                    setComment('');
+                    setComments([]);
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
+                    setComments([]);
                 });
-
-            setComment('');
-            setComments([]);
         }
     };
 
@@ -114,11 +116,11 @@ const ViewTMDB = ({ match, userObj }) => {
         <>
             <div className="lb-wrap">
                 <div className="lb-image">
-                    <img src={backdropImageRoot + posters.backdrop_path} alt="backdrop image" />
+                    <img src={backImg + posters.backdrop_path} />
                 </div>
 
                 <div className="lb-poster">
-                    <img src={posterImageRoot + posters.poster_path} alt="poster image" />
+                    <img src={img + posters.poster_path} />
                 </div>
 
                 <div className="lb-text">
