@@ -9,45 +9,10 @@ import { Box } from '@material-ui/core';
 import '../css/View.css';
 
 const useStyles = makeStyles({
-    root: {
-        textAlign: 'center',
-        // background: '#485460',
-        height: '100%',
-    },
-
-    pageTitle: {
-        textAlign: 'center',
-        fontSize: '4.2rem',
-        marginTop: '2%',
-        color: '#fff',
-        // marginBottom: 15,
-    },
     box: {
         display: 'grid',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
         color: '#10FF00',
-        // sx: { maxWidth: 300 },
-    },
-
-    topMovieContainer: {
-        margin: '2% 15% 2% 15%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        height: '80%',
-    },
-
-    topMovieContainer__container: {
-        marginRight: '3%',
-        marginLeft: ' 3%',
-        width: '100%',
-        height: '100%',
-    },
-
-    movieTitle: {
-        color: 'white',
-        fontSize: '1.3rem',
-        textDecoration: 'none',
     },
 });
 
