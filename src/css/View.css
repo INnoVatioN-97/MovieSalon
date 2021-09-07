@@ -1,64 +1,75 @@
 
 .lb-wrap {
-    width: 100%;
-    border: 1px solid #000000;
-    position: relative;
-  }
+  width: 100%;
+  border: 1px solid #000000;
+  position: relative;
+}
 
 .lb-wrap img {
-    width:100%;
-    vertical-align: middle;
-    position: relative;
-  }
+  width:100%;
+  vertical-align: middle;
+  position: relative;
+}
 .lb-poster img {
+  position: absolute;
+  width: 25%;
+  height: auto;
+  top: 15%;
+  left: 18%;
+}
+@media (max-width: 1200px) {
+  .lb-poster img {
     position: absolute;
     width: 25%;
     height: auto;
     top: 15%;
-    left: 18%;
+    left: 38%;
   }
-
+}
+@media (min-width: 1200px){
   .lb-text {
     display: grid;
     width: 41%;
     height: 67%;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: rgba(12, 12, 12, 0.9);
     position: absolute;
     top: 15%;
     left: 44%; 
-    text-overflow: ellipsis;
-    overflow: hidden;
+
   }
+}
 
 .lb-text h1,h3{
-    color: rgb(255, 255, 255);
-    text-align: center; 
-    position: relative;
-    font-size: 1.2rem;
+  color: rgb(255, 255, 255);
+  text-align: center; 
+  position: relative;
+  font-size: 1.2rem;
+  margin-bottom: 0%;
 }
 
 .lb-text p{
-    color: #fff;
-    text-align: justify; 
-    position: relative;
-    font-size: 1.2rem;
+  color: #fff;
+  text-align: justify; 
+  position: relative;
+  font-size: 1.0rem;
+  margin-top: 0%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
+
 
 .lb-cols{
-  color: #00FC87;
-  text-align: justify;
-  position: relative;
-  font-size: 1.2rem;
-}
-
-.lb-cols table{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+color: #00FC87;
+text-align: justify;
+position: relative;
+font-size: 1.2rem;
 }
 
 .lb-cols span{
-  color: rgb(249, 252, 253);
-  text-align: justify; 
-  position: relative;
-  font-size: 1.2rem;
+color: rgb(249, 252, 253);
+text-align: justify; 
+position: relative;
+font-size: 1.2rem;
 }
