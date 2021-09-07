@@ -14,7 +14,7 @@ const styles = makeStyles({
     movieTable: {
         // backgroundColor: '#636e72',
         borderRadius: '20px',
-        backgroundColor: 'rgba(12, 12, 12, 0.9)',
+        backgroundColor: 'rgba(32, 35, 42, 0.9)',
         color: '#FFFFFF',
     },
     tableHeader: {
