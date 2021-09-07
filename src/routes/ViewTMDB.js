@@ -98,14 +98,14 @@ const ViewTMDB = ({ match, userObj }) => {
         }
     };
 
-    const printComments = () => {
+    const printComments = (colSpan) => {
         // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
             return (
                 <>
                     {/* comments 배열을 map을 사용해 하나씩 렌더링. */}
                     {comments.map((comment) => (
-                        <Comment commentObj={comment} owner={userObj.email} />
+                        <Comment colSpan={colSpan} commentObj={comment} owner={userObj.email} />
                     ))}
                 </>
             );
@@ -158,9 +158,9 @@ const ViewTMDB = ({ match, userObj }) => {
                 </div>
             </div>
             <Table>
-                <TMDB id={id} />
-            </Table>
-            <Table>
+                <TableRow>
+                    <TMDB id={id} />
+                </TableRow>
                 <TableRow>
                     <TableCell align="center" colSpan="3">
                         <TextField
@@ -177,11 +177,9 @@ const ViewTMDB = ({ match, userObj }) => {
                         />
                     </TableCell>
                 </TableRow>
-            </Table>
-            <Table>
                 <TableRow>
                     {comments !== null ? (
-                        printComments()
+                        printComments(3)
                     ) : (
                         <TableRow>
                             <TableCell>로딩중...</TableCell>

@@ -135,14 +135,14 @@ const ViewMovie = ({ movieNm, userObj }) => {
         }
     };
 
-    const printComments = () => {
+    const printComments = (colSpan) => {
         // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
             return (
                 /* comments 배열을 map을 사용해 하나씩 렌더링. */
-                comments.map((comment) => <Comment commentObj={comment} owner={userObj.email} />)
+                comments.map((comment) => <Comment colSpan={colSpan} commentObj={comment} owner={userObj.email} />)
             );
-        } else return null;
+        } else return <TableCell colSpan={colSpan}>코멘트 로딩중 오류 발생! </TableCell>;
     };
 
     const printMovieInfo = (movie) => {
@@ -233,7 +233,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                         <TableBody>
                             {printMovieInfo(movieInfo)}
                             {comments !== null ? (
-                                printComments()
+                                printComments(3)
                             ) : (
                                 <TableRow>
                                     <TableCell className={classes.tableCell}>로딩중...</TableCell>

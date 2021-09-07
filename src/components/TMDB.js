@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
-import { classExpression } from '@babel/types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 

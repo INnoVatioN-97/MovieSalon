@@ -1,5 +1,4 @@
 import axios from 'axios';
-const cheerio = require('cheerio');
 
 // 네이버 검색 API 사용시 헤더에 집어넣어야 할 요소들.
 const ID_KEY = process.env.REACT_APP_NAVER_CLIENT_ID;

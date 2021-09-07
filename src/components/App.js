@@ -74,28 +74,6 @@ const App = () => {
         });
     }, []);
 
-    // useEffect(() => {
-    //     const getMovieInfos = async () => {
-    //         let tmpCodes = [];
-    //         movies.slice(0, 3).map((movie) =>
-    //             getNaverSearchResult(movie.movieNm).then((res) => {
-    //                 const { image, title } = res;
-    //                 tmpCodes.push({
-    //                     //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
-    //                     title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
-    //                     image: image,
-    //                     rank: movie.rank,
-    //                 });
-    //             })
-    //         );
-    //         return tmpCodes;
-    //     };
-    //     getMovieInfos().then((res) => {
-    //         setTop3Movies(res);
-    //         setInit(false);
-    //     });
-    // }, [movies]);
-
     const refreshUser = () => {
         const user = authService.currentUser;
         console.log('currentUser from App.js', user);
