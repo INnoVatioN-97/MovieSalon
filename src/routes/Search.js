@@ -1,77 +1,192 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { Link } from 'react-router-dom';
-
-const styles = (theme) => ({
-    paper: {
-        marginTop: 15,
-        marginLeft: 24,
-        marginRight: 24,
+import { fade, makeStyles, Table } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import { InputBase } from '@material-ui/core';
+import NoImageAvailable from 'images/NoImageAvailable.png';
+const styles = makeStyles((theme) => ({
+    posterIcon: {
+        width: '3.5rem',
+        height: '3.5rem',
+        borderRadius: '70%',
+        verticalAlign: 'middle',
+        alignItems: 'left',
     },
-});
+    search: {
+        textAlign: 'center',
+        position: 'relative',
+        borderRadius: '20px',
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
 
-class Search extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: true,
-            movies: [],
-            keyword: '',
-            searchMovies: [],
-        };
-        this.handleChange = this.handleChange.bind(this); // 바인딩
-    }
+        [theme.breakpoints.up('sm')]: {
+            margin: 'auto',
+            width: '70%',
+        },
+    },
+    searchIcon: {
+        // matgin: '20%',
+        padding: theme.spacing(1, 1),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        // alignItems: 'center',
+        justifyContent: 'center',
+        verticalAlign: 'top',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
+        },
+    },
+    searchResult: {
+        width: '100%',
+        backgroundColor: '#1F272E',
+        margin: 'auto',
+        borderRadius: ' 0 0 20px 20px',
+    },
+    searchResult__text: {
+        color: '#ffffff',
+        textDecoration: 'none',
+        textAlign: 'center',
+        borderBottom: 'none',
+        // verticalAlign: 'middle',
+    },
+}));
 
-    handleChange = (e) => {
-        this.setState({ keyword: e.target.value });
-        this.getSearchMovies(e.target.value);
+const Search = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [keyword, setKeyword] = useState('');
+    const [searchedMovies, setSearchedMovies] = useState([]);
+
+    const imgPathRoot = 'https://image.tmdb.org/t/p/w400'; // poster
+
+    const classes = styles();
+    const handleChange = (e) => {
+        // this.setState({ keyword: e.target.value });
+        // this.getSearchMovies(e.target.value);
+        const target = e.target.value;
+        // console.log('handleChange 호출, 값:', target);
+        if (target === '') {
+            setKeyword();
+            setSearchedMovies([]);
+        } else {
+            setKeyword(e.target.value);
+            getSearchMovies(e.target.value);
+        }
     };
 
-    getSearchMovies = async (keywords) => {
+    const getSearchMovies = async (keywords) => {
+        // console.log('getSearchMovies 호출');
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
             data: { results },
-        } = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&language=ko&page=1&include_adult=false&query=${keywords}`)
-        this.setState({searchMovies: results, isLoading: false});
-    }
-
-    componentDidMount() {
-    }
-
-    render() {
-        const { isLoading, searchMovies } = this.state;
-        let url = '/viewTmdb/';
-        return (
-            <>
-                <input type="text" name="keyword" value={this.state.keyword}
-                 onChange={this.handleChange} placeholder="검색"  />
-                {isLoading ? (
-                    <h2>Search!!!</h2>
-                ) : (
-                    searchMovies.map((m) => (
-                        <>
-                            {m.original_title||m.title.indexOf(this.state.keyword) > -1 ? (
-                                <TableRow>
-                                    <TableCell>
-                                        <Link to={url + m.id}>
-                                            {m.original_title}({m.title})
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell>{m.release_date}</TableCell>
-                                    <TableCell>{m.vote_average}점</TableCell>
-                                </TableRow>
-                            ) : (
-                                <p></p>
-                            )}
-                        </>
-                    ))
-                )}
-            </>
+        } = await axios.get(
+            `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&language=ko&page=1&include_adult=true&query=${keywords}`
         );
-    }
-}
+        // this.setState({ searchMovies: results, isLoading: false });
+        // if(results.length === 0 )
+        setSearchedMovies(results);
+        setIsLoading(false);
+        // console.log('isLoading:', isLoading);
+    };
+
+    // componentDidMount() {}
+
+    // render() {
+    // const { isLoading, searchMovies } = this.state;
+    let url = '/viewTmdb/';
+
+    return (
+        <>
+            <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                    <SearchIcon />
+                </div>
+                <InputBase
+                    placeholder="Search…"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    onChange={handleChange}
+                    value={keyword}
+                    inputProps={{ 'aria-label': 'search' }}
+                />
+
+                <div className={classes.searchResult}>
+                    {isLoading
+                        ? ''
+                        : searchedMovies.map((m) => (
+                              <Table>
+                                  {m.original_title || m.title.indexOf(keyword) > -1 ? (
+                                      <TableRow>
+                                          <TableCell
+                                              width="25%"
+                                              className={classes.searchResult__text}
+                                          >
+                                              {m.poster_path ? (
+                                                  <img
+                                                      src={imgPathRoot + m.poster_path}
+                                                      alt="poster"
+                                                      className={classes.posterIcon}
+                                                  />
+                                              ) : (
+                                                  <img
+                                                      src={NoImageAvailable}
+                                                      alt="poster"
+                                                      className={classes.posterIcon}
+                                                  />
+                                              )}
+                                          </TableCell>
+                                          <TableCell
+                                              width="75%"
+                                              className={classes.searchResult__text}
+                                          >
+                                              {/* <img
+                                        src={imgPathRoot + m.poster_path}
+                                        alt="poster"
+                                        className={classes.posterIcon}
+                                    /> */}
+                                              <Link
+                                                  to={url + m.id}
+                                                  className={classes.searchResult__text}
+                                              >
+                                                  {m.title + ' (' + m.release_date + ' 개봉)'}
+                                              </Link>
+                                          </TableCell>
+                                      </TableRow>
+                                  ) : (
+                                      ''
+                                      // <TableRow>
+                                      //     <TableCell>검색 결과가 없습니다.</TableCell>
+                                      // </TableRow>
+                                  )}
+                              </Table>
+                          ))}
+                    {}
+                </div>
+            </div>
+        </>
+    );
+    // }
+};
 
 export default Search;

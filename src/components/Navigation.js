@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem, Button } from '@material-ui/core';
+import {
+    AppBar,
+    Toolbar,
+    Link,
+    Drawer,
+    Divider,
+    List,
+    MenuItem,
+    Button,
+    InputBase,
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import Search from 'routes/Search';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        marginBottom: '0.5rem',
     },
     link: {
         // margin: 10,
@@ -69,17 +82,21 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     search: {
+        textAlign: 'center',
         position: 'relative',
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: '20px',
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginLeft: 0,
-        width: '100%',
+
+        // width: '50%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
-            width: 'auto',
+            // marginLeft: theme.spacing(6),
+            // marginRight: theme.spacing(6),
+            // justifyContent: 'center',
+            margin: 'auto',
+            width: '70%',
         },
     },
     searchIcon: {
@@ -138,11 +155,6 @@ const Navigation = ({ userObj }) => {
                   text: '박스 오피스 (영화 진흥위원회)',
               },
               {
-                  key: 'Search',
-                  url: '/#/Search',
-                  text: '영화 검색',
-              },
-              {
                   key: 'tmdbList',
                   url: '/#/tmdbList',
                   text: '박스 오피스 (TMDB)',
@@ -185,20 +197,44 @@ const Navigation = ({ userObj }) => {
                             <Button color="inherit" key={m.key}>
                                 {m.isProfile ? (
                                     <>
-                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
-                                            <img src={m.imgUrl} alt="profile" className={classes.appBarProfile} />
+                                        <Link
+                                            href={m.url}
+                                            className={classes.link}
+                                            variant="inherit"
+                                            color="inherit"
+                                            underline="none"
+                                        >
+                                            <img
+                                                src={m.imgUrl}
+                                                alt="profile"
+                                                className={classes.appBarProfile}
+                                            />
                                         </Link>
-                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
+                                        <Link
+                                            href={m.url}
+                                            className={classes.link}
+                                            variant="inherit"
+                                            color="inherit"
+                                            underline="none"
+                                        >
                                             {m.text}
                                         </Link>
                                     </>
                                 ) : (
-                                    <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
+                                    <Link
+                                        href={m.url}
+                                        className={classes.link}
+                                        variant="inherit"
+                                        color="inherit"
+                                        underline="none"
+                                    >
                                         {m.text}
                                     </Link>
                                 )}
                             </Button>
                         ))}
+                        {/* {searchBox()} */}
+                        <Search />
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -230,11 +266,20 @@ const Navigation = ({ userObj }) => {
                     {menuObj.map((m) => (
                         <>
                             <MenuItem key={m.key}>
-                                <Link href={m.url} className={classes.link} variant="inherit" color="inherit">
+                                <Link
+                                    href={m.url}
+                                    className={classes.link}
+                                    variant="inherit"
+                                    color="inherit"
+                                >
                                     {m.isProfile ? (
                                         <div className={classes.appBarProfile_Mobile}>
                                             <div>
-                                                <img src={m.imgUrl} alt={m.key} className={classes.appBarProfile_Mobile__img} />
+                                                <img
+                                                    src={m.imgUrl}
+                                                    alt={m.key}
+                                                    className={classes.appBarProfile_Mobile__img}
+                                                />
                                             </div>
                                             <div style={{ fontWeight: 'bold' }}>{m.text}</div>
                                         </div>
@@ -261,15 +306,25 @@ const Navigation = ({ userObj }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose} className={classes.drawer}>
+                    <Search />
+                    <Drawer
+                        anchor="left"
+                        open={drawerOpen}
+                        onClose={handleDrawerClose}
+                        className={classes.drawer}
+                    >
                         {getDrawerChoices()}
                     </Drawer>
-                </Toolbar>
+                </Toolbar>{' '}
             </AppBar>
         );
     };
 
-    return <header className={classes.root}>{mobileView ? displayMobileView() : displayDesktopView()}</header>;
+    return (
+        <header className={classes.root}>
+            {mobileView ? displayMobileView() : displayDesktopView()}
+        </header>
+    );
 };
 
 export default Navigation;
