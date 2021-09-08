@@ -39,6 +39,10 @@ const styles = makeStyles({
         borderRadius: '10px',
         boxShadow: '.05rem .05rem .05rem .05rem #000000',
     },
+    inputComment: {
+        backgroundColor: '#2d3436',
+        color: '#10FF00',
+    },
 });
 
 const ViewMovie = ({ movieNm, userObj }) => {
@@ -140,7 +144,9 @@ const ViewMovie = ({ movieNm, userObj }) => {
         if (comments !== null || comments !== undefined) {
             return (
                 /* comments 배열을 map을 사용해 하나씩 렌더링. */
-                comments.map((comment) => <Comment colSpan={colSpan} commentObj={comment} owner={userObj.email} />)
+                comments.map((comment) => (
+                    <Comment colSpan={colSpan} commentObj={comment} owner={userObj.email} />
+                ))
             );
         } else return <TableCell colSpan={colSpan}>코멘트 로딩중 오류 발생! </TableCell>;
     };
@@ -151,7 +157,12 @@ const ViewMovie = ({ movieNm, userObj }) => {
         return (
             <>
                 <TableRow hover={true}>
-                    <TableCell align="center" rowSpan="6" width="45%" className={classes.posterCell}>
+                    <TableCell
+                        align="center"
+                        rowSpan="6"
+                        width="30%"
+                        className={classes.posterCell}
+                    >
                         <a href={movie.link} rel="norefferer">
                             <img src={hqPoster} alt={movie.title} className={classes.posterImg} />
                         </a>
@@ -202,11 +213,14 @@ const ViewMovie = ({ movieNm, userObj }) => {
                             label="한줄평"
                             placeholder="한줄평 남기기"
                             // multiline
-                            variant="outlined"
+                            variant="filled"
                             size="medium"
                             value={comment}
                             onChange={handleChange}
                             onKeyPress={addComment}
+                            InputProps={{
+                                className: classes.inputComment,
+                            }}
                         />
                     </TableCell>
                 </TableRow>
@@ -225,8 +239,13 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     <>
                         <TableHead>
                             <TableRow>
-                                <TableCell colSpan="4" align="center" className={classes.tableHeader}>
-                                    포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.
+                                <TableCell
+                                    colSpan="4"
+                                    align="center"
+                                    className={classes.tableHeader}
+                                >
+                                    포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로
+                                    리다이렉트 됩니다.
                                 </TableCell>
                             </TableRow>
                         </TableHead>
