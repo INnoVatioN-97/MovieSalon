@@ -29,6 +29,7 @@ const useStyles = makeStyles({
         display: 'grid',
         backgroundColor: '#20232a',
         color: '#10FF00',
+        borderRadius: '3rem',
         // sx: { maxWidth: 300 },
     },
 
@@ -110,7 +111,13 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
                     {movies.map((m) => (
                         <span className={classes.posters__poster}>
                             <Link to={kobisViewURL + m.title} className={classes.movieTitle}>
-                                <img width="100%" height="100%" src={m.image} alt={m.title} width="150" />
+                                <img
+                                    width="100%"
+                                    height="100%"
+                                    src={m.image}
+                                    alt={m.title}
+                                    width="150"
+                                />
                                 <div>{m.title}</div>
                             </Link>
                         </span>
@@ -151,7 +158,10 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
             <div className={classes.hottest}>
                 <p>The hottest Movie of The Week </p>
                 <Link to={tmdbViewURL + hotMovie.id}>
-                    <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
+                    <img
+                        className={classes.backdrop}
+                        src={tmdbPosterURL + hotMovie.backdrop_path}
+                    />
                 </Link>
                 <p>{hotMovie.title}</p>
             </div>

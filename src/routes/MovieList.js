@@ -36,7 +36,6 @@ const MovieList = ({ movies }) => {
         <Paper className={classes.paper}>
             <Table className={classes.table}>
                 <TableBody>
-                    <InputBase type="text" name="keyword" value={keyword} onChange={handleChange} placeholder="검색" />
                     {movies.map((movie) => {
                         // console.log('movie_list',movie);
                         return (
