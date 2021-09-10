@@ -50,8 +50,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hqPoster, setHqPoster] = useState('');
     const [code, setCode] = useState(0);
-    const [comment, setComment] = useState('');
-    const [comments, setComments] = useState([]);
 
     const classes = styles();
 
@@ -75,25 +73,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
         });
     }, [movieNm]);
 
-    useEffect(() => {
-        console.log(comments);
-        if (comments.length === 0) {
-            const getData = dbService
-                .collection(`comment_movieCode=${code}`)
-                .orderBy('createdAt', 'desc')
-                .onSnapshot((snapshot) => {
-                    const commentsArray = snapshot.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }));
-                    setComments(commentsArray);
-                    // console.log(comments);
-                    console.log('dbService 접근!', comments);
-                });
-            return () => getData();
-        }
-    }, [code, comments]);
-
     const printActors = (actors) => {
         let text = '';
         for (let i = 0; i < actors.length - 1; i++) {
@@ -103,60 +82,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
         }
         return text;
     };
-    const handleChange = (e) => {
-        setComment(e.target.value);
-    };
-
-    const addComment = async (event) => {
-        console.log('event.keyCode:', event.code);
-        if (event.code === 'Enter') {
-            //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
-            //한줄평 필드를 비운다.
-            if (comment === '') {
-                return;
-            }
-            event.preventDefault();
-
-            const commentObj = {
-                comment: comment,
-                userId: userObj.email,
-                createdAt: Date.now(),
-            };
-            await dbService
-                .collection(`comment_movieCode=${code}`)
-                .doc(commentObj.userId)
-                .set(commentObj)
-                .then(() => {
-                    console.log('Document successfully written!');
-                    setComment('');
-                    setComments([]);
-                })
-                .catch((error) => {
-                    console.error('Error writing document: ', error);
-
-                    setComments([]);
-                });
-        }
-    };
-
-    const printComments = (colSpan) => {
-        // console.log('comments',comments);
-        if (comments !== null || comments !== undefined) {
-            return code > 0 ? (
-                /* comments 배열을 map을 사용해 하나씩 렌더링. */
-                comments.map((comment) => (
-                    <Comment
-                        colSpan={colSpan}
-                        commentObj={comment}
-                        owner={userObj.email}
-                        code={code}
-                    />
-                ))
-            ) : (
-                <TableCell colSpan={colSpan}>코멘트 로딩중...</TableCell>
-            );
-        } else return <TableCell colSpan={colSpan}>코멘트 로딩중 오류 발생! </TableCell>;
-    };
 
     const printMovieInfo = (movie) => {
         const actors = movie.actor.split('|');
@@ -164,12 +89,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
         return (
             <>
                 <TableRow hover={true}>
-                    <TableCell
-                        align="center"
-                        rowSpan="6"
-                        width="30%"
-                        className={classes.posterCell}
-                    >
+                    <TableCell align="center" rowSpan="6" width="30%" className={classes.posterCell}>
                         <a href={movie.link} rel="norefferer">
                             <img src={hqPoster} alt={movie.title} className={classes.posterImg} />
                         </a>
@@ -212,25 +132,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
                         ⭐x{movie.userRating}
                     </TableCell>
                 </TableRow>
-                <TableRow>
-                    <TableCell align="center" colSpan="3" className={classes.tableCell}>
-                        <TextField
-                            id="commentField"
-                            fullWidth={true}
-                            label="한줄평"
-                            placeholder="한줄평 남기기"
-                            // multiline
-                            variant="filled"
-                            size="medium"
-                            value={comment}
-                            onChange={handleChange}
-                            onKeyPress={addComment}
-                            InputProps={{
-                                className: classes.inputComment,
-                            }}
-                        />
-                    </TableCell>
-                </TableRow>
             </>
         );
     };
@@ -246,23 +147,19 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     <>
                         <TableHead>
                             <TableRow>
-                                <TableCell
-                                    colSpan="4"
-                                    align="center"
-                                    className={classes.tableHeader}
-                                >
-                                    포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로
-                                    리다이렉트 됩니다.
+                                <TableCell colSpan="4" align="center" className={classes.tableHeader}>
+                                    포스터를 클릭하시면 해당 영화에 대한 네이버 검색 결과로 리다이렉트 됩니다.
                                 </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {printMovieInfo(movieInfo)}
-                            {comments !== null ? (
-                                printComments(3)
+                            {/* const Comment = ({userObj, owner, colSpan, code }) */}
+                            {code > 0 ? (
+                                <Comment code={code} owner={userObj.email} colSpan={3} />
                             ) : (
                                 <TableRow>
-                                    <TableCell className={classes.tableCell}>로딩중...</TableCell>
+                                    <TableCell>'한줄평 기능 로딩중'</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
