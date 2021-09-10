@@ -8,6 +8,7 @@ import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
+import { useMediaQuery } from '@material-ui/core';
 import ReactPlayer from 'react-player';
 import '../css/Dialog.css';
 
@@ -42,10 +43,48 @@ const useStyles = makeStyles((theme) => ({
     posters__poster: {
         margin: '2%',
     },
+    dia_header: {
+        backgroundColor: '#282c34',
+        color: '#00FC87',
+    },
+    dia_table: {
+        display: 'flex',
+        fiexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: '#20232a',
+        color: 'white',
+    },
+    dia_table2: {
+        display: 'flex',
+        fiexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: '#20232a',
+        color: 'white',
+    },
+    dia_poster: {
+     borderRadius: '3%',
+    },
+    dia_cast: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+    },
+    dia_similer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+    },
+    dia_content_guide: {
+        color: "#00FC87",
+    },
 }));
 
 const TmdbList = ({ tmdbHome, upcomming }) => {
     const classes = useStyles();
+    const isMobile = useMediaQuery('(max-width: 768px)');
+
     const [isLoading, setIsLoading] = useState(true);
     const [open, setOpen] = useState(false);
     const [viewChange, setViewChange] = useState(false);
@@ -157,7 +196,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
         // console.log('printDialog:', rate, openedAt, poster_path, movieName, plot);
         return (
             <Dialog open={open} onClose={onCloseHandle} maxWidth="md">
-                <DialogTitle>{titles}</DialogTitle>
+                <DialogTitle className={classes.dia_header}>{titles}</DialogTitle>
                 {isLoading ? (
                     <DialogContent>
                         <Table>
@@ -165,32 +204,30 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         </Table>
                     </DialogContent>
                 ) : (
-                    <DialogContent>
+                    <DialogContent className={isMobile ? classes.dia_table : classes.dia_table2}>
                         <Table>
                             <TableRow>
-                                <TableCell align="center" rowSpan="4" width="25%">
+                                <TableCell align="center" width="25%" rowSpan={isMobile ? "1" : "4"} colSpan={isMobile ? "4" : "1"}>
                                     <Link to={'/viewTmdb/' + id}>
-                                        <img
+                                        <img className={classes.dia_poster}
                                             src={poster_path ? url + poster_path : NoImageAvailable}
                                             alt="Poster"
-                                            width="200"
-                                            height="300"
                                         />
                                     </Link>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <b>{movieName}</b>
+                                    <b className={classes.dia_content_guide}>{movieName}</b>
                                 </TableCell>
                                 <TableCell>
-                                    {' '}
+                                    
                                     {openedAt} <b>[★{rate}]</b>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <b>줄거리:</b>
+                                    <b className={classes.dia_content_guide}>줄거리:</b>
                                 </TableCell>
                                 <TableCell>
                                     <label>{plot}</label>
@@ -198,8 +235,11 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                             </TableRow>
                         </Table>
                         <Table>
+                            <TableHead>
+                                <b className={classes.dia_content_guide}>출연진</b>
+                            </TableHead>
                             <TableRow>
-                                <div>
+                                <div  className={classes.dia_cast}>
                                     {castMember.map((c) => (
                                         <TableCell>
                                             <>
@@ -237,10 +277,11 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         </Table>
                         <Table>
                             <TableHead>
-                                <b>이런영화는 어떤가요?</b>
+                                <b className={classes.dia_content_guide}>이런영화는 어떤가요?</b>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
+                                    <div className={classes.dia_similer}>
                                     {similer.map((s) => (
                                         <TableCell>
                                             <Link to={'/viewTmdb/' + s.id}>
@@ -248,6 +289,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                             </Link>
                                         </TableCell>
                                     ))}
+                                    </div>
                                 </TableRow>
                             </TableBody>
                         </Table>

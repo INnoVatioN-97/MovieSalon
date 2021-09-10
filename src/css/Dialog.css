@@ -5,9 +5,7 @@
     border: 16px solid silver;
 }
 .item {
-    padding: 12px;
-    background: white;
-    border-radius: 70%;
+    border-radius: 10%;
 }
 
 .poster {
