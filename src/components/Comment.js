@@ -78,13 +78,13 @@ const Comment = ({ owner, colSpan, code }) => {
     };
 
     const onDeleteClick = async (event) => {
-        console.log('event.target.id:', event.target.id, 'owner:', owner);
+        // console.log('event.target.id:', event.target.id, 'owner:', owner);
         // console.log(event.target.email);
 
         if (owner === event.target.id) {
             console.log('code:', code);
             // alert('이 댓글 주인!');
-            const isDelete = window.confirm(`이 댓글을 삭제하시겠습니까?, 영화 코드: ${code}`);
+            const isDelete = window.confirm(`이 댓글을 삭제하시겠습니까?`);
             if (isDelete === true) {
                 const commentRef = dbService.collection(`comment_movieCode=${code}`);
                 await commentRef
@@ -101,7 +101,7 @@ const Comment = ({ owner, colSpan, code }) => {
                     });
             }
         } else if (owner !== event.target.id) {
-            alert('주인 아님!');
+            alert('이 댓글의 작성자가 아닙니다.');
         }
     };
 
@@ -131,7 +131,6 @@ const Comment = ({ owner, colSpan, code }) => {
                     <TableRow align="center" className={classes.commentsRow}>
                         <TableCell colSpan={colSpan} align="center" className={classes.commentsCell}>
                             "{m.comment}" - {m.id}
-                            {console.log(m)}
                             <button id={m.id} onClick={onDeleteClick}>
                                 삭제
                             </button>
