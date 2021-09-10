@@ -93,7 +93,7 @@ const ViewTMDB = ({ match, userObj }) => {
                 <>
                     {/* comments 배열을 map을 사용해 하나씩 렌더링. */}
                     {comments.map((comment) => (
-                        <Comment commentObj={comment} owner={userObj.email} />
+                        <Comment commentObj={comment} owner={userObj.email} code={id} />
                     ))}
                 </>
             );

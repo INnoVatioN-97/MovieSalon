@@ -142,11 +142,18 @@ const ViewMovie = ({ movieNm, userObj }) => {
     const printComments = (colSpan) => {
         // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
-            return (
+            return code > 0 ? (
                 /* comments 배열을 map을 사용해 하나씩 렌더링. */
                 comments.map((comment) => (
-                    <Comment colSpan={colSpan} commentObj={comment} owner={userObj.email} />
+                    <Comment
+                        colSpan={colSpan}
+                        commentObj={comment}
+                        owner={userObj.email}
+                        code={code}
+                    />
                 ))
+            ) : (
+                <TableCell colSpan={colSpan}>코멘트 로딩중...</TableCell>
             );
         } else return <TableCell colSpan={colSpan}>코멘트 로딩중 오류 발생! </TableCell>;
     };

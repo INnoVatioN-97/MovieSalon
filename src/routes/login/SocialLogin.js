@@ -3,9 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { authService, firebaseInstance } from 'fbase';
 import { createHashHistory } from 'history';
-
+import { makeStyles } from '@material-ui/styles';
 export const history = createHashHistory();
 
+const styles = makeStyles({
+    root: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+});
 const SocialLogin = () => {
     const onSocialClick = async (event) => {
         try {
@@ -27,9 +33,9 @@ const SocialLogin = () => {
             );
         }
     };
-
+    const classes = styles();
     return (
-        <div className="authBtns">
+        <div className={classes.root}>
             <button onClick={onSocialClick} name="google" className="authBtn">
                 Continue with Google
                 <FontAwesomeIcon icon={faGoogle} />

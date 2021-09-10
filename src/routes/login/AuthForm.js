@@ -9,18 +9,24 @@ import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 export const history = createHashHistory();
 
 const useStyles = makeStyles({
-    profileCard: {
+    root: {
         // backgroundColor: 'red',
         // color: 'blue',
+        margin: '0',
         textAlign: 'center',
+        width: '100%',
     },
-    profileImg: {
-        margin: '20px',
-        width: '30%',
-        border: '10px',
-        borderRadius: '70%',
-        boxShadow: '0px 0px 7px 8px rgba(0,0,0,0.76)',
+    box: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+        marginTop: '5%',
+        marginBottom: '5%',
+        height: '100%',
+        width: '100%',
+        backgroundColor: 'green',
     },
+    inputForms: {},
 });
 
 const AuthForm = ({ userObj, isLoggedIn }) => {
@@ -70,52 +76,48 @@ const AuthForm = ({ userObj, isLoggedIn }) => {
 
     const classes = useStyles();
     return (
-        <>
-            <div>
-                <form onSubmit={signInSubmit}>
-                    <div>
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            required
-                            value={email}
-                            onChange={onChange}
-                        />
-                        <input
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            required
-                            value={password}
-                            onChange={onChange}
-                            className="authInput" // CSS 적용해야.
-                        />
-                    </div>
-                    <div>
-                        <input
-                            id="signInSubmit"
-                            type="submit"
-                            className="authInput authSubmit"
-                            value={'Sign In'}
-                            // onSubmit={signInSubmit}
-                        />
-                        <input
-                            id="joinSubmit"
-                            type="button"
-                            className="authInput authSubmit"
-                            value={'Create Account'}
-                            // onSubmit={joinSubmit}
-                            onClick={joinSubmit}
-                        />
-                    </div>
+        <div className={classes.root}>
+            <form onSubmit={signInSubmit}>
+                <div className={classes.box}>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        required
+                        value={email}
+                        onChange={onChange}
+                        className={classes.inputForms}
+                    />
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        required
+                        value={password}
+                        onChange={onChange}
+                        className="authInput" // CSS 적용해야.
+                    />
+                </div>
+                <div className={classes.box}>
+                    <input
+                        id="signInSubmit"
+                        type="submit"
+                        className="authInput authSubmit"
+                        value={'Sign In'}
+                        // onSubmit={signInSubmit}
+                    />
+                    <input
+                        id="joinSubmit"
+                        type="button"
+                        className="authInput authSubmit"
+                        value={'Create Account'}
+                        // onSubmit={joinSubmit}
+                        onClick={joinSubmit}
+                    />
                     {error}
-                </form>
-                {/* <span onClick={toggleAccount}>
-                    {newAccount ? '==>Sign in<==' : '==>Create Account<=='}
-                </span> */}
-            </div>
-        </>
+                </div>
+            </form>
+        </div>
     );
 };
 
