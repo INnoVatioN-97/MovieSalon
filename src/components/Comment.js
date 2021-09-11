@@ -27,9 +27,11 @@ const styles = makeStyles({
         backgroundColor: '#2d3436',
         // width: '100%',
         color: '#10FF00',
+        borderRadius: '20px',
     },
     commentsLine: {
         // verticalAlign: 'middle',
+        borderRadius: '20px',
         backgroundColor: '#2d3436',
         fontSize: '1.3rem',
         padding: '2% 6% 2% 6%',

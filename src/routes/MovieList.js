@@ -17,7 +17,8 @@ const styles = makeStyles({
     paper: {
         // margin: '2% 10% 10% 10%',
         padding: '2%',
-        width: '50%',
+        minwidth: '60%',
+        maxWidth: '70%',
         // height: '80%',
         margin: '2% auto auto auto',
         borderRadius: '20px',
