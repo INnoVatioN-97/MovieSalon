@@ -6,6 +6,8 @@ import { dbService } from 'fbase';
 import Comment from 'components/Comment';
 import TMDB from 'components/TMDB';
 import { Box } from '@material-ui/core';
+import NoBackdropImage from 'images/NoBackdropImage.PNG';
+import NoImageAvailable from 'images/NoImageAvailable.png';
 import '../css/View.css';
 
 const useStyles = makeStyles({
@@ -120,11 +122,11 @@ const ViewTMDB = ({match, userObj}) => {
         <>
         <div className="lb-wrap">
             <div className="lb-image">
-                <img src={backImg + posters.backdrop_path} />
+                <img src={ posters.backdrop_path ? backImg + posters.backdrop_path : NoBackdropImage} />
             </div>
 
             <div className="lb-poster">
-                <img src={img + posters.poster_path}/>
+                <img src={posters.poster_path ? img + posters.poster_path : NoImageAvailable}/>
             </div>
             <div className="lb-text">
                 <Box className={classes.box}>

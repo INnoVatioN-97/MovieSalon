@@ -3,9 +3,11 @@ import axios from 'axios';
 import { TableCell, TableRow, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
+import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
-import { useMediaQuery } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { useMediaQuery } from '@material-ui/core';
+import '../css/View.css';
 const styles = (theme) => ({
     root: {
         textAlign: 'center',
@@ -30,6 +32,13 @@ const styles = (theme) => ({
         width: '75%',
         height: '100%',
         justifyContent: 'center',
+    },
+    profile_image: {
+        width:'15%',
+        "@media (max-width: 750px)": {
+            width: '70%',
+
+          },
     },
     cast_content: {
         marginLeft: '8%',
@@ -79,7 +88,6 @@ class Cast extends React.Component {
         };
     }
     
-
     getCastInfo = async (ID) => {
         // 인물 정보 api
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -114,8 +122,7 @@ class Cast extends React.Component {
         return (
             <>
             <div className={classes.topMovieContainer}>
-            <img src={imgUrl + castInfo[5]} />
-
+            <img className={classes.profile_image} src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2} />
             <Box className={classes.box}>
             <div className={classes.cast_content}>
             <h2>{castInfo[1]}</h2>
