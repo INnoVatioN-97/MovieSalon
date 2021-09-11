@@ -228,12 +228,12 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 </TableCell>
                                 <TableCell>
                                     
-                                    {openedAt} <b>[★{rate}]</b>
+                                    {openedAt} <b>[⭐{rate}]</b>
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <b className={classes.dia_content_guide}>줄거리:</b>
+                                    <b className={classes.dia_content_guide}>📃줄거리:</b>
                                 </TableCell>
                                 <TableCell>
                                     <label>{plot}</label>
@@ -242,7 +242,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         </Table>
                         <Table>
                             <TableHead>
-                                <b className={classes.dia_content_guide}>출연진</b>
+                                <b className={classes.dia_content_guide}>🎞️출연진</b>
                             </TableHead>
                             <TableRow>
                                 <div  className={classes.dia_cast}>
@@ -283,7 +283,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         </Table>
                         <Table>
                             <TableHead>
-                                <b className={classes.dia_content_guide}>이런영화는 어떤가요?</b>
+                                <b className={classes.dia_content_guide}>🎬이런영화는 어떤가요?</b>
                             </TableHead>
                             <TableBody>
                                 <TableRow>

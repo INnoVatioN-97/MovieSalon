@@ -4,6 +4,7 @@ import { TableCell, TableRow, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
+import { useMediaQuery } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 const styles = (theme) => ({
     root: {
@@ -11,56 +12,52 @@ const styles = (theme) => ({
         // background: '#485460',
         height: '100%',
     },
-
-    pageTitle: {
-        textAlign: 'center',
-        fontSize: '4.2rem',
-        marginTop: '2%',
-        color: '#fff',
-        // marginBottom: 15,
-    },
-
     box: {
         display: 'flex',
-        width: 'auto',
+        width: '35%',
         flexDirection: 'column',
         flexWrap: 'wrap',
         backgroundColor: '#20232a',
         color: '#10FF00',
-        // sx: { maxWidth: 300 },
     },
-
+    box_film: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: '#20232a',
+        color: '#10FF00',
+        margin: '2% 12% 2% 12%',
+        width: '75%',
+        height: '100%',
+        justifyContent: 'center',
+    },
+    cast_content: {
+        marginLeft: '8%',
+        justifyContent: 'center',
+    },
     topMovieContainer: {
         margin: '2% 12% 2% 12%',
         display: 'flex',
         flexDirection: 'row',
-        // padding: '5% 0 5% 0',
         justifyContent: 'center',
         height: '80%',
-    },
-
-    topMovieContainer__container: {
-        marginRight: '0%',
-        marginLeft: ' 0%',
-        width: '100%',
-        height: '100%',
     },
     images: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'center',       
         width: '100%',
     },
     images__cast: {
         color: 'white',
-        margin: '2% 3% 3% 3%', // Box 내부 아이템 margin값 조정
+        margin: '1% 1% 1% 1%', // Box 내부 아이템 margin값 조정
     },
     h2_similer: {
         color: '10FF00',
+        fontSize: '1.2rem',
         textAlign: 'center',
-        marginLeft: '6%',
-        marginBottom: '0',
+        marginBottom: '3%',
     },
     images_border: {
         borderRadius: '4px 4px 4px 4px',
@@ -81,6 +78,7 @@ class Cast extends React.Component {
             movies: [],
         };
     }
+    
 
     getCastInfo = async (ID) => {
         // 인물 정보 api
@@ -119,11 +117,29 @@ class Cast extends React.Component {
             <img src={imgUrl + castInfo[5]} />
 
             <Box className={classes.box}>
+            <div className={classes.cast_content}>
             <h2>{castInfo[1]}</h2>
-            <p>{castInfo[3]}</p>
-            <p>{castInfo[4]}</p>
+            <p>{castInfo[2] === 1 ? <p>woman</p> : <p>man</p>}</p>
+            <p>{'🎂' + castInfo[3]}</p>
+            <p>{'🏠' + castInfo[4]}</p>
+            </div>
             </Box>
             </div>
+            <Box className={classes.box_film}>
+            <h2 className={classes.h2_similer}>🎞️출연작</h2>   
+            <div className={classes.images}>
+            {movies.map((m) => (
+                        <span className={classes.images__cast}>
+                            <Link to={queryUrl + m.id} className={classes.contentTitle}>
+                                <img className={classes.images_border} 
+                                src={m.poster_path ? imgUrl + m.poster_path : NoImageAvailable} alt="poster" />
+                                <div>{m.title}</div>                           
+                            </Link>
+                            
+                        </span>                        
+                    ))}
+            </div>
+            </Box>
             </>
         );
     }
