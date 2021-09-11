@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core';
 
 const styles = makeStyles({
     commentsTable: {
+        margin: 'auto',
+        width: '70%',
+
         // backgroundColor: '#636e72',
         borderRadius: '20px',
         backgroundColor: 'rgba(32, 35, 42, 0.9)',

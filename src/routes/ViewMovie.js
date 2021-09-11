@@ -9,11 +9,13 @@ const cheerio = require('cheerio');
 
 const styles = makeStyles({
     root: {
-        margin: '2% 5% 5% 5% ',
+        margin: '2% auto auto auto ',
     },
     movieTable: {
         // backgroundColor: '#636e72',
         borderRadius: '20px',
+        margin: 'auto',
+        width: '70%',
         backgroundColor: 'rgba(32, 35, 42, 0.9)',
         color: '#FFFFFF',
         marginBottom: '2%',

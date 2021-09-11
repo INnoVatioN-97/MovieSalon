@@ -32,9 +32,9 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
         if (audiInten === '0') return '관람객 수 변동 없음.';
         if (audiInten !== '0') {
             let text = '전일 대비 ';
-            if (audiInten > 0) text += `👍 X ${audiInten}`;
-            else text += `👎 X ${Math.abs(audiInten)}`;
-            return text + ' 명';
+            if (audiInten > 0) text += `➕ ${audiInten}`;
+            else text += `➖ ${Math.abs(audiInten)}`;
+            return text + ' 명 관람';
         }
     };
 
@@ -43,8 +43,8 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
         if (rankInten === '0') return '순위 변동 없음.';
         if (rankInten !== '0') {
             let text = '전일 대비 ';
-            if (rankInten > 0) text += `👍 X ${rankInten}`;
-            else text += `👎 X ${Math.abs(rankInten)}`;
+            if (rankInten > 0) text += `↑ ${rankInten}`;
+            else text += `↓ ${Math.abs(rankInten)}`;
             return text + '위';
         }
     };
@@ -69,7 +69,7 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
                     {printRankInten()}
                 </TableCell>
                 <TableCell colSpan="2" className={classes.movieInfo}>
-                    {'전일 대비 ' + printAudiIten()}
+                    {printAudiIten()}
                 </TableCell>
             </TableRow>
         </>
