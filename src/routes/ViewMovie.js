@@ -16,6 +16,7 @@ const styles = makeStyles({
         borderRadius: '20px',
         backgroundColor: 'rgba(32, 35, 42, 0.9)',
         color: '#FFFFFF',
+        marginBottom: '2%',
     },
     tableHeader: {
         fontSize: '1.0rem',
@@ -33,7 +34,7 @@ const styles = makeStyles({
         borderBottom: 'none',
         color: '#FFFFFF',
     },
-    posterCell: { margin: 0, padding: '1%' },
+    posterCell: { margin: 0, padding: '1%', borderBottom: 'none' },
     posterImg: {
         width: '100%',
         borderRadius: '10px',
@@ -138,13 +139,15 @@ const ViewMovie = ({ movieNm, userObj }) => {
 
     return (
         <div className={classes.root}>
-            <Table className={classes.movieTable}>
-                {isLoading ? (
+            {isLoading ? (
+                <Table className={classes.movieTable}>
                     <TableHead>
                         <TableRow>Loading..</TableRow>
                     </TableHead>
-                ) : (
-                    <>
+                </Table>
+            ) : (
+                <>
+                    <Table className={classes.movieTable}>
                         <TableHead>
                             <TableRow>
                                 <TableCell colSpan="4" align="center" className={classes.tableHeader}>
@@ -152,20 +155,18 @@ const ViewMovie = ({ movieNm, userObj }) => {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
-                            {printMovieInfo(movieInfo)}
-                            {/* const Comment = ({userObj, owner, colSpan, code }) */}
-                            {code > 0 ? (
-                                <Comment code={code} owner={userObj.email} colSpan={3} />
-                            ) : (
-                                <TableRow>
-                                    <TableCell>'한줄평 기능 로딩중'</TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </>
-                )}
-            </Table>
+                        <TableBody>{printMovieInfo(movieInfo)}</TableBody>
+                        {/* const Comment = ({userObj, owner, colSpan, code }) */}
+                    </Table>
+                    {code > 0 ? (
+                        <Comment code={code} owner={userObj.email} colSpan={3} />
+                    ) : (
+                        <TableRow>
+                            <TableCell>'한줄평 기능 로딩중'</TableCell>
+                        </TableRow>
+                    )}
+                </>
+            )}
         </div>
     );
 };
