@@ -13,18 +13,18 @@ const useStyles = makeStyles({
         display: 'grid',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
         color: '#10FF00',
-        borderRadius: '2.3rem',
     },
 });
 
-const ViewTMDB = ({ match, userObj }) => {
+
+const ViewTMDB = ({match, userObj}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [movieInfo, setMovieInfo] = useState([]);
     const [genre, setGenre] = useState([]);
     const [posters, setPosters] = useState([]);
     const [comment, setComment] = useState(''); // 글작성
     const [comments, setComments] = useState([]); // 모든 코멘트 저장소
-
+    
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
     const id = match.params.id;
     const img = 'https://image.tmdb.org/t/p/w400'; // poster
@@ -33,7 +33,7 @@ const ViewTMDB = ({ match, userObj }) => {
 
     useEffect(() => {
         getMovieInfo();
-    }, [match]);
+    }, [match]); 
 
     useEffect(() => {
         const getData = dbService
@@ -50,12 +50,13 @@ const ViewTMDB = ({ match, userObj }) => {
         return () => getData();
     }, [id, comments]);
 
+    
+
     const handleChange = (e) => {
         setComment(e.target.value);
     };
 
-    const addComment = async (event) => {
-        /*made by INNo */
+    const addComment = async (event) => { /*made by INNo */
         console.log('event.keyCode:', event.code);
         if (event.code === 'Enter') {
             //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
@@ -97,95 +98,74 @@ const ViewTMDB = ({ match, userObj }) => {
                     ))}
                 </>
             );
-        } else return <p>comment없음</p>;
+        } else return (<p>comment없음</p>);
     };
 
     const getMovieInfo = async () => {
         const {
-            data: {
-                original_title,
-                overview,
-                title,
-                poster_path,
-                backdrop_path,
-                tagline,
-                genres,
-                release_date,
-                runtime,
-                vote_average,
-            },
-        } = await axios.get(
-            `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=ko`
-        );
-        setMovieInfo({
-            title: title,
-            original_title: original_title,
-            tagline: tagline,
-            overview: overview.substring(0, 350),
-            release_date: release_date,
-            runtime: runtime,
-            vote_average: vote_average,
-        });
+            data: { original_title, overview, title, poster_path, backdrop_path, tagline, genres, release_date, runtime, vote_average },
+        } = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=ko`);
+        setMovieInfo({ title: title, original_title: original_title, tagline: tagline, overview: overview.substring(0,350)
+        , release_date: release_date, runtime: runtime, vote_average: vote_average });
         setPosters({
             poster_path: poster_path,
             backdrop_path: backdrop_path,
         });
         setIsLoading(false);
         setGenre(genres);
-        //  console.log(posters.poster_path);
-    };
+      //  console.log(posters.poster_path);
+    }
 
     return (
         <>
-            <div className="lb-wrap">
-                <div className="lb-image">
-                    <img src={backImg + posters.backdrop_path} />
-                </div>
-
-                <div className="lb-poster">
-                    <img src={img + posters.poster_path} />
-                </div>
-                <div className="lb-text">
-                    <Box className={classes.box}>
-                        <span>
-                            <h1>{movieInfo.original_title}</h1>
-                        </span>
-                        <h3>"{movieInfo.tagline}"</h3>
-                        <p>{movieInfo.overview}</p>
-                        <div className="lb-cols">
-                            <Table>
-                                <TableRow>
-                                    <TableCell>
-                                        Runtime:
-                                        <br />
-                                        <span>{movieInfo.runtime}mins</span>
-                                    </TableCell>
-                                    <TableCell>
-                                        release_date:
-                                        <br />
-                                        <span>{movieInfo.release_date}</span>
-                                    </TableCell>
-                                    <TableCell>
-                                        vote_average:
-                                        <br />
-                                        <span>{movieInfo.vote_average}/10</span>
-                                    </TableCell>
-                                    <TableCell>
-                                        Genres:
-                                        <br />
-                                        <span>{genre.map((g) => g.name + '|')}</span>
-                                    </TableCell>
-                                </TableRow>
-                            </Table>
-                        </div>
-                    </Box>
-                </div>
+        <div className="lb-wrap">
+            <div className="lb-image">
+                <img src={backImg + posters.backdrop_path} />
             </div>
-            <Table>
-                <TMDB id={id} />
-            </Table>
-            <Table>
-                <TableRow>
+
+            <div className="lb-poster">
+                <img src={img + posters.poster_path}/>
+            </div>
+            <div className="lb-text">
+                <Box className={classes.box}>
+                <span><h1>{movieInfo.original_title}</h1></span>
+                <h3>"{movieInfo.tagline}"</h3>
+                <p>{movieInfo.overview}</p>
+                <div className="lb-cols">
+
+                <Table>
+                    <TableRow>
+                        <TableCell>
+                            Runtime:<br/>
+                            <span>{movieInfo.runtime}mins</span>
+                        </TableCell>
+                        <TableCell>
+                            release_date:<br/>
+                            <span>{movieInfo.release_date}</span>
+                        </TableCell>
+                        <TableCell>
+                            vote_average:<br/>
+                            <span>{movieInfo.vote_average}/10</span>
+                        </TableCell>
+                        <TableCell>
+                            Genres:<br/>
+                            <span>
+                            {genre.map((g) => (
+                                g.name+'|'
+                            ))}
+                            </span>
+                        </TableCell>
+                    </TableRow>
+                    </Table>
+                </div> 
+                </Box>     
+            </div>
+        </div>
+        <Table>
+            <TMDB id={id} />
+        </Table>
+        <Table>
+        <TableRow>
                     <TableCell align="center" colSpan="3">
                         <TextField
                             id="commentField"
@@ -201,20 +181,20 @@ const ViewTMDB = ({ match, userObj }) => {
                         />
                     </TableCell>
                 </TableRow>
-            </Table>
-            <Table>
-                <TableRow>
-                    {comments !== null ? (
-                        printComments()
-                    ) : (
-                        <TableRow>
-                            <TableCell>로딩중...</TableCell>
-                        </TableRow>
-                    )}
-                </TableRow>
-            </Table>
-        </>
+        </Table>
+        <Table>
+        <TableRow>
+        {comments !== null ? (
+                            printComments()
+                        ) : (
+                            <TableRow>
+                                <TableCell>로딩중...</TableCell>
+                            </TableRow>
+                        )}
+        </TableRow>
+        </Table>
+    </>
     );
-};
+}
 
 export default ViewTMDB;

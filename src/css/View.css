@@ -38,8 +38,16 @@
   }
 }
 
-.lb-text h1,h3{
+.lb-text h1{
   color: rgb(255, 255, 255);
+  text-align: center; 
+  position: relative;
+  font-size: 1.2rem;
+  margin-bottom: 0%;
+}
+
+.lb-text h3{
+  color: #00FC87;
   text-align: center; 
   position: relative;
   font-size: 1.2rem;

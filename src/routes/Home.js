@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Grid, Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from '@material-ui/core';
 // firebase login import 추가
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -57,7 +58,7 @@ const useStyles = makeStyles({
     },
     posters__poster: {
         color: 'white',
-        margin: '4% 4% 5% 4%',
+        margin: '4% 4% 10% 4%',
         '&:hover': {
             transform: 'scale(1.4)',
         },
@@ -66,6 +67,13 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
+        justifyContent: 'center',
+        // width: '50%',
+    },
+    posters2_Mobile: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         // width: '50%',
     },
@@ -99,6 +107,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';
     const kobisViewURL = '/viewMovie?movieNm=';
+    const isMobile = useMediaQuery('(max-width: 400px)');
 
     const printTop3Movies_KOBIS = () => {
         console.log('movies:', movies);
@@ -134,7 +143,7 @@ const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
                 <div>
                     <h2>박스오피스 (해외) 🇺🇸</h2>
                 </div>
-                <div className={classes.posters2}>
+                <div className={isMobile ? classes.posters2_Mobile : classes.posters2}>
                     {tmdbHome.map((tmdb) => (
                         <span className={classes.posters2__poster}>
                             <Link to={tmdbViewURL + tmdb.id} className={classes.movieTitle}>

@@ -70,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
+    dia_cast_Mobile: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'spaceBetween',
+    },
     dia_similer: {
         display: 'flex',
         flexDirection: 'row',
@@ -256,7 +262,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                                 <span>
                                                     <b>{c.name}</b>
                                                 </span>
-                                                <br />[{c.character}]
+                                                
                                             </>
                                         </TableCell>
                                     ))}

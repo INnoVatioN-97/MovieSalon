@@ -1,10 +1,76 @@
 import React from 'react';
 import axios from 'axios';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
+import { withStyles } from '@material-ui/core/styles';
+const styles = (theme) => ({
+    root: {
+        textAlign: 'center',
+        // background: '#485460',
+        height: '100%',
+    },
 
+    pageTitle: {
+        textAlign: 'center',
+        fontSize: '4.2rem',
+        marginTop: '2%',
+        color: '#fff',
+        // marginBottom: 15,
+    },
+
+    box: {
+        display: 'flex',
+        width: 'auto',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        backgroundColor: '#20232a',
+        color: '#10FF00',
+        // sx: { maxWidth: 300 },
+    },
+
+    topMovieContainer: {
+        margin: '2% 12% 2% 12%',
+        display: 'flex',
+        flexDirection: 'row',
+        // padding: '5% 0 5% 0',
+        justifyContent: 'center',
+        height: '80%',
+    },
+
+    topMovieContainer__container: {
+        marginRight: '0%',
+        marginLeft: ' 0%',
+        width: '100%',
+        height: '100%',
+    },
+    images: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        width: '100%',
+    },
+    images__cast: {
+        color: 'white',
+        margin: '2% 3% 3% 3%', // Box 내부 아이템 margin값 조정
+    },
+    h2_similer: {
+        color: '10FF00',
+        textAlign: 'center',
+        marginLeft: '6%',
+        marginBottom: '0',
+    },
+    images_border: {
+        borderRadius: '4px 4px 4px 4px',
+    },
+    contentTitle: {
+        color: 'white',
+        fontSize: '1.3rem',
+        textDecoration: 'none',
+    },
+});
 class Cast extends React.Component {
     constructor(props) {
         super(props);
@@ -41,35 +107,26 @@ class Cast extends React.Component {
 
     render() {
         const { castInfo, movies } = this.state;
+        const { classes } = this.props;
+        /*
+        0_id, 1_name, 2_gender, 3_birthday, 4_place_of_birth, 5_profile_path
+        */
         const imgUrl = 'https://image.tmdb.org/t/p/w200';
         let queryUrl = '/viewTmdb/';
         return (
             <>
-                <TableRow>
-                    <TableCell>
-                        <img src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage} alt={castInfo[1]} width="150" height="150" />
-                    </TableCell>
-                    <TableCell>
-                        <TableRow>
-                            <h2>{castInfo[1]}</h2>
-                        </TableRow>
-                        <TableRow>{castInfo[3]}</TableRow>
-                        <TableRow>{castInfo[2] === 1 ? <p>woman</p> : <p>man</p>}</TableRow>
-                        <TableRow>{castInfo[4]}</TableRow>
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    {movies.map((m) => (
-                        <TableCell>
-                            <Link to={queryUrl + m.id}>
-                                <img src={m.poster_path ? imgUrl + m.poster_path : NoImageAvailable} alt="poster" />
-                            </Link>
-                        </TableCell>
-                    ))}
-                </TableRow>
+            <div className={classes.topMovieContainer}>
+            <img src={imgUrl + castInfo[5]} />
+
+            <Box className={classes.box}>
+            <h2>{castInfo[1]}</h2>
+            <p>{castInfo[3]}</p>
+            <p>{castInfo[4]}</p>
+            </Box>
+            </div>
             </>
         );
     }
 }
 
-export default Cast;
+export default withStyles(styles)(Cast);
