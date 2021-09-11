@@ -42,8 +42,10 @@ const styles = makeStyles({
     // owner: {fontSize:},
     btnDelete: {
         backgroundColor: '#4cd137',
-        fontSize: '2.2rem',
+        fontSize: '2.0rem',
         borderRadius: '2.5rem',
+        height: '2.6rem',
+        whiteSpace: 'nowrap',
         // justifyContent: 'center',
         '&:hover': {
             // border: 'solid',
@@ -52,9 +54,11 @@ const styles = makeStyles({
         },
     },
     btnAdd: {
-        width: '100%',
+        width: '5rem',
+        height: '3rem',
+        whiteSpace: 'nowrap',
         backgroundColor: '#4cd137',
-        fontSize: '1.4rem',
+        fontSize: '1.8rem',
         borderRadius: '2.5rem',
         // justifyContent: 'center',
         '&:hover': {
@@ -216,9 +220,10 @@ const Comment = ({ owner, colSpan, code }) => {
                     <TableRow align="center" className={classes.commentsRow}>
                         <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
                             <div className={classes.commentsLine}>
-                                <span>"{m.comment}"</span>
-                                <span>-</span>
-                                <span>{m.id}</span>
+                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                    <span>"{m.comment}"</span>
+                                    <span>- {m.id}</span>
+                                </div>
                                 <span>
                                     <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
                                         삭제
