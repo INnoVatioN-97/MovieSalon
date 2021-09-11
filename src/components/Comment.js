@@ -20,9 +20,6 @@ const styles = makeStyles({
         color: '#10FF00',
         borderBottom: 'none',
     },
-    tableCell: {
-        borderBottom: 'none',
-    },
     inputComment: {
         backgroundColor: '#2d3436',
         // width: '100%',
@@ -31,7 +28,7 @@ const styles = makeStyles({
     commentsLine: {
         // verticalAlign: 'middle',
         backgroundColor: '#2d3436',
-        fontSize: '2.3rem',
+        fontSize: '1.3rem',
         padding: '2% 6% 2% 6%',
         display: 'flex',
         flexDirection: 'row',
@@ -40,7 +37,7 @@ const styles = makeStyles({
     // owner: {fontSize:},
     btnDelete: {
         backgroundColor: '#4cd137',
-        fontSize: '2.5rem',
+        fontSize: '2.2rem',
         borderRadius: '2.5rem',
         // justifyContent: 'center',
         '&:hover': {
@@ -52,7 +49,7 @@ const styles = makeStyles({
     btnAdd: {
         width: '100%',
         backgroundColor: '#4cd137',
-        fontSize: '2.5rem',
+        fontSize: '1.4rem',
         borderRadius: '2.5rem',
         // justifyContent: 'center',
         '&:hover': {
@@ -60,6 +57,9 @@ const styles = makeStyles({
             // borderColor: 'grey',
             backgroundColor: '#44bd32',
         },
+    },
+    tableCell: {
+        borderBottom: 'none',
     },
 });
 const Comment = ({ owner, colSpan, code }) => {
@@ -179,7 +179,7 @@ const Comment = ({ owner, colSpan, code }) => {
             <Table className={classes.commentsTable}>
                 <TableBody>
                     <TableRow>
-                        <TableCell align="center" colSpan={colSpan - 1} width="75%" className={classes.tableCell}>
+                        <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
                             {/* <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}> */}
                             <TextField
                                 id="commentField"
@@ -199,7 +199,7 @@ const Comment = ({ owner, colSpan, code }) => {
 
                             {/* </div> */}
                         </TableCell>
-                        <TableCell align="center" colSpan="1" width="25%" className={classes.tableCell}>
+                        <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
                             <button onClick={addComment} className={classes.btnAdd}>
                                 추가
                             </button>
