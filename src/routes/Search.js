@@ -36,7 +36,7 @@ const styles = makeStyles((theme) => ({
         display: 'flex',
         // alignItems: 'center',
         justifyContent: 'center',
-        verticalAlign: 'top',
+        verticalAlign: 'middle',
     },
     inputRoot: {
         color: 'inherit',
@@ -155,6 +155,8 @@ const Search = () => {
                                                         <img src={NoImageAvailable} alt="poster" className={classes.posterIcon} />
                                                     )}
                                                 </ListItemIcon>
+                                            </Link>
+                                            <Link to={url + m.id} className={classes.searchResult__text}>
                                                 <Typography variant="inherit">{m.title + ' (' + m.release_date + ' 개봉)'}</Typography>
                                             </Link>
                                         </MenuItem>

@@ -2,37 +2,48 @@ import { makeStyles } from '@material-ui/styles';
 
 export default makeStyles((theme) => ({
     profileCard: {
+        whiteSpace: 'nowrap',
         borderRadius: '20px',
-        margin: '2% 20% auto 20%',
+        margin: '2% auto auto auto ',
         backgroundColor: '#202124',
         color: '#ffffff',
         textAlign: 'center',
-        // height: '100%',
+        // height: '70%',
+        width: '40%',
+        // padding: '0',
     },
     profileCard__up: {
-        borderRadius: ' 20px  20px 0 0', //테두리 둥글게하기 위함.
+        borderRadius: ' 20px 20px 0 0', //테두리 둥글게하기 위함.
         background: 'linear-gradient(90deg, #3389D4 30%, #EFBAA8 90%)',
-        height: '20%',
+        // height: '15%',
     },
     profileCard__down: {
         margin: 'auto',
-        width: '50%',
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        padding: '5%',
+        // padding: '5%',
     },
     profileImg: {
         marginTop: '5%',
         marginBottom: '2%',
-        width: '18rem',
-        height: '18rem',
+        // margin: '0',
+        // padding: '0',
+        width: '20vw',
+        height: '20vw',
         border: '10px',
         borderRadius: '70%',
         boxShadow: '0px 0px 7px 8px rgba(0,0,0,0.5)',
+        verticalAlign: 'middle',
+        // position: 'absolute',
+        overflow: 'hidden',
+        // transform: 'translate(1020, 1020)',
+        objectFit: 'cover',
     },
     formInput: {
         cursor: 'pointer',
-        width: '100%',
+        margin: 'auto',
+        width: '80%',
         padding: '10px 20px',
         borderRadius: '20px',
         border: '2px solid black',
@@ -44,7 +55,8 @@ export default makeStyles((theme) => ({
     },
     formBtn: {
         cursor: 'pointer',
-        width: '100%',
+        margin: 'auto',
+        width: '80%',
         padding: '10px 20px',
         border: '2px solid black',
         textAlign: 'center',
@@ -61,7 +73,8 @@ export default makeStyles((theme) => ({
 
     cancelBtn: {
         cursor: 'pointer',
-        width: '100%',
+        margin: 'auto',
+        width: '80%',
         padding: '10px 20px',
         border: '2px solid black',
         textAlign: 'center',

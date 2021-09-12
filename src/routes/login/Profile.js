@@ -109,7 +109,7 @@ const Profile = ({ refreshUser, userObj }) => {
             <div className={classes.profileCard__up}>
                 <div>
                     {isChange ? (
-                        <label for="attach-file" className="factoryInput__label">
+                        <label for="attach-file">
                             <img
                                 src={userObj.photoURL}
                                 className={classes.profileImg}
@@ -117,7 +117,6 @@ const Profile = ({ refreshUser, userObj }) => {
                                 style={{
                                     cursor: 'pointer',
                                     transform: 'translate(50, 50)',
-
                                     objectFit: 'cover',
                                 }}
                             />
@@ -128,11 +127,12 @@ const Profile = ({ refreshUser, userObj }) => {
                                         <img
                                             src={attachment}
                                             style={{
-                                                width: '50px',
-                                                height: '50px',
+                                                width: '2.7rem',
+                                                height: '2.7rem',
                                                 backgroundImage: attachment,
                                                 borderRadius: '70%',
                                                 border: '4',
+                                                verticalAlign: 'middle',
                                                 borderColor: '#000000',
                                             }}
                                             alt="attachment"
@@ -150,7 +150,13 @@ const Profile = ({ refreshUser, userObj }) => {
             </div>
             <form onSubmit={onSubmit}>
                 <div className={classes.profileCard__down}>
-                    <h2>{userObj.email}</h2>
+                    <h2
+                        style={{
+                            fontSize: '3vw',
+                        }}
+                    >
+                        {userObj.email}
+                    </h2>
                     {isChange ? (
                         <>
                             <input
@@ -183,7 +189,7 @@ const Profile = ({ refreshUser, userObj }) => {
                         </>
                     ) : (
                         <>
-                            <h3>{newDisplayName}</h3>
+                            <h3 style={{ fontSize: '3vw' }}>{newDisplayName}</h3>
                             <input type="button" onClick={onChangeProfile} className={classes.formBtn} value="프로필 정보 변경" />
                             <input type="button" onClick={onLogOutClick} className={classes.cancelBtn} value="로그아웃" />
                         </>

@@ -28,19 +28,14 @@ const styles = makeStyles({
     },
     tableCell: {
         textAlign: 'center',
-        fontSize: '1.6rem',
+        fontSize: '1.9rem',
         color: '#10ff00',
-        paddingBottom: '2%',
+        paddingBottom: '4%',
+        // marginBottom: '5%',
     },
 });
 
 const MovieList = ({ movies }) => {
-    const [keyword, setKeyword] = useState('');
-
-    const handleChange = (e) => {
-        setKeyword(e.target.value);
-    };
-
     const classes = styles();
 
     return (
@@ -57,22 +52,17 @@ const MovieList = ({ movies }) => {
                     {movies.map((movie) => {
                         // console.log('movie_list',movie);
                         return (
-                            // 검색창에 입력된 문자의 키워드를 movieName과 매치하여 리스트 출력
-                            movie.movieNm.indexOf(keyword) > -1 ? (
-                                <Movie
-                                    key={movie.movieCd}
-                                    movieNm={movie.movieNm}
-                                    rank={movie.rank}
-                                    rankInten={movie.rankInten}
-                                    openDt={movie.openDt}
-                                    audiCnt={movie.audiCnt}
-                                    audiAcc={movie.audiAcc}
-                                    audiInten={movie.audiInten}
-                                    // movieCode={fetchData(movie.movieNm)}
-                                />
-                            ) : (
-                                <p></p>
-                            )
+                            <Movie
+                                key={movie.movieCd}
+                                movieNm={movie.movieNm}
+                                rank={movie.rank}
+                                rankInten={movie.rankInten}
+                                openDt={movie.openDt}
+                                audiCnt={movie.audiCnt}
+                                audiAcc={movie.audiAcc}
+                                audiInten={movie.audiInten}
+                                // movieCode={fetchData(movie.movieNm)}
+                            />
                         );
                     })}
                 </TableBody>

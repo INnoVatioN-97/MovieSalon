@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Link,
-    Drawer,
-    Divider,
-    List,
-    MenuItem,
-    Button,
-    InputBase,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem, Button, InputBase } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -60,7 +50,10 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
     },
     menuButton: {
-        marginRight: theme.spacing(2),
+        // marginRight: theme.spacing(2),
+        margin: '0',
+        padding: '0',
+        position: 'absolute',
     },
     title: {
         // color: '#10FF00',
@@ -197,37 +190,15 @@ const Navigation = ({ userObj }) => {
                             <Button color="inherit" key={m.key}>
                                 {m.isProfile ? (
                                     <>
-                                        <Link
-                                            href={m.url}
-                                            className={classes.link}
-                                            variant="inherit"
-                                            color="inherit"
-                                            underline="none"
-                                        >
-                                            <img
-                                                src={m.imgUrl}
-                                                alt="profile"
-                                                className={classes.appBarProfile}
-                                            />
+                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
+                                            <img src={m.imgUrl} alt="profile" className={classes.appBarProfile} />
                                         </Link>
-                                        <Link
-                                            href={m.url}
-                                            className={classes.link}
-                                            variant="inherit"
-                                            color="inherit"
-                                            underline="none"
-                                        >
+                                        <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
                                             {m.text}
                                         </Link>
                                     </>
                                 ) : (
-                                    <Link
-                                        href={m.url}
-                                        className={classes.link}
-                                        variant="inherit"
-                                        color="inherit"
-                                        underline="none"
-                                    >
+                                    <Link href={m.url} className={classes.link} variant="inherit" color="inherit" underline="none">
                                         {m.text}
                                     </Link>
                                 )}
@@ -266,20 +237,11 @@ const Navigation = ({ userObj }) => {
                     {menuObj.map((m) => (
                         <>
                             <MenuItem key={m.key}>
-                                <Link
-                                    href={m.url}
-                                    className={classes.link}
-                                    variant="inherit"
-                                    color="inherit"
-                                >
+                                <Link href={m.url} className={classes.link} variant="inherit" color="inherit">
                                     {m.isProfile ? (
                                         <div className={classes.appBarProfile_Mobile}>
                                             <div>
-                                                <img
-                                                    src={m.imgUrl}
-                                                    alt={m.key}
-                                                    className={classes.appBarProfile_Mobile__img}
-                                                />
+                                                <img src={m.imgUrl} alt={m.key} className={classes.appBarProfile_Mobile__img} />
                                             </div>
                                             <div style={{ fontWeight: 'bold' }}>{m.text}</div>
                                         </div>
@@ -307,12 +269,7 @@ const Navigation = ({ userObj }) => {
                         <MenuIcon />
                     </IconButton>
                     <Search />
-                    <Drawer
-                        anchor="left"
-                        open={drawerOpen}
-                        onClose={handleDrawerClose}
-                        className={classes.drawer}
-                    >
+                    <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose} className={classes.drawer}>
                         {getDrawerChoices()}
                     </Drawer>
                 </Toolbar>{' '}
@@ -320,11 +277,7 @@ const Navigation = ({ userObj }) => {
         );
     };
 
-    return (
-        <header className={classes.root}>
-            {mobileView ? displayMobileView() : displayDesktopView()}
-        </header>
-    );
+    return <header className={classes.root}>{mobileView ? displayMobileView() : displayDesktopView()}</header>;
 };
 
 export default Navigation;

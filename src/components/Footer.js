@@ -6,15 +6,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const styles = makeStyles({
     root: {
         marginTop: '5%',
+        // margin: 'auto',
         width: '100%',
         fontSize: '1.rem',
-        height: '100%',
+        // height: '100%',
         backgroundColor: 'black',
         textAlign: 'center',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+        whiteSpace: 'nowrap',
     },
     profile: {
         textAlign: 'center',
@@ -22,7 +24,7 @@ const styles = makeStyles({
         // textDecoration: 'none',
     },
     profile__Info: {
-        height: '100%',
+        // height: '100%',
         color: 'white',
         display: 'flex',
         flexDirection: 'column',
