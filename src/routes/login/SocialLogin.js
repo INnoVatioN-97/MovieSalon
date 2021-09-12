@@ -11,48 +11,58 @@ const styles = makeStyles({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginLeft: '15%',
-        "@media (max-width: 750px)": {
-            marginLeft: '0%'
-          },
+        // margin: 'auto 5% auto 5%',
+        justifyContent: 'space-around',
+        // marginLeft: '15%',
+        '@media (max-width: 750px)': {
+            // marginLeft: '0%',
+        },
         textAlign: 'center',
     },
     google: {
-        width: '40%',
-        "@media (max-width: 750px)": {
-            width: '65%',
-          },
-        height: '30px',
+        // width: '40%',
+        '@media (max-width: 750px)': {
+            // width: '65%',
+        },
+        // height: '4vh',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'white',
-        padding: '0 30px',
-        "&:hover": {
-            background: 'rgba(25,30,40,0.8)',
+        fontWeight: '700',
+        // padding: '0 30px',
+        '&:hover': {
+            background: '#2980b9',
+            whiteSpace: 'nowrap',
+            color: 'white',
         },
-        background: '#00FC87',
+        background: 'linear-gradient(90deg, #c0392b 60%, #2980b9 80%)',
+        color: 'white',
+        textAlign: 'center',
+        fontSize: '3vw',
         whiteSpace: 'nowrap',
     },
     github: {
-        width: '40%',
-        "@media (max-width: 750px)": {
-            width: '65%',
-          },
-        height: '30px',
-        marginLeft: '3%',
-        fontSize: 'vw',
+        // width: '40%',
+        '@media (max-width: 750px)': {
+            // width: '65%',
+        },
+        // height: '30px',
+        // marginLeft: '3%',
+        // fontSize: 'vw',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'white',
-        padding: '0 30px',
-        "&:hover": {
-            background: 'rgba(25,30,40,0.8)',
+        fontWeight: '700',
+        // padding: '0 30px',
+        '&:hover': {
+            background: '#00FC87',
+            color: '#202329',
         },
-        background: '#00FC87',
+        background: 'rgba(25,30,40,0.8)',
+        color: 'white',
+        textAlign: 'center',
+        fontSize: '3vw',
         whiteSpace: 'nowrap',
-
     },
 });
 const SocialLogin = () => {
@@ -71,21 +81,17 @@ const SocialLogin = () => {
             history.push('/');
             console.log(data.user.email);
         } catch (error) {
-            alert(
-                '로그인에 문제가 발생했습니다. 혹시 같은 아이디에 다른 플랫폼으로 로그인을 시도하셨나요??'
-            );
+            alert('로그인에 문제가 발생했습니다. 혹시 같은 아이디에 다른 플랫폼으로 로그인을 시도하셨나요??');
         }
     };
     const classes = styles();
     return (
         <div className={classes.root}>
             <button onClick={onSocialClick} name="google" className={classes.google}>
-                Continue with Google
-                <FontAwesomeIcon icon={faGoogle} />
+                Sign with <FontAwesomeIcon icon={faGoogle} />
             </button>
             <button onClick={onSocialClick} name="github" className={classes.github}>
-                Continue with Github
-                <FontAwesomeIcon icon={faGithub} />
+                Sign with <FontAwesomeIcon icon={faGithub} />
             </button>
         </div>
     );

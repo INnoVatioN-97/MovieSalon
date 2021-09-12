@@ -40,10 +40,9 @@ const useStyles = makeStyles({
         marginBottom: '1%',
         borderBlock: 'solid',
         borderBlockColor: '#00FC87',
-        "@media (max-width: 750px)": {
+        '@media (max-width: 750px)': {
             width: '70%',
-
-          },
+        },
         writingMode: 'horizontal-tb',
         boxShadow: 'inset 255 255 255 32px',
     },
@@ -53,36 +52,47 @@ const useStyles = makeStyles({
     },
     sign_Button: {
         width: '30%',
-        height: '30px',
+        height: '3vh',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: 'white',
-        padding: '0 30px',
-        "&:hover": {
+        color: '#202329',
+        fontWeight: '700',
+        // padding: '0 30px',
+        '&:hover': {
             background: 'rgba(25,30,40,0.8)',
+            whiteSpace: 'nowrap',
+            color: 'white',
         },
         background: '#00FC87',
+        textAlign: 'center',
+        fontSize: '2vw',
+        whiteSpace: 'nowrap',
     },
     create_Account_btn: {
         marginTop: '3%',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        padding: '0 30px',
-        color: 'white',
+        // padding: '0 30px',
+        color: '#202329',
+        fontWeight: '700',
         width: '35%',
-        height: '30px',
-        "@media (max-width: 750px)": {
+        height: '3vh',
+        '@media (max-width: 750px)': {
             width: '32%',
             height: '20px',
-          },
-        "&:hover": {
+            whiteSpace: 'nowrap',
+        },
+        '&:hover': {
             background: 'rgba(25,30,40,0.8)',
+            color: 'white',
         },
         background: '#00FC87',
+        textAlign: 'center',
+        fontSize: '2vw',
+        whiteSpace: 'nowrap',
     },
-
 });
 
 const AuthForm = ({ userObj, isLoggedIn }) => {
