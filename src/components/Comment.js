@@ -75,33 +75,14 @@ const Comment = ({ owner, colSpan, code }) => {
     const classes = styles();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [cnt, setCnt] = useState(0);
 
     // 코멘트 하나도 작성 안된 영화의 경우
-    const [emptyComments, setEmptyComments] = useState(false);
     // const []
 
     useEffect(() => {
         console.log('comments:', comments);
-        if (comments.length === 0 && code > 0 && !emptyComments) {
-            const getData = dbService
-                .collection(`comment_movieCode=${code}`)
-                .orderBy('createdAt', 'desc')
-                .onSnapshot((snapshot) => {
-                    const commentsArray = snapshot.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }));
-                    setComments(commentsArray);
-                    console.log('dbService 접근!', comments);
-                });
-            if (comments.length === 0) {
-                setCnt(cnt + 1);
-                if (cnt > 3) setEmptyComments(true);
-            }
-            return () => getData();
-        }
-        if (comments.length !== 0 && emptyComments) {
+        // if (!emptyComments) {
+        if (comments.length === 0) {
             const getData = dbService
                 .collection(`comment_movieCode=${code}`)
                 .orderBy('createdAt', 'desc')
@@ -115,7 +96,7 @@ const Comment = ({ owner, colSpan, code }) => {
                 });
             return () => getData();
         }
-    }, [comments]);
+    }, [code, comments]);
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -145,7 +126,6 @@ const Comment = ({ owner, colSpan, code }) => {
                     console.log('Document successfully written!');
                     setComment('');
                     setComments([]);
-                    if (emptyComments) window.location.reload();
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
