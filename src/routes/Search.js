@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import { Link } from 'react-router-dom';
-import { fade, makeStyles, Table } from '@material-ui/core';
+import { fade, makeStyles, Table, TableRow, Typography, TableCell, MenuList, Paper, MenuItem, ListItemIcon } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
 import NoImageAvailable from 'images/NoImageAvailable.png';
@@ -132,56 +130,43 @@ const Search = () => {
                 />
 
                 <div className={classes.searchResult}>
-                    {isLoading
-                        ? ''
-                        : searchedMovies.map((m) => (
-                              <Table>
-                                  {m.original_title || m.title.indexOf(keyword) > -1 ? (
-                                      <TableRow>
-                                          <TableCell
-                                              width="25%"
-                                              className={classes.searchResult__text}
-                                          >
-                                              {m.poster_path ? (
-                                                  <img
-                                                      src={imgPathRoot + m.poster_path}
-                                                      alt="poster"
-                                                      className={classes.posterIcon}
-                                                  />
-                                              ) : (
-                                                  <img
-                                                      src={NoImageAvailable}
-                                                      alt="poster"
-                                                      className={classes.posterIcon}
-                                                  />
-                                              )}
-                                          </TableCell>
-                                          <TableCell
-                                              width="75%"
-                                              className={classes.searchResult__text}
-                                          >
-                                              {/* <img
-                                        src={imgPathRoot + m.poster_path}
-                                        alt="poster"
-                                        className={classes.posterIcon}
-                                    /> */}
-                                              <Link
-                                                  to={url + m.id}
-                                                  className={classes.searchResult__text}
-                                              >
-                                                  {m.title + ' (' + m.release_date + ' 개봉)'}
-                                              </Link>
-                                          </TableCell>
-                                      </TableRow>
-                                  ) : (
-                                      ''
-                                      // <TableRow>
-                                      //     <TableCell>검색 결과가 없습니다.</TableCell>
-                                      // </TableRow>
-                                  )}
-                              </Table>
-                          ))}
-                    {}
+                    {isLoading ? (
+                        ''
+                    ) : (
+                        <Paper className={classes.searchResult}>
+                            {searchedMovies.map((m) => (
+                                <MenuList
+                                    onClick={() => {
+                                        setKeyword('');
+                                        setSearchedMovies([]);
+                                    }}
+                                >
+                                    {m.original_title || m.title.indexOf(keyword) > -1 ? (
+                                        <MenuItem className={classes.searchResult__text}>
+                                            <Link to={url + m.id} className={classes.searchResult__text}>
+                                                <ListItemIcon>
+                                                    {m.poster_path ? (
+                                                        <img
+                                                            src={imgPathRoot + m.poster_path}
+                                                            alt="poster"
+                                                            className={classes.posterIcon}
+                                                        />
+                                                    ) : (
+                                                        <img src={NoImageAvailable} alt="poster" className={classes.posterIcon} />
+                                                    )}
+                                                </ListItemIcon>
+                                                <Typography variant="inherit">{m.title + ' (' + m.release_date + ' 개봉)'}</Typography>
+                                            </Link>
+                                        </MenuItem>
+                                    ) : (
+                                        <MenuItem className={classes.searchResult__text}>
+                                            <Typography variant="inherit"> 검색결과없음.</Typography>
+                                        </MenuItem>
+                                    )}
+                                </MenuList>
+                            ))}
+                        </Paper>
+                    )}
                 </div>
             </div>
         </>
