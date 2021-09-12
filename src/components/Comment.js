@@ -75,28 +75,38 @@ const Comment = ({ owner, colSpan, code }) => {
     const classes = styles();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
+    const [refresh, setIsRefresh] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     // 코멘트 하나도 작성 안된 영화의 경우
     // const []
 
     useEffect(() => {
         console.log('comments:', comments);
-        // if (!emptyComments) {
-        if (comments.length === 0) {
-            const getData = dbService
-                .collection(`comment_movieCode=${code}`)
-                .orderBy('createdAt', 'desc')
-                .onSnapshot((snapshot) => {
-                    const commentsArray = snapshot.docs.map((doc) => ({
-                        id: doc.id,
-                        ...doc.data(),
-                    }));
-                    setComments(commentsArray);
-                    console.log('dbService 접근!', comments);
-                });
-            return () => getData();
+        if (refresh === true) {
+            console.log('새로 코멘트 가져와야되는 구간');
+            if (comments.length === 0) {
+                const getData = dbService
+                    .collection(`comment_movieCode=${code}`)
+                    .orderBy('createdAt', 'desc')
+                    .onSnapshot((snapshot) => {
+                        const commentsArray = snapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            ...doc.data(),
+                        }));
+                        setComments(commentsArray);
+                        console.log('dbService 접근!', comments);
+                        setIsLoading(true);
+                    });
+                return () => {
+                    setIsRefresh(false);
+                    getData();
+                };
+            } else {
+                console.log('새로 코멘트 가져오지 않는구간');
+            }
         }
-    }, [code, comments]);
+    }, [refresh, comments, isLoading]);
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -126,6 +136,7 @@ const Comment = ({ owner, colSpan, code }) => {
                     console.log('Document successfully written!');
                     setComment('');
                     setComments([]);
+                    setIsRefresh(true);
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
@@ -153,6 +164,7 @@ const Comment = ({ owner, colSpan, code }) => {
                         alert('제대로 삭제됨!');
                         // window.location.reload();
                         setComments([]);
+                        setIsRefresh(true);
                     })
                     .catch((error) => {
                         console.error('Error writing document: ', error);
@@ -194,25 +206,30 @@ const Comment = ({ owner, colSpan, code }) => {
                             </button>
                         </TableCell>
                     </TableRow>
+                    {isLoading ? (
+                        comments.map((m) => (
+                            <TableRow align="center" className={classes.commentsRow}>
+                                <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
+                                    <div className={classes.commentsLine}>
+                                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                            <span>"{m.comment}"</span>
+                                            <span>- {m.id}</span>
+                                        </div>
+                                        <span>
+                                            <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
+                                                삭제
+                                            </button>
+                                        </span>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell>불러오는 중...</TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
-
-                {comments.map((m) => (
-                    <TableRow align="center" className={classes.commentsRow}>
-                        <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
-                            <div className={classes.commentsLine}>
-                                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <span>"{m.comment}"</span>
-                                    <span>- {m.id}</span>
-                                </div>
-                                <span>
-                                    <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
-                                        삭제
-                                    </button>
-                                </span>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                ))}
             </Table>
         </>
     );

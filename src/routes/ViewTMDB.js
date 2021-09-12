@@ -124,7 +124,7 @@ const ViewTMDB = ({ match, userObj }) => {
     };
 
     return (
-        <>
+        <div>
             <div className="lb-wrap">
                 <div className="lb-image">
                     <img src={posters.backdrop_path ? backImg + posters.backdrop_path : NoBackdropImage} alt="backPoster" />
@@ -173,14 +173,8 @@ const ViewTMDB = ({ match, userObj }) => {
             <Table>
                 <TMDB id={id} />
             </Table>
-            {id > 0 ? (
-                <Comment code={id} owner={userObj.email} colSpan={3} />
-            ) : (
-                <TableRow>
-                    <TableCell>'한줄평 기능 로딩중'</TableCell>
-                </TableRow>
-            )}
-        </>
+            <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
+        </div>
     );
 };
 
