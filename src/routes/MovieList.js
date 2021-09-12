@@ -31,6 +31,7 @@ const styles = makeStyles({
         fontSize: '1.9rem',
         color: '#10ff00',
         paddingBottom: '4%',
+
         // marginBottom: '5%',
     },
 });

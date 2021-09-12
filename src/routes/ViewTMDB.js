@@ -173,35 +173,13 @@ const ViewTMDB = ({ match, userObj }) => {
             <Table>
                 <TMDB id={id} />
             </Table>
-            <Table>
+            {id > 0 ? (
+                <Comment code={id} owner={userObj.email} colSpan={3} />
+            ) : (
                 <TableRow>
-                    <TableCell align="center" colSpan="3">
-                        <TextField
-                            id="commentField"
-                            fullWidth={true}
-                            label="한줄평"
-                            placeholder="한줄평 남기기"
-                            // multiline
-                            variant="filled"
-                            size="medium"
-                            value={comment}
-                            onChange={handleChange}
-                            onKeyPress={addComment}
-                        />
-                    </TableCell>
+                    <TableCell>'한줄평 기능 로딩중'</TableCell>
                 </TableRow>
-            </Table>
-            <Table>
-                <TableRow>
-                    {comments !== null ? (
-                        printComments()
-                    ) : (
-                        <TableRow>
-                            <TableCell>로딩중...</TableCell>
-                        </TableRow>
-                    )}
-                </TableRow>
-            </Table>
+            )}
         </>
     );
 };
