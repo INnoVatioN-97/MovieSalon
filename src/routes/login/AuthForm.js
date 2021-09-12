@@ -16,6 +16,7 @@ const useStyles = makeStyles({
         margin: '0',
         textAlign: 'center',
         width: '100%',
+        height: '100%',
     },
     title: {
         color: '#fff',
@@ -34,6 +35,19 @@ const useStyles = makeStyles({
         width: '100%',
         alignItems: 'center',
     },
+    authContainer: {
+        margin: '0 0 2% 0',
+        padding: '0',
+        display: 'flex',
+        flexDirection: 'row',
+        // margin: 'auto',
+        // marginTop: '5%',
+        // marginBottom: '5%',
+        height: '100%',
+        width: '100%',
+        // alignItems: 'center',
+        justifyContent: 'space-around',
+    },
     inputForms: {
         width: '40%',
         height: '30px',
@@ -51,8 +65,8 @@ const useStyles = makeStyles({
         marginBottom: '0.3%',
     },
     sign_Button: {
-        width: '30%',
-        height: '3vh',
+        width: '40%',
+        // height: '3vh',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -70,15 +84,16 @@ const useStyles = makeStyles({
         whiteSpace: 'nowrap',
     },
     create_Account_btn: {
-        marginTop: '3%',
+        // marginTop: '3%',
+        width: '40%',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
         // padding: '0 30px',
         color: '#202329',
         fontWeight: '700',
-        width: '35%',
-        height: '3vh',
+        // width: '35%',
+        // height: '3vh',
         '@media (max-width: 750px)': {
             width: '32%',
             height: '20px',
@@ -170,7 +185,7 @@ const AuthForm = ({ userObj, isLoggedIn }) => {
                         className={classes.inputForms} // CSS 적용해야.
                     />
                 </Box>
-                <div className={classes.box}>
+                <div className={classes.authContainer}>
                     <input
                         id="signInSubmit"
                         type="submit"

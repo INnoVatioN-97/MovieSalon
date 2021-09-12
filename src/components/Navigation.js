@@ -204,8 +204,7 @@ const Navigation = ({ userObj }) => {
                                 )}
                             </Button>
                         ))}
-                        {/* {searchBox()} */}
-                        <Search />
+                        {Boolean(userObj) ? <Search /> : null}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -268,7 +267,7 @@ const Navigation = ({ userObj }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Search />
+                    {Boolean(userObj) ? <Search /> : null}
                     <Drawer anchor="left" open={drawerOpen} onClose={handleDrawerClose} className={classes.drawer}>
                         {getDrawerChoices()}
                     </Drawer>

@@ -20,7 +20,7 @@ const styles = makeStyles({
         textAlign: 'center',
     },
     google: {
-        // width: '40%',
+        width: '40%',
         '@media (max-width: 750px)': {
             // width: '65%',
         },
@@ -35,14 +35,14 @@ const styles = makeStyles({
             whiteSpace: 'nowrap',
             color: 'white',
         },
-        background: 'linear-gradient(90deg, #c0392b 60%, #2980b9 80%)',
+        background: '#c0392b',
         color: 'white',
         textAlign: 'center',
-        fontSize: '3vw',
+        fontSize: '2vw',
         whiteSpace: 'nowrap',
     },
     github: {
-        // width: '40%',
+        width: '40%',
         '@media (max-width: 750px)': {
             // width: '65%',
         },
@@ -55,13 +55,13 @@ const styles = makeStyles({
         fontWeight: '700',
         // padding: '0 30px',
         '&:hover': {
-            background: '#00FC87',
+            background: '#ffffff',
             color: '#202329',
         },
         background: 'rgba(25,30,40,0.8)',
         color: 'white',
         textAlign: 'center',
-        fontSize: '3vw',
+        fontSize: '2vw',
         whiteSpace: 'nowrap',
     },
 });
