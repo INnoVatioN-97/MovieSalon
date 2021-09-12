@@ -10,6 +10,49 @@ const styles = makeStyles({
     root: {
         display: 'flex',
         flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginLeft: '15%',
+        "@media (max-width: 750px)": {
+            marginLeft: '0%'
+          },
+        textAlign: 'center',
+    },
+    google: {
+        width: '40%',
+        "@media (max-width: 750px)": {
+            width: '65%',
+          },
+        height: '30px',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        padding: '0 30px',
+        "&:hover": {
+            background: 'rgba(25,30,40,0.8)',
+        },
+        background: '#00FC87',
+        whiteSpace: 'nowrap',
+    },
+    github: {
+        width: '40%',
+        "@media (max-width: 750px)": {
+            width: '65%',
+          },
+        height: '30px',
+        marginLeft: '3%',
+        fontSize: 'vw',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        padding: '0 30px',
+        "&:hover": {
+            background: 'rgba(25,30,40,0.8)',
+        },
+        background: '#00FC87',
+        whiteSpace: 'nowrap',
+
     },
 });
 const SocialLogin = () => {
@@ -36,11 +79,11 @@ const SocialLogin = () => {
     const classes = styles();
     return (
         <div className={classes.root}>
-            <button onClick={onSocialClick} name="google" className="authBtn">
+            <button onClick={onSocialClick} name="google" className={classes.google}>
                 Continue with Google
                 <FontAwesomeIcon icon={faGoogle} />
             </button>
-            <button onClick={onSocialClick} name="github" className="authBtn">
+            <button onClick={onSocialClick} name="github" className={classes.github}>
                 Continue with Github
                 <FontAwesomeIcon icon={faGithub} />
             </button>

@@ -6,7 +6,6 @@ import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import { withStyles } from '@material-ui/core/styles';
-import { useMediaQuery } from '@material-ui/core';
 import '../css/View.css';
 const styles = (theme) => ({
     root: {

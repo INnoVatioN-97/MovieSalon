@@ -1,12 +1,30 @@
 .authContainer {
     /* margin: 5% 0% 30% 0%; */
-    margin-top: 6%;
+    margin-top: 3%;
     padding: 2%;
-    width: 70%;
+    width: 50%;
     /* padding: 5%; */
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     /* align-items: center; */
-    background-color: red;
+    background-color: rgba(13, 14, 16, 0.3);
 }
+
+@media screen and (max-width: 400px) { 
+    .authContainer{
+    margin-top: 12%;
+    margin-bottom: 10%;
+    padding: 2%;
+    width: 80%;
+    /* padding: 5%; */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    /* align-items: center; */
+    background-color: rgba(13, 14, 16, 0.3);
+    }
+    
+};
+
+

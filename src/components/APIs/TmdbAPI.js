@@ -30,7 +30,7 @@ export const getUpcommingMovies = async () => { // 개봉예정작
     const {
         data: { results },
     } = await axios.get(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_API_KEY}&language=ko&page=1&region=kr`);
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_API_KEY}&language=ko&page=1&region=US`);
         return results;
     } catch (error) {
         console.log('error!', error);

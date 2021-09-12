@@ -332,6 +332,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 width="200"
                                 height="300"
                             />
+                            <div className={classes.dia_content_guide}>{u.title}</div>
                         </span>
                     ))}
                 </div>
@@ -347,6 +348,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
                                 title={m.title}
                             />
+                            <div className={classes.dia_content_guide}>{m.title}</div>
                         </span>
                     ))}
                 </div>
