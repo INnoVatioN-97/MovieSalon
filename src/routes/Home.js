@@ -97,6 +97,9 @@ const useStyles = makeStyles({
     },
     backdrop: {
         width: '40%',
+        '@media (max-width: 750px)': {
+             width: '60%',
+        },
         borderRadius: '15px',
         boxShadow: '5px 5px 15px 5px #000000',
     },

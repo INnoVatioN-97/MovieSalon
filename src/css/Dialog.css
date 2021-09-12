@@ -26,6 +26,8 @@
 .button {
     width: 16rem;
     height: 3rem;
+    margin-top: 1%;
+    margin-bottom: 1%;
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 2.5px;
