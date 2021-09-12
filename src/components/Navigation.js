@@ -50,10 +50,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
     },
     menuButton: {
-        // marginRight: theme.spacing(2),
-        margin: '0',
-        padding: '0',
-        position: 'absolute',
+        marginRight: theme.spacing(2),
     },
     title: {
         // color: '#10FF00',
