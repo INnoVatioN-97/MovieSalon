@@ -27,7 +27,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
             {isLoggedIn && <Navigation userObj={userObj} />}
             <Switch>
                 {isLoggedIn ? (
-                    <div>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <Route exact path="/">
                             <Home
                                 movies={top3Movies}
@@ -59,16 +59,20 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         <Route exact path="/profile">
                             <Profile userObj={userObj} refreshUser={refreshUser} />
                         </Route>
-                        <Footer />
+                        <footer>
+                            <Footer />
+                        </footer>
                     </div>
                 ) : (
-                    <>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <Navigation />
                         <Route exact path="/">
                             <Auth />
                         </Route>
-                        <Footer />
-                    </>
+                        <footer>
+                            <Footer />
+                        </footer>
+                    </div>
                 )}
             </Switch>
         </Router>

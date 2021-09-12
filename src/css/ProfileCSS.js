@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 export default makeStyles((theme) => ({
     profileCard: {
         borderRadius: '20px',
-        margin: '2% 20% 0 20%',
+        margin: '2% 20% auto 20%',
         backgroundColor: '#202124',
         color: '#ffffff',
         textAlign: 'center',

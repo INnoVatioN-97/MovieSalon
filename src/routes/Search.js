@@ -21,7 +21,7 @@ const styles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-
+        width: '70%',
         [theme.breakpoints.up('sm')]: {
             margin: 'auto',
             width: '70%',
