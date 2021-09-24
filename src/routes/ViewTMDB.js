@@ -28,6 +28,7 @@ const ViewTMDB = ({ match, userObj }) => {
 
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
     const id = match.params.id;
+    const code = match.params.id;
     const img = 'https://image.tmdb.org/t/p/w400'; // poster
     const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
     const classes = useStyles();

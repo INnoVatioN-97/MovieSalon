@@ -35,7 +35,7 @@ const styles = makeStyles({
             whiteSpace: 'nowrap',
             color: 'white',
         },
-        background: '#c0392b',
+        background: 'linear-gradient(90deg, #c0392b 30%, #FBC014 35%, #2980b9 80%)',
         color: 'white',
         textAlign: 'center',
         fontSize: '2vw',

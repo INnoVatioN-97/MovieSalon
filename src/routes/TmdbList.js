@@ -348,7 +348,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
                                 title={m.title}
                             />
-                            <div className={classes.dia_content_guide}>{m.title}</div>
+                            <div className={classes.dia_content_guide}>{m.title.slice(0,20)}</div>
                         </span>
                     ))}
                 </div>
