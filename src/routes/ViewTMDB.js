@@ -28,6 +28,7 @@ const ViewTMDB = ({ match, userObj }) => {
 
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
     const id = match.params.id;
+    const code = match.params.id;
     const img = 'https://image.tmdb.org/t/p/w400'; // poster
     const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
     const classes = useStyles();
@@ -173,7 +174,13 @@ const ViewTMDB = ({ match, userObj }) => {
             <Table>
                 <TMDB id={id} />
             </Table>
-            <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
+            {code > 0 ? (
+                        <Comment code={id} owner={userObj.email} colSpan={3} />
+                    ) : (
+                        <TableRow>
+                            <TableCell>'한줄평 기능 로딩중'</TableCell>
+                        </TableRow>
+                    )}
         </div>
     );
 };
