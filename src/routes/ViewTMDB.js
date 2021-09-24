@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { TableBody, Table, TableRow, TableCell, TextField, Grid } from '@material-ui/core';
-import { dbService } from 'fbase';
+import { TableBody, Table, TableRow, TableCell } from '@material-ui/core';
 import Comment from 'components/Comment';
 import TMDB from 'components/TMDB';
 import { Box } from '@material-ui/core';
@@ -25,9 +24,9 @@ const ViewTMDB = ({ match, userObj }) => {
     const [posters, setPosters] = useState([]);
 
     const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-    const id = match.params.id;
-    const img = 'https://image.tmdb.org/t/p/w400'; // poster
-    const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280 background img
+    const id = match.params.id; // 영화 코드
+    const img = 'https://image.tmdb.org/t/p/w400'; // 영화 메인 포스터
+    const backImg = 'https://image.tmdb.org/t/p/w1280'; // 1280사이즈 백그라운드 포스터
     const classes = useStyles();
 
     useEffect(() => {
@@ -53,26 +52,12 @@ const ViewTMDB = ({ match, userObj }) => {
         });
         setGenre(genres);
         setIsLoading(false);
-        //  console.log(posters.poster_path);
     };
 
     return (
         <>
             {isLoading ? (
-                <div>
-                    로딩중
-                    {match.params.id > 0 ? (
-                        <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
-                    ) : (
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>'한줄평 기능 로딩중'</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    )}
-                </div>
+                <div className="lb-wrap">로딩중...</div>
             ) : (
                 <>
                     <div className="lb-wrap">
@@ -88,7 +73,7 @@ const ViewTMDB = ({ match, userObj }) => {
                                 <span>
                                     <h1>{movieInfo.original_title}</h1>
                                 </span>
-                                {/* 태그라인 미존재시 허공에 ""만 떠있는거 해결 */}
+
                                 <h3>{Boolean(movieInfo.tagline) ? `"${movieInfo.tagline}"` : ''}</h3>
                                 <p>{movieInfo.overview}</p>
                                 <div className="lb-cols">
@@ -123,8 +108,8 @@ const ViewTMDB = ({ match, userObj }) => {
                     <Table>
                         <TMDB id={id} />
                     </Table>
-                    {match.params.id > 0 ? (
-                        <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
+                    {id > 0 ? (
+                        <Comment code={id} owner={userObj.email} colSpan={3} />
                     ) : (
                         <Table>
                             <TableBody>
