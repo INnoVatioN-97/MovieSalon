@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../css/App.css';
-import { TableBody, Table, TableRow, TableCell, TableHead, TextField } from '@material-ui/core';
-import { dbService } from 'fbase';
+import { TableBody, Table, TableRow, TableCell, TableHead } from '@material-ui/core';
 import Comment from 'components/Comment';
 import { getNaverSearchResult, getHighQualityPosterLink } from 'components/APIs/NaverSearchAPI';
 import { makeStyles } from '@material-ui/styles';
@@ -12,7 +11,6 @@ const styles = makeStyles({
         margin: '2% auto auto auto ',
     },
     movieTable: {
-        // backgroundColor: '#636e72',
         borderRadius: '20px',
         margin: 'auto',
         width: '70%',
@@ -88,7 +86,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
 
     const printMovieInfo = (movie) => {
         const actors = movie.actor.split('|');
-        // console.log('userObj from printMovieInfo:', userObj.email);
         return (
             <>
                 <TableRow hover={true}>
@@ -108,7 +105,7 @@ const ViewMovie = ({ movieNm, userObj }) => {
                         감독
                     </TableCell>
                     <TableCell align="center" className={classes.tableCell}>
-                        {movie.director.replace('|', '')}
+                        {movie.director.substr(0, movie.director.length - 1).replace('|', ' ')}
                     </TableCell>
                 </TableRow>
                 <TableRow>
@@ -158,7 +155,6 @@ const ViewMovie = ({ movieNm, userObj }) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>{printMovieInfo(movieInfo)}</TableBody>
-                        {/* const Comment = ({userObj, owner, colSpan, code }) */}
                     </Table>
                     {code > 0 ? (
                         <Comment code={code} owner={userObj.email} colSpan={3} />

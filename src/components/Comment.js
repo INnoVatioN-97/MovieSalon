@@ -74,7 +74,6 @@ const Comment = ({ owner, colSpan, code }) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [refresh, setRefresh] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
 
     // 코멘트 하나도 작성 안된 영화의 경우
     // const []
@@ -95,7 +94,6 @@ const Comment = ({ owner, colSpan, code }) => {
                         }));
                         setComments(commentsArray);
                         console.log('dbService 접근!', comments);
-                        // setIsLoading(true);
                     });
                 return () => {
                     setRefresh(false);
@@ -136,7 +134,6 @@ const Comment = ({ owner, colSpan, code }) => {
                     setComment('');
                     setComments([]);
                     setRefresh(true);
-                    setIsLoading(false);
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
@@ -147,9 +144,6 @@ const Comment = ({ owner, colSpan, code }) => {
     };
 
     const onDeleteClick = async (event) => {
-        // console.log('event.target.id:', event.target.id, 'owner:', owner);
-        // console.log(event.target.email);
-
         if (owner === event.target.id) {
             console.log('code:', code);
             // alert('이 댓글 주인!');
@@ -162,7 +156,6 @@ const Comment = ({ owner, colSpan, code }) => {
                     .then(() => {
                         console.log('Document successfully Deleted!');
                         alert('제대로 삭제됨!');
-                        // window.location.reload();
                         setComments([]);
                         setRefresh(true);
                     })
@@ -181,7 +174,6 @@ const Comment = ({ owner, colSpan, code }) => {
                 <TableBody>
                     <TableRow>
                         <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
-                            {/* <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}> */}
                             <TextField
                                 id="commentField"
                                 fullWidth={true}
@@ -197,8 +189,6 @@ const Comment = ({ owner, colSpan, code }) => {
                                     className: classes.inputComment,
                                 }}
                             />
-
-                            {/* </div> */}
                         </TableCell>
                         <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
                             <button onClick={addComment} className={classes.btnAdd}>
@@ -228,13 +218,11 @@ const Comment = ({ owner, colSpan, code }) => {
                 <TableBody>
                     <TableRow>
                         <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
-                            {/* <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}> */}
                             <TextField
                                 id="commentField"
                                 fullWidth={true}
                                 label="한줄평 남기기"
                                 placeholder="한줄평 입력"
-                                // multiline
                                 variant="filled"
                                 size="medium"
                                 value={comment}
@@ -244,8 +232,6 @@ const Comment = ({ owner, colSpan, code }) => {
                                     className: classes.inputComment,
                                 }}
                             />
-
-                            {/* </div> */}
                         </TableCell>
                         <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
                             <button onClick={addComment} className={classes.btnAdd}>
