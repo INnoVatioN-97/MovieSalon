@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableRow, TableCell, TextField, TableBody } from '@material-ui/core';
-import { dbService, firebaseInstance, storageService } from 'fbase';
+import { dbService } from 'fbase';
 import { makeStyles } from '@material-ui/core';
 
 const styles = makeStyles({
     commentsTable: {
         margin: 'auto',
         width: '70%',
-
-        // backgroundColor: '#636e72',
         borderRadius: '20px',
         backgroundColor: 'rgba(32, 35, 42, 0.9)',
         color: '#FFFFFF',
@@ -75,7 +73,7 @@ const Comment = ({ owner, colSpan, code }) => {
     const classes = styles();
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [refresh, setIsRefresh] = useState(true);
+    const [refresh, setRefresh] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
     // 코멘트 하나도 작성 안된 영화의 경우
@@ -83,7 +81,8 @@ const Comment = ({ owner, colSpan, code }) => {
 
     useEffect(() => {
         console.log('comments:', comments);
-        if (refresh === true) {
+        console.log('refresh:', refresh);
+        if (refresh && code !== 0) {
             console.log('새로 코멘트 가져와야되는 구간');
             if (comments.length === 0) {
                 const getData = dbService
@@ -96,17 +95,17 @@ const Comment = ({ owner, colSpan, code }) => {
                         }));
                         setComments(commentsArray);
                         console.log('dbService 접근!', comments);
-                        setIsLoading(true);
+                        // setIsLoading(true);
                     });
                 return () => {
-                    setIsRefresh(false);
+                    setRefresh(false);
                     getData();
                 };
             } else {
                 console.log('새로 코멘트 가져오지 않는구간');
             }
         }
-    }, [refresh, comments, isLoading]);
+    }, [refresh, code, comments]);
 
     const handleChange = (e) => {
         setComment(e.target.value);
@@ -136,7 +135,8 @@ const Comment = ({ owner, colSpan, code }) => {
                     console.log('Document successfully written!');
                     setComment('');
                     setComments([]);
-                    setIsRefresh(true);
+                    setRefresh(true);
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     console.error('Error writing document: ', error);
@@ -164,7 +164,7 @@ const Comment = ({ owner, colSpan, code }) => {
                         alert('제대로 삭제됨!');
                         // window.location.reload();
                         setComments([]);
-                        setIsRefresh(true);
+                        setRefresh(true);
                     })
                     .catch((error) => {
                         console.error('Error writing document: ', error);
@@ -176,8 +176,8 @@ const Comment = ({ owner, colSpan, code }) => {
     };
 
     return (
-        <>
-            <Table className={classes.commentsTable}>
+        <Table className={classes.commentsTable}>
+            {!refresh ? (
                 <TableBody>
                     <TableRow>
                         <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
@@ -206,32 +206,56 @@ const Comment = ({ owner, colSpan, code }) => {
                             </button>
                         </TableCell>
                     </TableRow>
-                    {isLoading ? (
-                        comments.map((m) => (
-                            <TableRow align="center" className={classes.commentsRow}>
-                                <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
-                                    <div className={classes.commentsLine}>
-                                        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                            <span>"{m.comment}"</span>
-                                            <span>- {m.id}</span>
-                                        </div>
-                                        <span>
-                                            <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
-                                                삭제
-                                            </button>
-                                        </span>
+                    {comments.map((m) => (
+                        <TableRow align="center" className={classes.commentsRow}>
+                            <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
+                                <div className={classes.commentsLine}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                        <span>"{m.comment}"</span>
+                                        <span>- {m.id}</span>
                                     </div>
-                                </TableCell>
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell>불러오는 중...</TableCell>
+                                    <span>
+                                        <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
+                                            삭제
+                                        </button>
+                                    </span>
+                                </div>
+                            </TableCell>
                         </TableRow>
-                    )}
+                    ))}
                 </TableBody>
-            </Table>
-        </>
+            ) : (
+                <TableBody>
+                    <TableRow>
+                        <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
+                            {/* <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}> */}
+                            <TextField
+                                id="commentField"
+                                fullWidth={true}
+                                label="한줄평 남기기"
+                                placeholder="한줄평 입력"
+                                // multiline
+                                variant="filled"
+                                size="medium"
+                                value={comment}
+                                onChange={handleChange}
+                                onKeyPress={addComment}
+                                InputProps={{
+                                    className: classes.inputComment,
+                                }}
+                            />
+
+                            {/* </div> */}
+                        </TableCell>
+                        <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
+                            <button onClick={addComment} className={classes.btnAdd}>
+                                추가
+                            </button>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            )}
+        </Table>
     );
 };
 

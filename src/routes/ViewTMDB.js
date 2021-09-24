@@ -90,14 +90,7 @@ const ViewTMDB = ({ match, userObj }) => {
     const printComments = () => {
         // console.log('comments',comments);
         if (comments !== null || comments !== undefined) {
-            return (
-                <>
-                    {/* comments 배열을 map을 사용해 하나씩 렌더링. */}
-                    {comments.map((comment) => (
-                        <Comment commentObj={comment} owner={userObj.email} code={id} />
-                    ))}
-                </>
-            );
+            return <Comment code={id} owner={userObj.email} colSpan={3} />;
         } else return <p>comment없음</p>;
     };
 
@@ -124,7 +117,7 @@ const ViewTMDB = ({ match, userObj }) => {
     };
 
     return (
-        <div>
+        <>
             <div className="lb-wrap">
                 <div className="lb-image">
                     <img src={posters.backdrop_path ? backImg + posters.backdrop_path : NoBackdropImage} alt="backPoster" />
@@ -173,8 +166,20 @@ const ViewTMDB = ({ match, userObj }) => {
             <Table>
                 <TMDB id={id} />
             </Table>
-            <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
-        </div>
+            {/* {printComments()} */}
+
+            {match.params.id > 0 ? (
+                <Comment code={match.params.id} owner={userObj.email} colSpan={3} />
+            ) : (
+                <Table>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>'한줄평 기능 로딩중'</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            )}
+        </>
     );
 };
 

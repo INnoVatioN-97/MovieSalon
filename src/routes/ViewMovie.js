@@ -163,9 +163,13 @@ const ViewMovie = ({ movieNm, userObj }) => {
                     {code > 0 ? (
                         <Comment code={code} owner={userObj.email} colSpan={3} />
                     ) : (
-                        <TableRow>
-                            <TableCell>'한줄평 기능 로딩중'</TableCell>
-                        </TableRow>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>'한줄평 기능 로딩중'</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
                     )}
                 </>
             )}
