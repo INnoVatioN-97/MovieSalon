@@ -81,7 +81,9 @@ const SocialLogin = () => {
             history.push('/');
             console.log(data.user.email);
         } catch (error) {
-            alert('로그인에 문제가 발생했습니다. 혹시 같은 아이디에 다른 플랫폼으로 로그인을 시도하셨나요??');
+            alert(
+                '로그인에 문제가 발생했습니다. \n혹시 같은 아이디의 다른 플랫폼 계정으로 로그인을 시도하셨나요??\n(ex: ABCDE@gmail.com / ABCDE@naver.com)'
+            );
         }
     };
     const classes = styles();
