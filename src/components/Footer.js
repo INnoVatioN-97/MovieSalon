@@ -5,11 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const styles = makeStyles({
     root: {
-        marginTop: '5%',
+        // marginTop: '5%',
         // margin: 'auto',
         width: '100%',
+        height: '10vh',
         fontSize: '1.rem',
         // height: '100%',
+        // position: 'absolute',
+        bottom: '0',
         backgroundColor: 'black',
         textAlign: 'center',
         display: 'flex',
@@ -17,6 +20,10 @@ const styles = makeStyles({
         justifyContent: 'space-around',
         alignItems: 'center',
         whiteSpace: 'nowrap',
+
+        // position:absolute;
+        // bottom:0;
+        // background:#5eaeff;
     },
     profile: {
         textAlign: 'center',
