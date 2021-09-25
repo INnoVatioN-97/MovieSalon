@@ -8,12 +8,26 @@ import { Box } from '@material-ui/core';
 import NoBackdropImage from 'images/NoBackdropImage.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import '../css/View.css';
+import Responsive from 'components/Responsive';
 
 const useStyles = makeStyles({
     box: {
         display: 'grid',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
         color: '#10FF00',
+    },
+    carosol: {
+        position: 'relative',
+        marginLeft: '12%',
+        marginBottom: '5%',
+        width: '70%',
+        backgroundColor: '#20232a',
+        color: '#10FF00',
+        paddingTop: '1%',
+        paddingLeft: '3%',
+        paddingRight: '3%',
+        paddingBottom: '2%',
+        borderRadius: '3rem',
     },
 });
 
@@ -108,6 +122,11 @@ const ViewTMDB = ({ match, userObj }) => {
                     <Table>
                         <TMDB id={id} />
                     </Table>
+                    <div>
+                    <Box className={classes.carosol}>
+                        <Responsive id={id}/>
+                    </Box>
+                    </div>
                     {id > 0 ? (
                         <Comment code={id} owner={userObj.email} colSpan={3} />
                     ) : (

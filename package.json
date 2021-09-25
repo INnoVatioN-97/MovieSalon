@@ -26,6 +26,9 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.3",
         "react-slick": "^0.28.1",
+        "sass": "^1.42.1",
+        "slick-carousel": "^1.8.1",
+        "swiper": "^7.0.6",
         "uuid": "^8.3.2",
         "web-vitals": "^1.0.1"
     },

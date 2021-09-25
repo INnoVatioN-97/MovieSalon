@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { TableCell, TableRow, Table } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import NoImageAvailable from 'images/NoImageAvailable.png';
-import { classExpression } from '@babel/types';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
@@ -80,7 +78,6 @@ class TMDB extends React.Component {
         this.state = {
             isLoading: true,
             castMember: [],
-            similer: [],
             movieId: props.id,
         };
     }
@@ -95,27 +92,49 @@ class TMDB extends React.Component {
         this.setState({ castMember: cast.slice(0, 5), isLoading: false }); // 출연진 7명만 추출(slice())
     };
 
-    getSimilerMovies = async (id) => {
-        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-        const {
-            data: { results },
-        } = await axios.get(
-            `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`
-        );
-        this.setState({ similer: results.slice(0, 4) });
-    };
-
     componentDidMount() {
         this.getMovieCasts(this.state.movieId);
-        this.getSimilerMovies(this.state.movieId);
     }
 
     render() {
-        const { castMember, similer } = this.state;
+        const { castMember} = this.state;
         const { classes } = this.props;
         const url = 'https://image.tmdb.org/t/p/w200';
-        let qeuryUrl = '/viewTmdb/';
         let castUrl = '/Filmography/';
+        var settings = {
+            dots: true,
+            infinite: false,
+            speed: 500,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            initialSlide: 0,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  initialSlide: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          };
 
         return (
             <>
@@ -150,36 +169,9 @@ class TMDB extends React.Component {
                         </div>
                     </div>
 
-                    <div className={classes.topMovieContainer}>
-                        <div className={classes.topMovieContainer__container}>
-                            <Box className={classes.box}>
-                                <h2 className={classes.h2_similer}>🎞️이런 영화는 어때요?</h2>
-                                <div className={classes.images}>
-                                    {similer.map((s) => (
-                                        <span className={classes.images__cast}>
-                                            <Link
-                                                to={qeuryUrl + s.id}
-                                                className={classes.contentTitle}
-                                            >
-                                                <img
-                                                    className={classes.images_border}
-                                                    src={
-                                                        s.poster_path
-                                                            ? url + s.poster_path
-                                                            : NoImageAvailable
-                                                    }
-                                                    alt={s.title}
-                                                    width="200"
-                                                />
-                                                <div>{s.title}</div>
-                                            </Link>
-                                        </span>
-                                    ))}
-                                </div>
-                            </Box>
-                        </div>
-                    </div>
+                    
                 </div>
+
                 {/*
                 <TableRow>
                 {similer.map((s) => (

@@ -12,6 +12,7 @@ import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
 import Filmography from 'routes/Filmography';
 import Footer from './Footer';
+import Responsive from './Responsive';
 
 const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, top3Movies, hotMovie }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
@@ -58,6 +59,9 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         <Route exact path="/Filmography/:id" component={Filmography}></Route>
                         <Route exact path="/profile">
                             <Profile userObj={userObj} refreshUser={refreshUser} />
+                        </Route>
+                        <Route exact path="/Responsive">
+                            <Responsive/>
                         </Route>
                         <footer>
                             <Footer />
