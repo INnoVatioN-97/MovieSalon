@@ -10,14 +10,14 @@ module.exports = function (app) {
         createProxyMiddleware('/poster', {
             target: 'https://movie.naver.com',
             changeOrigin: true,
+            // 하단 처리는 필수로 해주어야 한다. 아래의 내용이 없으면 url 경로에 // api가 추가되어 경로를 찾을 수 없어진다.
             pathRewrite: { '^/poster/': '/' },
+        }),
+        createProxyMiddleware('/TMDB', {
+            target: 'https://api.themoviedb.org',
+            changeOrigin: true,
+            // 하단 처리는 필수로 해주어야 한다. 아래의 내용이 없으면 url 경로에 // api가 추가되어 경로를 찾을 수 없어진다.
+            pathRewrite: { '^/TMDB/': '/' },
         })
     );
-    // app.use(
-    //     createProxyMiddleware('/poster', {
-    //         target: 'https://movie.naver.com',
-    //         changeOrigin: true,
-    //         pathRewrite: { '^/poster/': '/' },
-    //     })
-    // );
 };
