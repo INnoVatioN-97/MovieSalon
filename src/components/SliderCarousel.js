@@ -3,9 +3,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
+import NoImageAvailable from 'images/NoImageAvailable.png';
 import { Link } from 'react-router-dom';
 
-export default class Responsive extends Component {
+export default class SliderCarousel extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,6 +37,16 @@ export default class Responsive extends Component {
     const url = 'https://image.tmdb.org/t/p/w200';
     let qeuryUrl = '/viewTmdb/';
     console.log('render_similer', similer);
+    const printSimiler = () => {
+      const result = [];
+      for (let i = 0; i < similer.length; i++) {
+        result.push(<Link to={qeuryUrl + similer[i].id} >
+          <img src={ similer[i].poster_path ? url + similer[i].poster_path : NoImageAvailable }
+           height="350px" alt={similer[i].title}/>
+           </Link>);
+      }
+        return result;
+    }
     var settings = {
       dots: true,
       infinite: false,
@@ -77,14 +88,7 @@ export default class Responsive extends Component {
         { isLoading ? <p>로딩중</p> :  
         <div>
           <Slider {...settings}>
-          <Link to={qeuryUrl + similer[0].id} >  <img src={url + similer[0].poster_path} height="350px" alt={similer[0].title}/> </Link>
-          <Link to={qeuryUrl + similer[1].id} >  <img src={url + similer[1].poster_path} height="350px" alt={similer[1].title}/> </Link>
-          <Link to={qeuryUrl + similer[2].id} >  <img src={url + similer[2].poster_path} height="350px" alt={similer[2].title}/> </Link>
-          <Link to={qeuryUrl + similer[3].id} >  <img src={url + similer[3].poster_path} height="350px" alt={similer[3].title}/> </Link>
-          <Link to={qeuryUrl + similer[4].id} >  <img src={url + similer[4].poster_path} height="350px" alt={similer[4].title}/> </Link>
-          <Link to={qeuryUrl + similer[5].id} >  <img src={url + similer[5].poster_path} height="350px" alt={similer[5].title}/> </Link>
-          <Link to={qeuryUrl + similer[6].id} >  <img src={url + similer[6].poster_path} height="350px" alt={similer[6].title}/> </Link>
-          <Link to={qeuryUrl + similer[7].id} >  <img src={url + similer[7].poster_path} height="350px" alt={similer[7].title}/> </Link>
+          {printSimiler()}
           </Slider>
         </div>
         }

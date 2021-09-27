@@ -8,7 +8,7 @@ import { Box } from '@material-ui/core';
 import NoBackdropImage from 'images/NoBackdropImage.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import '../css/View.css';
-import Responsive from 'components/Responsive';
+import SliderCarousel from 'components/SliderCarousel';
 
 const useStyles = makeStyles({
     box: {
@@ -124,7 +124,7 @@ const ViewTMDB = ({ match, userObj }) => {
                     </Table>
                     <div>
                     <Box className={classes.carosol}>
-                        <Responsive id={id}/>
+                        <SliderCarousel id={id}/>
                     </Box>
                     </div>
                     {id > 0 ? (
