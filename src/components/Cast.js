@@ -7,6 +7,9 @@ import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import { withStyles } from '@material-ui/core/styles';
 import '../css/View.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const styles = (theme) => ({
     root: {
         textAlign: 'center',
@@ -75,6 +78,19 @@ const styles = (theme) => ({
         fontSize: '1.3rem',
         textDecoration: 'none',
     },
+    carosol: {
+        position: 'relative',
+        marginLeft: '12%',
+        marginBottom: '5%',
+        width: '70%',
+        backgroundColor: '#20232a',
+        color: '#10FF00',
+        paddingTop: '1%',
+        paddingLeft: '3%',
+        paddingRight: '3%',
+        paddingBottom: '2%',
+        borderRadius: '3rem',
+    },
 });
 class Cast extends React.Component {
     constructor(props) {
@@ -102,8 +118,9 @@ class Cast extends React.Component {
         const {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/person/${ID}/movie_credits?api_key=${TMDB_API_KEY}&language=ko`);
-        this.setState({ movies: cast.slice(0, 5) });
+        this.setState({ movies: cast.slice(0, 8), isLoading: false });
     };
+
 
     componentDidMount() {
         this.getCastInfo(this.state.personId);
@@ -118,6 +135,50 @@ class Cast extends React.Component {
         */
         const imgUrl = 'https://image.tmdb.org/t/p/w200';
         let queryUrl = '/viewTmdb/';
+       const printCast = () => {
+            const result = [];
+            for (let i = 0; i < movies.length; i++) {
+              result.push(<Link to={queryUrl + movies[i].id} >
+                <img src={ movies[i].poster_path ? imgUrl + movies[i].poster_path : NoImageAvailable }
+                 height="350px" alt={movies[i].title}/>
+                 </Link>);
+            }
+              return result;
+          };
+          var settings = {
+            dots: true,
+            infinite: false,
+            speed: 500,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            initialSlide: 0,
+            responsive: [
+              {
+                breakpoint: 1024,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 3,
+                  infinite: true,
+                  dots: true
+                }
+              },
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 2,
+                  initialSlide: 2
+                }
+              },
+              {
+                breakpoint: 480,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1
+                }
+              }
+            ]
+          };
         return (
             <>
             <div className={classes.topMovieContainer}>
@@ -131,20 +192,10 @@ class Cast extends React.Component {
             </div>
             </Box>
             </div>
-            <Box className={classes.box_film}>
-            <h2 className={classes.h2_similer}>🎞️출연작</h2>   
-            <div className={classes.images}>
-            {movies.map((m) => (
-                        <span className={classes.images__cast}>
-                            <Link to={queryUrl + m.id} className={classes.contentTitle}>
-                                <img className={classes.images_border} 
-                                src={m.poster_path ? imgUrl + m.poster_path : NoImageAvailable} alt="poster" />
-                                <div>{m.title}</div>                           
-                            </Link>
-                            
-                        </span>                        
-                    ))}
-            </div>
+            <Box className={classes.carosol}>
+            <Slider {...settings}>
+                {printCast()}
+            </Slider>
             </Box>
             </>
         );

@@ -36,7 +36,6 @@ export default class SliderCarousel extends Component {
     const { similer, isLoading } = this.state;
     const url = 'https://image.tmdb.org/t/p/w200';
     let qeuryUrl = '/viewTmdb/';
-    console.log('render_similer', similer);
     const printSimiler = () => {
       const result = [];
       for (let i = 0; i < similer.length; i++) {
