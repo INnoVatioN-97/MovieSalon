@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import { Grid, Paper } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from '@material-ui/core';
 // firebase login import 추가
 import 'firebase/firestore';
 import 'firebase/auth';
 import '../css/Home.css';
-
-//https://material-ui.com/system/flexbox/#flex-wrap 에서
-// Box 좀 보고 Home 화면에서 순위 세개 이쁘게 띄워야 함.
 
 const useStyles = makeStyles({
     root: {
@@ -105,7 +101,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Home = ({ movies, isLoggedIn, userObj, tmdbHome, hotMovie }) => {
+const Home = ({ movies, tmdbHome, hotMovie }) => {
     const classes = useStyles();
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';

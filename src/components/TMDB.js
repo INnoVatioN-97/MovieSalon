@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
-import NoImageAvailable from 'images/NoImageAvailable.png';
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
@@ -101,40 +100,6 @@ class TMDB extends React.Component {
         const { classes } = this.props;
         const url = 'https://image.tmdb.org/t/p/w200';
         let castUrl = '/Filmography/';
-        var settings = {
-            dots: true,
-            infinite: false,
-            speed: 500,
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            initialSlide: 0,
-            responsive: [
-              {
-                breakpoint: 1024,
-                settings: {
-                  slidesToShow: 3,
-                  slidesToScroll: 3,
-                  infinite: true,
-                  dots: true
-                }
-              },
-              {
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  initialSlide: 2
-                }
-              },
-              {
-                breakpoint: 480,
-                settings: {
-                  slidesToShow: 1,
-                  slidesToScroll: 1
-                }
-              }
-            ]
-          };
 
         return (
             <>
@@ -167,18 +132,8 @@ class TMDB extends React.Component {
                                 </div>
                             </Box>
                         </div>
-                    </div>
-
-                    
+                    </div>                 
                 </div>
-
-                {/*
-                <TableRow>
-                {similer.map((s) => (
-                <TableCell ><Link to={qeuryUrl + s.id}><img src={s.poster_path ? url + s.poster_path : NoImageAvailable }/></Link><br/><b>{s.title}</b></TableCell>
-                ))}
-            </TableRow>
-            */}
             </>
         );
     }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { fade, makeStyles, Table, TableRow, Typography, TableCell, MenuList, Paper, MenuItem, ListItemIcon } from '@material-ui/core';
+import { fade, makeStyles, Typography, MenuList, Paper, MenuItem, ListItemIcon } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
 import NoImageAvailable from 'images/NoImageAvailable.png';
@@ -78,10 +78,7 @@ const Search = () => {
 
     const classes = styles();
     const handleChange = (e) => {
-        // this.setState({ keyword: e.target.value });
-        // this.getSearchMovies(e.target.value);
         const target = e.target.value;
-        // console.log('handleChange 호출, 값:', target);
         if (target === '') {
             setKeyword();
             setSearchedMovies([]);
@@ -92,24 +89,15 @@ const Search = () => {
     };
 
     const getSearchMovies = async (keywords) => {
-        // console.log('getSearchMovies 호출');
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
         const {
             data: { results },
         } = await axios.get(
             `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&language=ko&page=1&include_adult=true&query=${keywords}`
         );
-        // this.setState({ searchMovies: results, isLoading: false });
-        // if(results.length === 0 )
         setSearchedMovies(results);
         setIsLoading(false);
-        // console.log('isLoading:', isLoading);
     };
-
-    // componentDidMount() {}
-
-    // render() {
-    // const { isLoading, searchMovies } = this.state;
     let url = '/viewTmdb/';
 
     return (

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem, Button, InputBase } from '@material-ui/core';
+import { AppBar, Toolbar, Link, Drawer, Divider, List, MenuItem, Button } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import Search from 'routes/Search';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,11 +79,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
 
-        // width: '50%',
         [theme.breakpoints.up('sm')]: {
-            // marginLeft: theme.spacing(6),
-            // marginRight: theme.spacing(6),
-            // justifyContent: 'center',
             margin: 'auto',
             width: '70%',
         },
