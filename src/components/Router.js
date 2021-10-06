@@ -15,7 +15,7 @@ import Filmography from 'routes/Filmography';
 import Footer from './Footer';
 import SliderCarousel from './SliderCarousel';
 
-const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, top3Movies, hotMovie }) => {
+const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, hotMovie, krHome }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
     const viewMovie = (e) => {
@@ -32,11 +32,11 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <Route exact path="/">
                             <Home
-                                movies={top3Movies}
                                 isLoggedIn={isLoggedIn}
                                 userObj={userObj}
                                 tmdbHome={tmdbHome.slice(0, 3)}
                                 hotMovie={hotMovie}
+                                krHome={krHome}
                             />
                         </Route>
                         <Route exact path="/movieList">

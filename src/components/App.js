@@ -4,17 +4,17 @@ import AppRouter from './Router';
 import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import { getKobisMovies } from './APIs/KobisAPI';
-import { getTmdbBoxOffice, getUpcommingMovies, getHotWeekMovies } from './APIs/TmdbAPI';
+import { getTmdbBoxOffice, getUpcommingMovies, getHotWeekMovies, getTMDBSearchKRBoxOffice } from './APIs/TmdbAPI';
 import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 const App = () => {
     const [movies, setMovies] = useState([]);
-    const [top3Movies, setTop3Movies] = useState([]);
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
     const [upcomming, setUpcomming] = useState([]);
     const [hotMovie, setHotMovie] = useState([]);
+    const [krHome, setKRHome] = useState([]);
 
     const [init, setInit] = useState(true);
 
@@ -35,22 +35,19 @@ const App = () => {
         });
     }, []);
 
-    useEffect(() => {
+    useEffect(() => { // search kr boxoffice
         const getMovieInfos = async (movies) => {
-            let tmpCodes = [];
-            let cnt = 0;
+            let results = [];
+            let krmovies = [];
             movies.slice(0, 4).map((movie) =>
-                getNaverSearchResult(movie.movieNm).then((res) => {
-                    const { image, title } = res;
-                    tmpCodes[cnt++] = {
-                        //tmpCode안에 kobis 영화[제목, 이미지url]만 삽입
-                        title: title.replace(/<b>/gi, '').replace(/<\/b>/gi, ''),
-                        image: image,
-                        rank: movie.rank,
-                    };
-                })
+            getTMDBSearchKRBoxOffice(movie.movieNm).then((res) => {
+                const results = res;
+                krmovies.push(results);
+                console.log('tmdb_한국박스오피스검색', results);
+                setKRHome(krmovies);
+            })
             );
-            return tmpCodes;
+            return results;
         };
 
         getTmdbBoxOffice().then((res) => {
@@ -67,7 +64,6 @@ const App = () => {
 
         getKobisMovies().then((res) => {
             getMovieInfos(res).then((res) => {
-                setTop3Movies(res);
                 setInit(false);
             });
             setMovies(res);
@@ -98,8 +94,8 @@ const App = () => {
                         refreshUser={refreshUser}
                         isLoggedIn={Boolean(userObj)}
                         userObj={userObj}
+                        krHome={krHome}
                         movies={movies}
-                        top3Movies={top3Movies}
                         tmdbHome={tmdbHome}
                         upcomming={upcomming}
                         hotMovie={hotMovie}

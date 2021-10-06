@@ -101,28 +101,28 @@ const useStyles = makeStyles({
     },
 });
 
-const Home = ({ movies, tmdbHome, hotMovie }) => {
+const Home = ({ tmdbHome, hotMovie, krHome }) => {
     const classes = useStyles();
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';
-    const kobisViewURL = '/viewMovie?movieNm=';
+   // const kobisViewURL = '/viewMovie?movieNm=';
     const isMobile = useMediaQuery('(max-width: 400px)');
 
     const printTop3Movies_KOBIS = () => {
-        console.log('movies:', movies);
+        console.log('krHome:', krHome);
         return (
             <div>
                 <div>
                     <h2>박스오피스 (국내) 🇰🇷</h2>
                 </div>
                 <div className={classes.posters}>
-                    {movies.map((m) => (
+                    {krHome.map((m) => (
                         <span className={classes.posters__poster}>
-                            <Link to={kobisViewURL + m.title} className={classes.movieTitle}>
+                            <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>{/* 변경해야함*/}
                                 <img
                                     width="100%"
                                     height="100%"
-                                    src={m.image}
+                                    src={tmdbPosterURL + m.poster_path}
                                     alt={m.title}
                                     width="150"
                                 />
