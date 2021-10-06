@@ -4,7 +4,7 @@ import axios from 'axios';
 const ID_KEY = process.env.REACT_APP_NAVER_CLIENT_ID;
 const SECRET_KEY = process.env.REACT_APP_NAVER_CLIENT_SECRET_KEY;
 
-// 네이버 검색 API를 활용해 영화의 상세정보를 가져오는 함수
+// 네이버 검색 API를 활용해 영화의 상세정보를 가져오는 함수 [ 삭제 예정 ]
 export const getNaverSearchResult = async (movieName) => {
     try {
         const {

@@ -118,7 +118,7 @@ class Cast extends React.Component {
         const {
             data: { cast },
         } = await axios.get(`https://api.themoviedb.org/3/person/${ID}/movie_credits?api_key=${TMDB_API_KEY}&language=ko`);
-        this.setState({ movies: cast.slice(0, 8), isLoading: false });
+        this.setState({ movies: cast.slice(0, cast.length), isLoading: false });
     };
 
 
@@ -193,6 +193,7 @@ class Cast extends React.Component {
             </Box>
             </div>
             <Box className={classes.carosol}>
+            <h2> 🎞️출연작 </h2>
             <Slider {...settings}>
                 {printCast()}
             </Slider>

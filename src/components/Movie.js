@@ -53,7 +53,7 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
         <>
             <TableRow hover={true}>
                 <TableCell colSpan="2">
-                    <Link to={url + movieNm} className={classes.movieTitle}>
+                    <Link to={url + movieNm} className={classes.movieTitle}> {/*이거삭제*/}
                         {movieNm}
                     </Link>
                 </TableCell>

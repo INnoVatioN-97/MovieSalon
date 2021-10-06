@@ -36,3 +36,17 @@ export const getUpcommingMovies = async () => { // 개봉예정작
         console.log('error!', error);
     }
 };
+
+export const getTMDBSearchKRBoxOffice = async (keywords) => {
+    try{
+        const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+        const {
+            data: { results },
+        } = await axios.get(
+            `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&language=ko&page=1&include_adult=true&query=${keywords}`
+        );
+        return results[0];
+    } catch (error) {
+        console.log('error_gettmdbsearchKr!', error);
+    }
+};

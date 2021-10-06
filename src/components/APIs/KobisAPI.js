@@ -14,6 +14,7 @@ export const getKobisMovies = async () => {
         } = await axios.get(
             `http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${API_KEY}&targetDt=${yesterday}`
         );
+        console.log(dailyBoxOfficeList);
         return dailyBoxOfficeList;
     } catch (error) {
         console.log('error!', error);
