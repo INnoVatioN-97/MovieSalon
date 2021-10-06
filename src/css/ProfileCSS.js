@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
     profileCard: {
         whiteSpace: 'nowrap',
         borderRadius: '20px',
-        margin: '10% auto 50% auto ',
+        margin: '5% auto 50% auto ',
         backgroundColor: '#202124',
         color: '#ffffff',
         textAlign: 'center',
