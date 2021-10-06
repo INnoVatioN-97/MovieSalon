@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from 'routes/Home';
 import MovieList from 'routes/MovieList';
+import About from 'routes/About';
 import ViewMovie from 'routes/ViewMovie';
 import queryString from 'query-string';
 import Auth from 'routes/login/Auth';
@@ -61,11 +62,11 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                             <Profile userObj={userObj} refreshUser={refreshUser} />
                         </Route>
                         <Route exact path="/SliderCarousel">
-                            <SliderCarousel/>
+                            <SliderCarousel />
                         </Route>
-                        <footer>
-                            <Footer />
-                        </footer>
+                        <Route exact path="/aboutUs">
+                            <About />
+                        </Route>
                     </div>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -73,9 +74,9 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         <Route exact path="/">
                             <Auth />
                         </Route>
-                        <footer>
-                            <Footer />
-                        </footer>
+                        <Route exact path="/aboutUs">
+                            <About />
+                        </Route>
                     </div>
                 )}
             </Switch>

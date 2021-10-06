@@ -144,11 +144,21 @@ const Navigation = ({ userObj }) => {
                   url: '/#/tmdbList',
                   text: '박스 오피스 (TMDB)',
               },
+              {
+                  key: 'About',
+                  url: '/#/aboutUs',
+                  text: 'About Us',
+              },
           ]
         : [
               {
                   url: '/#/',
                   text: '로그인 하기',
+              },
+              {
+                  key: 'About',
+                  url: '/#/aboutUs',
+                  text: 'About Us',
               },
           ];
 
