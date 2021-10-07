@@ -20,8 +20,12 @@ const styles = makeStyles({
     },
     name: {
         fontSize: '2.0vw',
+        color: 'white',
     },
-    // profile__Info: { display: 'flex', flexDirection: 'column' },
+    prifile: {
+        color: '#2ecc71',
+    },
+    profile__Info: { display: 'flex', flexDirection: 'column' },
     profileImg: {
         marginTop: '5%',
         margin: 'auto',

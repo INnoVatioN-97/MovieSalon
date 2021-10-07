@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 const styles = makeStyles({
     //이미지 flex:left로
     root: {
-        margin: '10%',
+        margin: '3% 10% 10% 10% ',
         // padding: 'auto',
         display: 'flex',
         flexDirection: 'row',
@@ -25,9 +25,14 @@ const styles = makeStyles({
         height: '100%',
     },
     profileImg: {
+        padding: '2% 2% 2% 2%',
         borderRadius: '20%',
-        width: '20vw',
-        height: '20vw',
+        // minWidth: '300px',
+        // maxWidth: '500px',
+        // minHeight: '300px',
+        // maxHeight: '500px',
+        width: '30vw',
+        height: '30vw',
     },
     schoolLogo: {
         margin: '0',
@@ -37,13 +42,30 @@ const styles = makeStyles({
         opacity: '0.4',
         borderRadius: '70%',
     },
-    comment: {
-        fontSize: '2rem',
+    headline: {
+        fontSize: '2.5vw',
         margin: 'auto',
         padding: '0',
         color: '#10FF00',
         textAlign: 'center',
     },
+    name: {
+        fontSize: '2.1vw',
+        margin: '2%',
+    },
+    comment: {
+        // display: 'inline-block',
+        wordBreak: 'keep-all',
+        margin: '1%',
+        fontSize: '1.7vw',
+    },
+    myStack: {
+        backgroundColor: 'grey',
+        fontSize: '1.5vw',
+        padding: '3%',
+    },
+    myStack__Title: { textAlign: 'center' },
+    myStack__List: { color: 'white' },
 });
 
 const AboutDetail = ({ name }) => {
@@ -69,8 +91,8 @@ const AboutDetail = ({ name }) => {
                   school: '명지전문대학',
                   year: '16',
                   age: `${curYear - born012}`,
-                  hobby: '코딩하기',
-                  comment: '오늘도 나는 코딩에 쩔어산다...',
+                  hobby: '밥먹고 코딩하다 현타오기',
+                  headline: '오늘도 나는 코딩에 쩔어산다...',
                   profileImg: Profile012,
               })
             : setMeObj({
@@ -80,7 +102,7 @@ const AboutDetail = ({ name }) => {
                   year: '16',
                   age: `${curYear - bornKSY}`,
                   hobby: 'MLB 더쇼 하기',
-                  comment: '아... 기모찌...',
+                  headline: '아... 기모찌...',
                   profileImg: ProfileKSY,
               });
         setInit(true);
@@ -91,14 +113,24 @@ const AboutDetail = ({ name }) => {
             <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
             <div className={classes.container}>
                 <div style={{ textAlign: 'center' }}>자기소개</div>
-                <div className={classes.comment}>"{meObj.comment}"</div>
+                <div className={classes.headline}>"{meObj.headline}"</div>
                 <div>
                     <br />
-                    <h3>저는, {name}입니다.</h3>
-                    <div>
+                    <div className={classes.name}>저는 {name}입니다... 아...</div>
+                    <div className={classes.comment}>
                         저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
                         {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
-                        {meObj.hobby}가 내 취미입니다.
+                        {meObj.hobby}가 내 취미입니다... 살려주세요 취업시켜주세요
+                    </div>
+                    <div className={classes.myStack}>
+                        <div className={classes.myStack__Title}> 사용 가능한 기술 스택</div>
+                        <div className={classes.myStack__List}>
+                            <ul>
+                                <li>자바</li>
+                                <li>JSP</li>
+                                <li>Javascript</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
