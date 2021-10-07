@@ -6,10 +6,10 @@ import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import { withStyles } from '@material-ui/core/styles';
-import '../css/View.css';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'css/View.css';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 const styles = (theme) => ({
     root: {
         textAlign: 'center',
@@ -36,11 +36,10 @@ const styles = (theme) => ({
         justifyContent: 'center',
     },
     profile_image: {
-        width:'15%',
-        "@media (max-width: 750px)": {
+        width: '15%',
+        '@media (max-width: 750px)': {
             width: '70%',
-
-          },
+        },
     },
     cast_content: {
         marginLeft: '8%',
@@ -57,7 +56,7 @@ const styles = (theme) => ({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center',       
+        justifyContent: 'center',
         width: '100%',
     },
     images__cast: {
@@ -102,7 +101,7 @@ class Cast extends React.Component {
             movies: [],
         };
     }
-    
+
     getCastInfo = async (ID) => {
         // 인물 정보 api
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -121,7 +120,6 @@ class Cast extends React.Component {
         this.setState({ movies: cast.slice(0, cast.length), isLoading: false });
     };
 
-
     componentDidMount() {
         this.getCastInfo(this.state.personId);
         this.getFilmoMovies(this.state.personId);
@@ -135,17 +133,22 @@ class Cast extends React.Component {
         */
         const imgUrl = 'https://image.tmdb.org/t/p/w200';
         let queryUrl = '/viewTmdb/';
-       const printCast = () => {
+        const printCast = () => {
             const result = [];
             for (let i = 0; i < movies.length; i++) {
-              result.push(<Link to={queryUrl + movies[i].id} >
-                <img src={ movies[i].poster_path ? imgUrl + movies[i].poster_path : NoImageAvailable }
-                 height="350px" alt={movies[i].title}/>
-                 </Link>);
+                result.push(
+                    <Link to={queryUrl + movies[i].id}>
+                        <img
+                            src={movies[i].poster_path ? imgUrl + movies[i].poster_path : NoImageAvailable}
+                            height="350px"
+                            alt={movies[i].title}
+                        />
+                    </Link>
+                );
             }
-              return result;
-          };
-          var settings = {
+            return result;
+        };
+        var settings = {
             dots: true,
             infinite: false,
             speed: 500,
@@ -153,51 +156,49 @@ class Cast extends React.Component {
             slidesToScroll: 4,
             initialSlide: 0,
             responsive: [
-              {
-                breakpoint: 1024,
-                settings: {
-                  slidesToShow: 3,
-                  slidesToScroll: 3,
-                  infinite: true,
-                  dots: true
-                }
-              },
-              {
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 2,
-                  slidesToScroll: 2,
-                  initialSlide: 2
-                }
-              },
-              {
-                breakpoint: 480,
-                settings: {
-                  slidesToShow: 1,
-                  slidesToScroll: 1
-                }
-              }
-            ]
-          };
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true,
+                    },
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2,
+                    },
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                },
+            ],
+        };
         return (
             <>
-            <div className={classes.topMovieContainer}>
-            <img className={classes.profile_image} src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2} />
-            <Box className={classes.box}>
-            <div className={classes.cast_content}>
-            <h2>{castInfo[1]}</h2>
-            <p>{castInfo[2] === 1 ? <p>woman</p> : <p>man</p>}</p>
-            <p>{'🎂' + castInfo[3]}</p>
-            <p>{'🏠' + castInfo[4]}</p>
-            </div>
-            </Box>
-            </div>
-            <Box className={classes.carosol}>
-            <h2> 🎞️출연작 </h2>
-            <Slider {...settings}>
-                {printCast()}
-            </Slider>
-            </Box>
+                <div className={classes.topMovieContainer}>
+                    <img className={classes.profile_image} src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2} />
+                    <Box className={classes.box}>
+                        <div className={classes.cast_content}>
+                            <h2>{castInfo[1]}</h2>
+                            <p>{castInfo[2] === 1 ? <p>woman</p> : <p>man</p>}</p>
+                            <p>{'🎂' + castInfo[3]}</p>
+                            <p>{'🏠' + castInfo[4]}</p>
+                        </div>
+                    </Box>
+                </div>
+                <Box className={classes.carosol}>
+                    <h2> 🎞️출연작 </h2>
+                    <Slider {...settings}>{printCast()}</Slider>
+                </Box>
             </>
         );
     }

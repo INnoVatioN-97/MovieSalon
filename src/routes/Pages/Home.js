@@ -6,7 +6,7 @@ import { useMediaQuery } from '@material-ui/core';
 // firebase login import 추가
 import 'firebase/firestore';
 import 'firebase/auth';
-import '../css/Home.css';
+import 'css/Home.css';
 
 const useStyles = makeStyles({
     root: {
@@ -94,7 +94,7 @@ const useStyles = makeStyles({
     backdrop: {
         width: '40%',
         '@media (max-width: 750px)': {
-             width: '60%',
+            width: '60%',
         },
         borderRadius: '15px',
         boxShadow: '5px 5px 15px 5px #000000',
@@ -105,7 +105,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
     const classes = useStyles();
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';
-   // const kobisViewURL = '/viewMovie?movieNm=';
+    // const kobisViewURL = '/viewMovie?movieNm=';
     const isMobile = useMediaQuery('(max-width: 400px)');
 
     const printTop3Movies_KOBIS = () => {
@@ -118,14 +118,9 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
                 <div className={classes.posters}>
                     {krHome.map((m) => (
                         <span className={classes.posters__poster}>
-                            <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>{/* 변경해야함*/}
-                                <img
-                                    width="100%"
-                                    height="100%"
-                                    src={tmdbPosterURL + m.poster_path}
-                                    alt={m.title}
-                                    width="150"
-                                />
+                            <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>
+                                {/* 변경해야함*/}
+                                <img width="100%" height="100%" src={tmdbPosterURL + m.poster_path} alt={m.title} width="150" />
                                 <div>{m.title}</div>
                             </Link>
                         </span>
@@ -166,10 +161,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
             <div className={classes.hottest}>
                 <p>The hottest Movie of The Week </p>
                 <Link to={tmdbViewURL + hotMovie.id}>
-                    <img
-                        className={classes.backdrop}
-                        src={tmdbPosterURL + hotMovie.backdrop_path}
-                    />
+                    <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
                 </Link>
                 <p>{hotMovie.title}</p>
             </div>

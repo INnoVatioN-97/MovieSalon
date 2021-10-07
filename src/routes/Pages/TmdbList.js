@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 import ReactPlayer from 'react-player';
-import '../css/Dialog.css';
+import 'css/Dialog.css';
 
 /**
  * 박스오피스 / 개봉 예정작 버튼에 각각 ID값을 줘
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
     },
     dia_poster: {
-     borderRadius: '3%',
+        borderRadius: '3%',
     },
     dia_cast: {
         display: 'flex',
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     dia_content_guide: {
-        color: "#00FC87",
+        color: '#00FC87',
     },
 }));
 
@@ -213,9 +213,10 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                     <DialogContent className={isMobile ? classes.dia_table : classes.dia_table2}>
                         <Table>
                             <TableRow>
-                                <TableCell align="center" width="25%" rowSpan={isMobile ? "1" : "4"} colSpan={isMobile ? "4" : "1"}>
+                                <TableCell align="center" width="25%" rowSpan={isMobile ? '1' : '4'} colSpan={isMobile ? '4' : '1'}>
                                     <Link to={'/viewTmdb/' + id}>
-                                        <img className={classes.dia_poster}
+                                        <img
+                                            className={classes.dia_poster}
                                             src={poster_path ? url + poster_path : NoImageAvailable}
                                             alt="Poster"
                                         />
@@ -227,7 +228,6 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                     <b className={classes.dia_content_guide}>{movieName}</b>
                                 </TableCell>
                                 <TableCell>
-                                    
                                     {openedAt} <b>[⭐{rate}]</b>
                                 </TableCell>
                             </TableRow>
@@ -245,7 +245,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 <b className={classes.dia_content_guide}>🎞️출연진</b>
                             </TableHead>
                             <TableRow>
-                                <div  className={classes.dia_cast}>
+                                <div className={classes.dia_cast}>
                                     {castMember.map((c) => (
                                         <TableCell>
                                             <>
@@ -262,7 +262,6 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                                 <span>
                                                     <b>{c.name}</b>
                                                 </span>
-                                                
                                             </>
                                         </TableCell>
                                     ))}
@@ -288,13 +287,13 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                             <TableBody>
                                 <TableRow>
                                     <div className={classes.dia_similer}>
-                                    {similer.map((s) => (
-                                        <TableCell>
-                                            <Link to={'/viewTmdb/' + s.id}>
-                                                <img id={s.id} src={url + s.poster_path} alt={url + s.poster_path} />
-                                            </Link>
-                                        </TableCell>
-                                    ))}
+                                        {similer.map((s) => (
+                                            <TableCell>
+                                                <Link to={'/viewTmdb/' + s.id}>
+                                                    <img id={s.id} src={url + s.poster_path} alt={url + s.poster_path} />
+                                                </Link>
+                                            </TableCell>
+                                        ))}
                                     </div>
                                 </TableRow>
                             </TableBody>
@@ -348,7 +347,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                                 id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
                                 title={m.title}
                             />
-                            <div className={classes.dia_content_guide}>{m.title.slice(0,20)}</div>
+                            <div className={classes.dia_content_guide}>{m.title.slice(0, 20)}</div>
                         </span>
                     ))}
                 </div>

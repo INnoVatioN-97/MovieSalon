@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Link } from '@material-ui/core';
 import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Profile012 from 'images/Profile012.png';
+import Profile012 from 'images/Profile012.jpg';
 import ProfileKSY from 'images/ProfileKSY.jpg';
 
 const styles = makeStyles({

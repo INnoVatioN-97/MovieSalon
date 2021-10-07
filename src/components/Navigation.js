@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import Search from 'routes/Search';
+import Search from 'components/Search';
 
 const useStyles = makeStyles((theme) => ({
     root: {

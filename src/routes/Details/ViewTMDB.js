@@ -3,11 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { TableBody, Table, TableRow, TableCell } from '@material-ui/core';
 import Comment from 'components/Comment';
-import TMDB from 'components/TMDB';
+import TMDB from 'components/APIs/TMDB';
 import { Box } from '@material-ui/core';
 import NoBackdropImage from 'images/NoBackdropImage.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
-import '../css/View.css';
+import 'css/View.css';
 import SliderCarousel from 'components/SliderCarousel';
 
 const useStyles = makeStyles({
@@ -123,9 +123,9 @@ const ViewTMDB = ({ match, userObj }) => {
                         <TMDB id={id} />
                     </Table>
                     <div>
-                    <Box className={classes.carosol}>
-                        <SliderCarousel id={id}/>
-                    </Box>
+                        <Box className={classes.carosol}>
+                            <SliderCarousel id={id} />
+                        </Box>
                     </div>
                     {id > 0 ? (
                         <Comment code={id} owner={userObj.email} colSpan={3} />

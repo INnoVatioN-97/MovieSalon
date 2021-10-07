@@ -1,17 +1,17 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from 'routes/Home';
-import MovieList from 'routes/MovieList';
-import About from 'routes/About';
-import ViewMovie from 'routes/ViewMovie';
+import Home from 'routes/Pages/Home';
+import MovieList from 'routes/Pages/MovieList';
+import About from 'routes/Pages/AboutUs/About';
+import ViewMovie from 'routes/Details/ViewMovie';
 import queryString from 'query-string';
 import Auth from 'routes/login/Auth';
-import Search from 'routes/Search';
-import TmdbList from 'routes/TmdbList';
-import ViewTMDB from 'routes/ViewTMDB';
+import Search from 'components/Search';
+import TmdbList from 'routes/Pages/TmdbList';
+import ViewTMDB from 'routes/Details/ViewTMDB';
 import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
-import Filmography from 'routes/Filmography';
+import Filmography from 'routes/Details/Filmography';
 import Footer from './Footer';
 import SliderCarousel from './SliderCarousel';
 

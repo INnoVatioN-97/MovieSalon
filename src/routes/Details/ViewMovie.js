@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../css/App.css';
+import 'css/App.css';
 import { TableBody, Table, TableRow, TableCell, TableHead } from '@material-ui/core';
 import Comment from 'components/Comment';
 import { getNaverSearchResult, getHighQualityPosterLink } from 'components/APIs/NaverSearchAPI';
