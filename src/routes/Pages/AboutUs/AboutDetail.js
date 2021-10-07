@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from 'react';
+import MJC_LOGO from 'images/MJC_LOGO.svg';
+import Profile012 from 'images/Profile012.jpg';
+import ProfileKSY from 'images/ProfileKSY.jpg';
+import { makeStyles } from '@material-ui/core';
+
+const styles = makeStyles({
+    //이미지 flex:left로
+    root: {
+        margin: '10%',
+        // padding: 'auto',
+        display: 'flex',
+        flexDirection: 'row',
+        whiteSpace: 'wrap',
+        justifyContent: 'space-around',
+        borderRadius: '2vw',
+        backgroundColor: 'rgba(12, 12, 12, 0.9)',
+    },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        color: 'white',
+        margin: '5%',
+        width: '100%',
+        height: '100%',
+    },
+    profileImg: {
+        borderRadius: '20%',
+        width: '20vw',
+        height: '20vw',
+    },
+    schoolLogo: {
+        margin: '0',
+        padding: '0',
+        width: '4vw',
+        height: '4vw',
+        opacity: '0.4',
+        borderRadius: '70%',
+    },
+    comment: {
+        fontSize: '2rem',
+        margin: 'auto',
+        padding: '0',
+        color: '#10FF00',
+        textAlign: 'center',
+    },
+});
+
+const AboutDetail = ({ name }) => {
+    const [meObj, setMeObj] = useState({});
+    const [init, setInit] = useState(false);
+
+    const classes = styles();
+
+    /**
+     * 들어온 이름 정보가 누구냐에 따라 만나이, 취미 등 다르게 설정될 수 있도록.
+     * <속성 정보>
+     * name, school, major, age, hobby, comment
+     */
+    useEffect(() => {
+        const curYear = new Date().getFullYear();
+        const born012 = new Date(1997, 6, 3).getFullYear();
+        const bornKSY = new Date(1997, 8, 11).getFullYear();
+
+        name === '고영일'
+            ? setMeObj({
+                  name: name,
+                  major: '전자공학과',
+                  school: '명지전문대학',
+                  year: '16',
+                  age: `${curYear - born012}`,
+                  hobby: '코딩하기',
+                  comment: '오늘도 나는 코딩에 쩔어산다...',
+                  profileImg: Profile012,
+              })
+            : setMeObj({
+                  name: name,
+                  major: '전자공학과',
+                  school: '명지전문대학',
+                  year: '16',
+                  age: `${curYear - bornKSY}`,
+                  hobby: 'MLB 더쇼 하기',
+                  comment: '아... 기모찌...',
+                  profileImg: ProfileKSY,
+              });
+        setInit(true);
+    }, []);
+
+    return init ? (
+        <div className={classes.root}>
+            <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
+            <div className={classes.container}>
+                <div style={{ textAlign: 'center' }}>자기소개</div>
+                <div className={classes.comment}>"{meObj.comment}"</div>
+                <div>
+                    <br />
+                    <h3>저는, {name}입니다.</h3>
+                    <div>
+                        저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
+                        {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
+                        {meObj.hobby}가 내 취미입니다.
+                    </div>
+                </div>
+            </div>
+            <img src={MJC_LOGO} className={classes.schoolLogo} alt="학교 로고" />
+        </div>
+    ) : (
+        <div>initializing...</div>
+    );
+};
+
+export default AboutDetail;

@@ -36,8 +36,10 @@ const About = () => {
         <div className={classes.root}>
             {/* 영일 */}
             <div className={classes.profile__Info}>
-                <img src={Profile012} className={classes.profileImg} alt="고영일 Profile" />
-                <div className={classes.name}>고영일(❄️25살, 녹아내리는 중❄️)</div>
+                <Link href="/#/AboutDetail?name=고영일" className={classes.link} variant="inherit" color="inherit" underline="none">
+                    <img src={Profile012} className={classes.profileImg} alt="고영일 Profile" />
+                    <div className={classes.name}>고영일(❄️25살, 녹아내리는 중❄️)</div>
+                </Link>
                 <span>
                     <Link href="https://github.com/INnoVatioN-97/" className={classes.profile}>
                         <FontAwesomeIcon icon={faGithub} />
@@ -49,8 +51,10 @@ const About = () => {
 
             {/* 신영 */}
             <div className={classes.profile__Info}>
-                <img src={ProfileKSY} className={classes.profileImg} alt="고영일 Profile" />
-                <div className={classes.name}>강신영(🔥25살, 불타오르는 중🔥)</div>
+                <Link href="/#/AboutDetail?name=강신영" className={classes.link} variant="inherit" color="inherit" underline="none">
+                    <img src={ProfileKSY} className={classes.profileImg} alt="고영일 Profile" />
+                    <div className={classes.name}>강신영(🔥25살, 불타오르는 중🔥)</div>
+                </Link>
                 <span>
                     <Link href="https://github.com/TylerKang-97" className={classes.profile}>
                         <FontAwesomeIcon icon={faGithub} />
