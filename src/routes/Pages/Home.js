@@ -107,16 +107,17 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
     const tmdbViewURL = '/viewTmdb/';
     // const kobisViewURL = '/viewMovie?movieNm=';
     const isMobile = useMediaQuery('(max-width: 400px)');
+    const krBoxOffice = krHome.slice(0,3); // [kobis :: Tmdb 연동 정보를 받아 3개만 추출] 
 
     const printTop3Movies_KOBIS = () => {
-        console.log('krHome:', krHome);
+        console.log('krHome:', krBoxOffice);
         return (
             <div>
                 <div>
                     <h2>박스오피스 (국내) 🇰🇷</h2>
                 </div>
                 <div className={classes.posters}>
-                    {krHome.map((m) => (
+                    {krBoxOffice.map((m) => (
                         <span className={classes.posters__poster}>
                             <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>
                                 {/* 변경해야함*/}

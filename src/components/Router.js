@@ -16,7 +16,7 @@ import SliderCarousel from './SliderCarousel';
 import About from 'routes/Pages/AboutUs/About';
 import AboutDetail from 'routes/Pages/AboutUs/AboutDetail';
 
-const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, hotMovie, krHome }) => {
+const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, hotMovie, krHome, kobis }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
     const viewMovie = (e) => {
@@ -48,7 +48,7 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                             />
                         </Route>
                         <Route exact path="/movieList">
-                            <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} />
+                            <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} kobis={kobis} />
                         </Route>
                         <Route path="/viewMovie" component={viewMovie} />
                         <Route path="/AboutDetail" component={aboutDetail} />

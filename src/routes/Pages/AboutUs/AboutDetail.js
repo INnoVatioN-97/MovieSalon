@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MJC_LOGO from 'images/MJC_LOGO.svg';
+// import MJC_LOGO from 'images/MJC_LOGO.svg';
 import Profile012 from 'images/Profile012.jpg';
 import ProfileKSY from 'images/ProfileKSY.jpg';
 import { makeStyles } from '@material-ui/core';
@@ -134,7 +134,7 @@ const AboutDetail = ({ name }) => {
                     </div>
                 </div>
             </div>
-            <img src={MJC_LOGO} className={classes.schoolLogo} alt="학교 로고" />
+           {/*<img src={MJC_LOGO} className={classes.schoolLogo} alt="학교 로고" /> */} 
         </div>
     ) : (
         <div>initializing...</div>

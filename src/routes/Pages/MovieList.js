@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import { TableCell, TableHead, TableRow } from '@material-ui/core';
+import { getKobisMovies } from 'components/APIs/KobisAPI';
+import { faKorvue } from '@fortawesome/free-brands-svg-icons';
 
 /*
 2021.07.14 List 기능 추가 ver1.0 @TylerKang
@@ -36,7 +38,7 @@ const styles = makeStyles({
     },
 });
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, kobis }) => {
     const classes = styles();
 
     return (
@@ -45,27 +47,37 @@ const MovieList = ({ movies }) => {
                 <TableHead>
                     <TableRow>
                         <TableCell colSpan="5" className={classes.tableCell}>
-                            어제자 한국 박스오피스 Top 10 영화들
+                        📈어제자 한국 박스오피스 Top 10 영화들
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {movies.map((movie) => {
+                    {kobis.map((k) => {
+                        return(
+                        <>
+                        {movies.map((movie) => {
                         // console.log('movie_list',movie);
                         return (
-                            <Movie
-                                key={movie.movieCd}
-                                movieNm={movie.movieNm}
-                                rank={movie.rank}
-                                rankInten={movie.rankInten}
-                                openDt={movie.openDt}
-                                audiCnt={movie.audiCnt}
-                                audiAcc={movie.audiAcc}
-                                audiInten={movie.audiInten}
-                                // movieCode={fetchData(movie.movieNm)}
-                            />
+                            <>
+                            {k.movieNm === movie.title ? <Movie
+                                key={movie.id}
+                                id={movie.id}
+                                movieNm={movie.title}
+                                rank={k.rank}
+                                rankInten={k.rankInten}
+                                openDt={k.openDt}
+                                audiCnt={k.audiCnt}
+                                audiAcc={k.audiAcc}
+                                audiInten={k.audiInten}
+                            /> : <p></p> }
+                            
+                            </>
                         );
                     })}
+                        </>
+                        );
+                    })}
+                    
                 </TableBody>
             </Table>
         </Paper>
