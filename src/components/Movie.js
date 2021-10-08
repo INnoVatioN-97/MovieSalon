@@ -22,7 +22,7 @@ const styles = makeStyles({
     },
 });
 
-const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten }) => {
+const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten, id }) => {
     // console.log('movieCode from Movie:', movieCode);
     const classes = styles();
     let url = '/viewMovie?movieNm=';
@@ -53,7 +53,7 @@ const Movie = ({ movieCode, movieNm, openDt, rank, audiAcc, audiInten, rankInten
         <>
             <TableRow hover={true}>
                 <TableCell colSpan="2">
-                    <Link to={url + movieNm} className={classes.movieTitle}> {/*이거삭제*/}
+                    <Link to={'/viewTmdb/' + id} className={classes.movieTitle}> {/*이거삭제*/}
                         {movieNm}
                     </Link>
                 </TableCell>

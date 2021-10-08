@@ -10,6 +10,7 @@ import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 const App = () => {
     const [movies, setMovies] = useState([]);
+    const [kobis, setKobis] = useState([]);
     const [userObj, setUserObj] = useState([]);
     const [tmdbHome, setTmdbHome] = useState([]);
     const [upcomming, setUpcomming] = useState([]);
@@ -39,12 +40,14 @@ const App = () => {
         const getMovieInfos = async (movies) => {
             let results = [];
             let krmovies = [];
-            movies.slice(0, 4).map((movie) =>
+            movies.slice(0, 9).map((movie) =>
             getTMDBSearchKRBoxOffice(movie.movieNm).then((res) => {
                 const results = res;
                 krmovies.push(results);
                 console.log('tmdb_한국박스오피스검색', results);
                 setKRHome(krmovies);
+                setMovies(krmovies);
+                
             })
             );
             return results;
@@ -66,7 +69,7 @@ const App = () => {
             getMovieInfos(res).then((res) => {
                 setInit(false);
             });
-            setMovies(res);
+             setKobis(res);
         });
     }, []);
 
@@ -95,6 +98,7 @@ const App = () => {
                         isLoggedIn={Boolean(userObj)}
                         userObj={userObj}
                         krHome={krHome}
+                        kobis={kobis}
                         movies={movies}
                         tmdbHome={tmdbHome}
                         upcomming={upcomming}

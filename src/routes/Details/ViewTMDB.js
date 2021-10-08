@@ -85,7 +85,7 @@ const ViewTMDB = ({ match, userObj }) => {
                         <div className="lb-text">
                             <Box className={classes.box}>
                                 <span>
-                                    <h1>{movieInfo.original_title}</h1>
+                                    <h1>{movieInfo.title ? movieInfo.title : movieInfo.original_title}</h1>
                                 </span>
 
                                 <h3>{Boolean(movieInfo.tagline) ? `"${movieInfo.tagline}"` : ''}</h3>

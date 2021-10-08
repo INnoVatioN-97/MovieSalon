@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import MJC_LOGO from 'images/MJC_LOGO.svg';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles } from '@material-ui/core/styles';
