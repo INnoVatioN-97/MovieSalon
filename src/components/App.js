@@ -44,7 +44,7 @@ const App = () => {
             getTMDBSearchKRBoxOffice(movie.movieNm).then((res) => {
                 const results = res;
                 krmovies.push(results);
-                console.log('tmdb_한국박스오피스검색', results);
+               // console.log('tmdb_한국박스오피스검색', results);
                 setKRHome(krmovies);
                 setMovies(krmovies);
                 

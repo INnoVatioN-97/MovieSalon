@@ -214,7 +214,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
                         <Table>
                             <TableRow>
                                 <TableCell align="center" width="25%" rowSpan={isMobile ? '1' : '4'} colSpan={isMobile ? '4' : '1'}>
-                                    <Link to={'/viewTmdb/' + id}>
+                                    <Link to={'/viewTmdb/' + id.slice(0,-1)}>
                                         <img
                                             className={classes.dia_poster}
                                             src={poster_path ? url + poster_path : NoImageAvailable}
