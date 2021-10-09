@@ -46,7 +46,7 @@ const MovieList = ({ movies, kobis }) => {
     console.log('kobis', kobis);
 
     useEffect(() => { 
-        setTimeout(() => {setIsLoading(false)}, 2000);
+        setTimeout(() => {setIsLoading(false)}, 700);
     }, [])
     const printKRBoxOffice = () => {
         return (
