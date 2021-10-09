@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Movie from 'components/Movie';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,6 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { TableCell, TableHead, TableRow } from '@material-ui/core';
 import { getKobisMovies } from 'components/APIs/KobisAPI';
 import { faKorvue } from '@fortawesome/free-brands-svg-icons';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 /*
 2021.07.14 List 기능 추가 ver1.0 @TylerKang
@@ -40,6 +41,44 @@ const styles = makeStyles({
 
 const MovieList = ({ movies, kobis }) => {
     const classes = styles();
+    const [isLoading, setIsLoading] = useState(true);
+    console.log('movies', movies);
+    console.log('kobis', kobis);
+
+    useEffect(() => { 
+        setTimeout(() => {setIsLoading(false)}, 2000);
+    }, [])
+    const printKRBoxOffice = () => {
+        return (
+            <>
+            {kobis.map((k) => {
+                return(
+                <>
+                {movies.map((movie) => {
+               // console.log('movie_list',movie);
+                return (
+                    <>
+                    {k.movieNm === movie.title ? <Movie
+                        key={movie.id}
+                        id={movie.id}
+                        movieNm={movie.title}
+                        rank={k.rank}
+                        rankInten={k.rankInten}
+                        openDt={k.openDt}
+                        audiCnt={k.audiCnt}
+                        audiAcc={k.audiAcc}
+                        audiInten={k.audiInten}
+                    />
+                     : <p></p> }
+                    </>
+                );
+            })}
+                </>
+                );
+            })}
+            </>
+        );
+    }
 
     return (
         <Paper className={classes.paper}>
@@ -52,32 +91,7 @@ const MovieList = ({ movies, kobis }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {kobis.map((k) => {
-                        return(
-                        <>
-                        {movies.map((movie) => {
-                        // console.log('movie_list',movie);
-                        return (
-                            <>
-                            {k.movieNm === movie.title ? <Movie
-                                key={movie.id}
-                                id={movie.id}
-                                movieNm={movie.title}
-                                rank={k.rank}
-                                rankInten={k.rankInten}
-                                openDt={k.openDt}
-                                audiCnt={k.audiCnt}
-                                audiAcc={k.audiAcc}
-                                audiInten={k.audiInten}
-                            /> : <p></p> }
-                            
-                            </>
-                        );
-                    })}
-                        </>
-                        );
-                    })}
-                    
+                    { isLoading ? <p>로딩중</p> : <>{printKRBoxOffice()}</> }
                 </TableBody>
             </Table>
         </Paper>
