@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TableCell, TableRow } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const styles = makeStyles({
     movieTitle: {
