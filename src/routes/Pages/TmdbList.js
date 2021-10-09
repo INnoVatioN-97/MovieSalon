@@ -42,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
     },
     posters__poster: {
         margin: '2%',
+        '&:hover': {
+            transform: 'scale(1.2)',
+           // opacity: '0.5',
+        },
     },
     dia_header: {
         backgroundColor: '#282c34',
