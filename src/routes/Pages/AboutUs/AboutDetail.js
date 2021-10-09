@@ -146,7 +146,8 @@ const AboutDetail = ({ name }) => {
                                                     style={{
                                                         display: 'flex',
                                                         flexDirection: 'row',
-                                                        justifyContent: 'space-between',
+                                                        justifyContent: 'space-around',
+                                                        // flexWrap: 'wrap',
                                                         width: '100%',
                                                     }}
                                                 >
@@ -154,8 +155,9 @@ const AboutDetail = ({ name }) => {
                                                         style={{
                                                             fontSize: '1.7rem',
                                                             color: '#44bd32',
-                                                            textAlign: 'center',
+                                                            textAlign: 'left',
                                                             wordBreak: 'keep-all',
+                                                            flexGrow: '1',
                                                         }}
                                                     >
                                                         {m.projectName}
@@ -166,6 +168,7 @@ const AboutDetail = ({ name }) => {
                                                             color: '#ffffff',
                                                             textAlign: 'right',
                                                             wordBreak: 'keep-all',
+                                                            flexGrow: '2',
                                                         }}
                                                     >
                                                         {m.description}

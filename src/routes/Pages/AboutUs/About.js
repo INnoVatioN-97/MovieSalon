@@ -1,13 +1,13 @@
 import React from 'react';
 import { makeStyles, Link } from '@material-ui/core';
-import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Profile012 from 'images/Profile012.jpg';
 import ProfileKSY from 'images/ProfileKSY.jpg';
 
 const styles = makeStyles({
     root: {
-        margin: '5%',
+        margin: '5% 10%',
         fontSize: '1.0rem',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
         color: '#10FF00',
@@ -17,7 +17,7 @@ const styles = makeStyles({
         flexWrap: 'wrap',
         alignItems: 'center',
         whiteSpace: 'nowrap',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
     },
     name: {
         fontSize: '1.3rem',
