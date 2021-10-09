@@ -2,7 +2,6 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from 'routes/Pages/Home';
 import MovieList from 'routes/Pages/MovieList';
-import ViewMovie from 'routes/Details/ViewMovie';
 import queryString from 'query-string';
 import Auth from 'routes/login/Auth';
 import Search from 'components/Search';
@@ -11,7 +10,6 @@ import ViewTMDB from 'routes/Details/ViewTMDB';
 import Navigation from './Navigation';
 import Profile from 'routes/login/Profile';
 import Filmography from 'routes/Details/Filmography';
-import Footer from './Footer';
 import SliderCarousel from './SliderCarousel';
 import About from 'routes/Pages/AboutUs/About';
 import AboutDetail from 'routes/Pages/AboutUs/AboutDetail';
@@ -19,11 +17,6 @@ import AboutDetail from 'routes/Pages/AboutUs/AboutDetail';
 const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, hotMovie, krHome, kobis }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
     //url속 쿼리스트링에 movieNm을 가져와 ViewMovie컴포넌트에 싣고 렌더링.
-    const viewMovie = (e) => {
-        const { search } = e.location;
-        const queryObj = queryString.parse(search);
-        return <ViewMovie movieNm={queryObj.movieNm} userObj={userObj} />;
-    };
 
     const aboutDetail = (e) => {
         const { search } = e.location;
@@ -50,7 +43,6 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         <Route exact path="/movieList">
                             <MovieList movies={movies} isLoggedIn={isLoggedIn} userObj={userObj} kobis={kobis} />
                         </Route>
-                        <Route path="/viewMovie" component={viewMovie} />
                         <Route path="/AboutDetail" component={aboutDetail} />
                         <Route exact path="/auth">
                             <Auth isLoggedIn={isLoggedIn} userObj={userObj} />

@@ -5,7 +5,6 @@ import { authService } from 'fbase';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import { getKobisMovies } from './APIs/KobisAPI';
 import { getTmdbBoxOffice, getUpcommingMovies, getHotWeekMovies, getTMDBSearchKRBoxOffice } from './APIs/TmdbAPI';
-import { getNaverSearchResult } from './APIs/NaverSearchAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 const App = () => {
