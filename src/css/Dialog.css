@@ -13,9 +13,7 @@
     box-shadow: 10px 5px 5px rgb(153, 153, 167);
 }
 
-.poster:hover {
-    transform: scale(1.2);
-}
+
 
 .child {
     display: grid;

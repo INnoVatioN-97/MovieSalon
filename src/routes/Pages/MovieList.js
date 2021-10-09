@@ -4,11 +4,8 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
 import { TableCell, TableHead, TableRow } from '@material-ui/core';
-import { getKobisMovies } from 'components/APIs/KobisAPI';
-import { faKorvue } from '@fortawesome/free-brands-svg-icons';
-import { ContactSupportOutlined } from '@material-ui/icons';
+
 
 /*
 2021.07.14 List 기능 추가 ver1.0 @TylerKang

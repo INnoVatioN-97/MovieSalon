@@ -2,8 +2,6 @@ import { authService, firebaseInstance } from 'fbase';
 import React, { useState } from 'react';
 import { createHashHistory } from 'history';
 import { makeStyles } from '@material-ui/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { Box, Button } from '@material-ui/core';
 // import '../css/Profile.css';
 

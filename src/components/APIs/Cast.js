@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { TableCell, TableRow, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
@@ -149,7 +149,7 @@ class Cast extends React.Component {
             return result;
         };
         var settings = {
-            dots: true,
+            dots: false,
             infinite: false,
             speed: 500,
             slidesToShow: 4,
