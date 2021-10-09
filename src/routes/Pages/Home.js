@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
@@ -103,11 +103,18 @@ const useStyles = makeStyles({
 
 const Home = ({ tmdbHome, hotMovie, krHome }) => {
     const classes = useStyles();
+    const [isLoading, setIsLoading] = useState(true);
     const tmdbPosterURL = 'https://image.tmdb.org/t/p/w500';
     const tmdbViewURL = '/viewTmdb/';
     // const kobisViewURL = '/viewMovie?movieNm=';
     const isMobile = useMediaQuery('(max-width: 400px)');
     const krBoxOffice = krHome.slice(0,3); // [kobis :: Tmdb 연동 정보를 받아 3개만 추출] 
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 1000);
+    }, [])
 
     const printTop3Movies_KOBIS = () => {
         console.log('krHome:', krBoxOffice);
@@ -177,7 +184,9 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
             </div>
             <div className={classes.topMovieContainer}>
                 <div className={classes.topMovieContainer__container}>
-                    <Box className={classes.box}>{printTop3Movies_KOBIS()}</Box>
+                    <Box className={classes.box}>
+                    {isLoading ? <p>로딩중</p> : <> {printTop3Movies_KOBIS()} </>}
+                    </Box>
                 </div>
             </div>
             <div className={classes.topMovieContainer}>
