@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import MJC_LOGO from 'images/MJC_LOGO.svg';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 
 const styles = makeStyles({
     //이미지 flex:left로
@@ -11,77 +10,78 @@ const styles = makeStyles({
         margin: '3% 10% 10% 10% ',
         // padding: 'auto',
         display: 'flex',
-        flexDirection: 'row',
+        // flexDirection: 'row',
         whiteSpace: 'wrap',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
+        alignContent: 'space-around',
+        flexWrap: 'wrap',
         borderRadius: '2vw',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
+        // width:''
     },
     container: {
         display: 'flex',
         flexDirection: 'column',
         color: 'white',
-        margin: '5%',
+        margin: '2%',
         width: '100%',
         height: '100%',
     },
     intro: {
         textAlign: 'center',
-        margin: '2%',
+        margin: 'auto',
         // marginBottom: '8%',
-        borderRadius: '20px',
+        borderRadius: '3vw',
         backgroundColor: '#2f3640',
-        padding: 'auto',
+        padding: '2%',
     },
     headline: {
         fontSize: '2.5vw',
         // margin: 'auto',
-        margin: '5% auto 5% auto',
+        margin: 'auto',
         color: '#10FF00',
         textAlign: 'center',
     },
     profileImg: {
-        padding: '2% 2% 2% 2%',
-        borderRadius: '20%',
-        width: '30vw',
-        height: '30vw',
-    },
-    schoolLogo: {
-        margin: '0',
-        padding: '0',
-        width: '4vw',
-        height: '4vw',
-        opacity: '0.4',
+        margin: 'auto',
         borderRadius: '70%',
+        width: '20vw',
+        height: '20vw',
     },
     name: {
         fontSize: '2.1vw',
         margin: '3%',
     },
     comment: {
-        // display: 'inline-block',
+        // wordBreak: 'keep-all',
+        // wordBreak: 'break-all',
         wordBreak: 'keep-all',
-        margin: '1% 1% 3% 1%',
+        margin: 'auto',
         fontSize: '1.7vw',
     },
     myStack: {
-        backgroundColor: 'grey',
+        backgroundColor: '#1F272E',
         fontSize: '1.5vw',
         padding: '2%',
         color: 'white',
-        borderRadius: '0 0 20px 20px',
+        borderRadius: '3vw',
         // margin: '5%',
     },
-    myStack__Title: { textAlign: 'center' },
+    stackName: {
+        textAlign: 'center',
+        fontSize: '2vw',
+        fontWeight: 'bold',
+    },
+    myStack__availableTechs: { textAlign: 'center', color: '#10FF00' },
     myStackList: {
         listStyle: 'none',
         fontSize: '1.7vw',
-        color: 'black',
+        color: '#10FF00',
     },
     myStackList__li: {
-        textAlign: 'left',
+        // textAlign: 'center',
         fontSize: '1.3vw',
-        margin: '3%',
+        margin: '2% 0 2% 0',
         color: 'white',
     },
 });
@@ -111,36 +111,72 @@ const AboutDetail = ({ name }) => {
 
     return init ? (
         <div className={classes.root}>
-            <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
+            <div className={classes.container}>
+                <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
+            </div>
             <div className={classes.container}>
                 <div className={classes.headline}>"{meObj.headline}"</div>
-                <div>
-                    <div className={classes.name}>저는 {name}입니다... 아...</div>
-                    <div className={classes.comment}>
-                        저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
-                        {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
-                        {meObj.hobby}가 내 취미입니다...
-                    </div>
-                    <div className={classes.intro}>
-                        <div>간단한 자기소개</div>
-                        <div className={classes.comment}>{meObj.comment}</div>
-                        <div className={classes.myStack}>
-                            <div className={classes.myStack__Title}> 사용 가능한 기술 스택</div>
-                            {meObj.techStacks.map((m) => {
-                                return (
-                                    <ul className={classes.myStackList}>
-                                        <div style={{ textAlign: 'center' }}>{m.name}</div>
-                                        {m.projects.map((m) => {
-                                            return <li className={classes.myStackList__li}>{m}</li>;
-                                        })}
-                                    </ul>
-                                );
-                            })}
+                <div className={classes.name}>저는 {name}입니다... 아...</div>
+                <div className={classes.comment}>
+                    저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
+                    {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
+                    {meObj.hobby}가 내 취미입니다...
+                </div>
+            </div>
+            <div className={classes.container}>
+                <div className={classes.intro}>
+                    <div>간단한 자기소개</div>
+                    <div className={classes.comment}>{meObj.comment}</div>
+                    <div className={classes.myStack}>
+                        <div className={classes.myStack__availableTechs}>
+                            {' '}
+                            사용 가능한 기술 스택
                         </div>
+                        {meObj.techStacks.map((m) => {
+                            return (
+                                <ul className={classes.myStackList}>
+                                    <div className={classes.stackName}>{m.name} Projects</div>
+                                    {m.projects.map((m) => {
+                                        return (
+                                            <li className={classes.myStackList__li}>
+                                                <div
+                                                    style={{
+                                                        display: 'flex',
+                                                        flexDirection: 'row',
+                                                        justifyContent: 'space-between',
+                                                        width: '100%',
+                                                    }}
+                                                >
+                                                    <span
+                                                        style={{
+                                                            fontSize: '1.52vw',
+                                                            color: '#44bd32',
+                                                            textAlign: 'center',
+                                                            wordBreak: 'break-word',
+                                                        }}
+                                                    >
+                                                        {m.projectName}
+                                                    </span>
+                                                    <span
+                                                        style={{
+                                                            fontSize: '1.3vw',
+                                                            color: '#ffffff',
+                                                            textAlign: 'right',
+                                                            wordBreak: 'break-word',
+                                                        }}
+                                                    >
+                                                        {m.description}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
-            <img src={MJC_LOGO} className={classes.schoolLogo} alt="학교 로고" />
         </div>
     ) : (
         <div>initializing...</div>

@@ -21,15 +21,30 @@ export const meObj012 = {
         {
             name: 'java(Android)',
             projects: [
-                '띵글 카메라 - Google CloudVision API를 활용한 사진 자동정리앱 (캡스톤 디자인 교내대회 출품작)',
-                '날씨 어플리케이션 - 공공데이터 API를 활용한 내 지역(도단위) 코로나 현황 및 날씨정보 출력',
+                // {
+                //     projectName: '',
+                //     description: '',
+                // },
+                {
+                    projectName: '띵글 카메라',
+                    description:
+                        'Google CloudVision API를 활용한 사진 자동정리앱 (캡스톤 디자인 교내대회 출품작)',
+                },
+                {
+                    projectName: '날씨 어플리케이션',
+                    description:
+                        '공공데이터 API를 활용한 내 지역(도단위) 코로나 현황 및 날씨정보 출력',
+                },
             ],
         },
         {
             name: 'React(Javascript)',
             projects: [
-                'MovieSalon - TMDB, KOBIS, Firebase API를 활용한 국내,북미 박스오피스 웹페이지 (깃허브 리포지토리 내 프로젝트명은 MovieRank)',
-                '응애응애 - 흥애흥애',
+                {
+                    projectName: 'Movie Salon',
+                    description:
+                        'TMDB, KOBIS, Firebase API를 활용한 국내,북미 박스오피스 웹페이지 (깃허브 리포지토리 내 프로젝트명은 MovieRank)',
+                },
             ],
         },
     ],
@@ -42,7 +57,7 @@ export const meObjKSY = {
     year: '16',
     age: `${curYear - bornKSY}`,
     hobby: 'MLB 더쇼 하기',
-    headline: '아... 기모찌...',
+    headline: '아...',
     profileImg: ProfileKSY,
 
     comment: '코멘트입니다.',
@@ -50,11 +65,31 @@ export const meObjKSY = {
     techStacks: [
         {
             name: 'java(Swing)',
-            projects: ['On Your Study Plan - 내 수강과목들에 대한 학점 현황 관리 프로그램'],
+            projects: [
+                {
+                    projectName: 'On Your Study Plan',
+                    description: '내 수강과목들에 대한 학점 현황 관리 프로그램',
+                },
+            ],
         },
         {
             name: 'C(Arduino)',
-            projects: ['Box Farmers - 온습도센서, 히터, 쿨러등을 활용한 스마트팜 시스템'],
+            projects: [
+                {
+                    projectName: 'Box Farmers',
+                    description: '온습도센서, 히터, 쿨러등을 활용한 스마트팜 시스템',
+                },
+            ],
+        },
+        {
+            name: 'React(Javascript)',
+            projects: [
+                {
+                    projectName: 'Movie Salon',
+                    description:
+                        'TMDB, KOBIS, Firebase API를 활용한 국내,북미 박스오피스 웹페이지 (깃허브 리포지토리 내 프로젝트명은 MovieRank)',
+                },
+            ],
         },
     ],
 };
