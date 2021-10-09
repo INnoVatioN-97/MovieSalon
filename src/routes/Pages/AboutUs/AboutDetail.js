@@ -13,9 +13,9 @@ const styles = makeStyles({
         // flexDirection: 'row',
         whiteSpace: 'wrap',
         justifyContent: 'center',
-        alignContent: 'space-around',
+        alignContent: 'space-between',
         flexWrap: 'wrap',
-        borderRadius: '2vw',
+        borderRadius: '2.5rem',
         backgroundColor: 'rgba(12, 12, 12, 0.9)',
         // width:''
     },
@@ -31,12 +31,12 @@ const styles = makeStyles({
         textAlign: 'center',
         margin: 'auto',
         // marginBottom: '8%',
-        borderRadius: '3vw',
+        borderRadius: '2.4rem',
         backgroundColor: '#2f3640',
         padding: '2%',
     },
     headline: {
-        fontSize: '2.5vw',
+        fontSize: '2.2rem',
         // margin: 'auto',
         margin: 'auto',
         color: '#10FF00',
@@ -45,11 +45,11 @@ const styles = makeStyles({
     profileImg: {
         margin: 'auto',
         borderRadius: '70%',
-        width: '20vw',
-        height: '20vw',
+        width: '23rem',
+        height: '23rem',
     },
     name: {
-        fontSize: '2.1vw',
+        fontSize: '1.7rem',
         margin: '3%',
     },
     comment: {
@@ -57,30 +57,33 @@ const styles = makeStyles({
         // wordBreak: 'break-all',
         wordBreak: 'keep-all',
         margin: 'auto',
-        fontSize: '1.7vw',
+        fontSize: '1.4rem',
     },
     myStack: {
         backgroundColor: '#1F272E',
-        fontSize: '1.5vw',
+        fontSize: '1.2rem',
         padding: '2%',
         color: 'white',
-        borderRadius: '3vw',
+        borderRadius: '2.3rem',
         // margin: '5%',
     },
     stackName: {
         textAlign: 'center',
-        fontSize: '2vw',
+        fontSize: '1rem',
         fontWeight: 'bold',
     },
-    myStack__availableTechs: { textAlign: 'center', color: '#10FF00' },
+    myStack__availableTechs: {
+        textAlign: 'center',
+        color: '#10FF00',
+    },
     myStackList: {
         listStyle: 'none',
-        fontSize: '1.7vw',
+        fontSize: '1.7rem',
         color: '#10FF00',
     },
     myStackList__li: {
         // textAlign: 'center',
-        fontSize: '1.3vw',
+        fontSize: '1.3rem',
         margin: '2% 0 2% 0',
         color: 'white',
     },
@@ -149,20 +152,20 @@ const AboutDetail = ({ name }) => {
                                                 >
                                                     <span
                                                         style={{
-                                                            fontSize: '1.52vw',
+                                                            fontSize: '1.7rem',
                                                             color: '#44bd32',
                                                             textAlign: 'center',
-                                                            wordBreak: 'break-word',
+                                                            wordBreak: 'keep-all',
                                                         }}
                                                     >
                                                         {m.projectName}
                                                     </span>
                                                     <span
                                                         style={{
-                                                            fontSize: '1.3vw',
+                                                            fontSize: '1.2rem',
                                                             color: '#ffffff',
                                                             textAlign: 'right',
-                                                            wordBreak: 'break-word',
+                                                            wordBreak: 'keep-all',
                                                         }}
                                                     >
                                                         {m.description}

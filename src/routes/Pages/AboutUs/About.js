@@ -14,12 +14,13 @@ const styles = makeStyles({
         borderRadius: '20px',
         textAlign: 'center',
         display: 'flex',
+        flexWrap: 'wrap',
         alignItems: 'center',
         whiteSpace: 'nowrap',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
     },
     name: {
-        fontSize: '2.0vw',
+        fontSize: '1.3rem',
         color: 'white',
     },
     prifile: {
@@ -30,8 +31,8 @@ const styles = makeStyles({
         marginTop: '5%',
         margin: 'auto',
         borderRadius: '70%',
-        width: '28vw',
-        height: '28vw',
+        width: '24rem',
+        height: '24rem',
     },
 });
 const About = () => {
@@ -40,7 +41,13 @@ const About = () => {
         <div className={classes.root}>
             {/* 영일 */}
             <div className={classes.profile__Info}>
-                <Link href="/#/AboutDetail?name=고영일" className={classes.link} variant="inherit" color="inherit" underline="none">
+                <Link
+                    href="/#/AboutDetail?name=고영일"
+                    className={classes.link}
+                    variant="inherit"
+                    color="inherit"
+                    underline="none"
+                >
                     <img src={Profile012} className={classes.profileImg} alt="고영일 Profile" />
                     <div className={classes.name}>고영일(❄️25살, 녹아내리는 중❄️)</div>
                 </Link>
@@ -55,7 +62,13 @@ const About = () => {
 
             {/* 신영 */}
             <div className={classes.profile__Info}>
-                <Link href="/#/AboutDetail?name=강신영" className={classes.link} variant="inherit" color="inherit" underline="none">
+                <Link
+                    href="/#/AboutDetail?name=강신영"
+                    className={classes.link}
+                    variant="inherit"
+                    color="inherit"
+                    underline="none"
+                >
                     <img src={ProfileKSY} className={classes.profileImg} alt="고영일 Profile" />
                     <div className={classes.name}>강신영(🔥25살, 불타오르는 중🔥)</div>
                 </Link>
