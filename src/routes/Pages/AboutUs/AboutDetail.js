@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import MJC_LOGO from 'images/MJC_LOGO.svg';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Link } from '@material-ui/core';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 const styles = makeStyles({
@@ -28,6 +28,18 @@ const styles = makeStyles({
         width: '100%',
         height: '100%',
     },
+    container_2: {
+        display: 'flex',
+        flexDirection: 'column',
+        color: 'white',
+        flex: 'wrap',
+        margin: '2%',
+        '@media (max-width: 750px)': {
+            width: '100%',
+        },
+        width: '45%',
+        height: '100%',
+    },
     intro: {
         textAlign: 'center',
         margin: 'auto',
@@ -37,8 +49,7 @@ const styles = makeStyles({
         padding: '2%',
     },
     headline: {
-        fontSize: '2.2rem',
-        // margin: 'auto',
+        fontSize: '1.8rem',
         margin: 'auto',
         color: '#10FF00',
         textAlign: 'center',
@@ -48,8 +59,8 @@ const styles = makeStyles({
     profileImg: {
         margin: 'auto',
         borderRadius: '70%',
-        width: '23rem',
-        height: '23rem',
+        width: '15rem',
+        height: '15rem',
     },
     name: {
         fontSize: '1.7rem',
@@ -87,7 +98,7 @@ const styles = makeStyles({
     myStackList__li: {
         // textAlign: 'center',
         fontSize: '1.3rem',
-        margin: '2% 0 2% 0',
+        margin: '2% 0 2% -5%',
         color: 'white',
     },
     infoTable: {
@@ -96,13 +107,17 @@ const styles = makeStyles({
     infoTable__row: {},
     infoTalbe__Cell__left: {
         color: 'white',
-        fontSize: '2rem',
+        fontSize: '1.5rem',
         borderBottom: 'none',
+        // marginLeft: '1%',
     },
     infoTalbe__Cell__right: {
         color: 'white',
-        fontSize: '1.6rem',
+        fontSize: '1.1rem',
         borderBottom: 'none',
+    },
+    link: {
+    color: '#FFFF00',
     },
 });
 
@@ -134,7 +149,7 @@ const AboutDetail = ({ name }) => {
             <div className={classes.container}>
                 <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
             </div>
-            <div className={classes.container}>
+            <div className={classes.container_2}>
                 <div className={classes.comment}>
                     <Table className={classes.infoTable}>
                         <TableHead>
@@ -154,9 +169,9 @@ const AboutDetail = ({ name }) => {
                                 <TableCell className={classes.infoTalbe__Cell__right}>{meObj.age}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell className={classes.infoTalbe__Cell__left}>최종학력 / 입학년도</TableCell>
+                                <TableCell className={classes.infoTalbe__Cell__left}>학력</TableCell>
                                 <TableCell className={classes.infoTalbe__Cell__right}>
-                                    {meObj.school} {meObj.major} / {meObj.year}학번
+                                    {meObj.school} {meObj.major}
                                 </TableCell>
                             </TableRow>
                             <TableRow>
@@ -170,7 +185,7 @@ const AboutDetail = ({ name }) => {
                     </Table>
                 </div>
             </div>
-            <div className={classes.container}>
+            <div className={classes.container_2}>
                 <div className={classes.intro}>
                     <div>간단한 자기소개</div>
                     <div className={classes.comment}>{meObj.comment}</div>
@@ -195,13 +210,15 @@ const AboutDetail = ({ name }) => {
                                                     <span
                                                         style={{
                                                             fontSize: '1.7rem',
-                                                            color: '#44bd32',
+                                                            color: '#FFFF00',
                                                             textAlign: 'left',
                                                             wordBreak: 'keep-all',
                                                             flexGrow: '1',
                                                         }}
                                                     >
-                                                        {m.projectName}
+                                                       <Link href={'https://github.com/' +meObj.github_name +'/' + m.projectName} className={classes.link}>
+                                                            {m.projectName}
+                                                        </Link>
                                                     </span>
                                                     <span
                                                         style={{
