@@ -137,12 +137,12 @@ const Navigation = ({ userObj }) => {
               {
                   key: 'movieList',
                   url: '/#/movieList',
-                  text: '박스 오피스 (영화 진흥위원회)',
+                  text: '🇰🇷 BoxOffice',
               },
               {
                   key: 'tmdbList',
                   url: '/#/tmdbList',
-                  text: '박스 오피스 (TMDB)',
+                  text: '🗺️BoxOffice (WORLD)',
               },
               {
                   key: 'About',
