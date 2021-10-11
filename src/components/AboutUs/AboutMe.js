@@ -14,6 +14,7 @@ export const meObj012 = {
     hobby: '밥먹고 코딩하다 현타오기',
     headline: '오늘도 나는 코딩에 쩔어산다...',
     profileImg: Profile012,
+    github_name: 'INnoVatioN-97',
 
     comment: '살려주세요 취업시켜주세요',
 
@@ -26,14 +27,14 @@ export const meObj012 = {
                 //     description: '',
                 // },
                 {
-                    projectName: '띵글 카메라',
+                    projectName: 'MJCCapstoneDesign',
                     description:
-                        'Google CloudVision API를 활용한 사진 자동정리앱 (캡스톤 디자인 교내대회 출품작)',
+                        'Google CloudVision API를 활용한 사진 자동정리앱',
                 },
                 {
-                    projectName: '날씨 어플리케이션',
+                    projectName: 'Android_WeatherApp',
                     description:
-                        '공공데이터 API를 활용한 내 지역(도단위) 코로나 현황 및 날씨정보 출력',
+                        '공공데이터 API를 활용한 지역별 코로나 현황 및 날씨정보 출력',
                 },
             ],
         },
@@ -43,7 +44,7 @@ export const meObj012 = {
                 {
                     projectName: 'Movie Salon',
                     description:
-                        'TMDB, KOBIS, Firebase API를 활용한 국내,북미 박스오피스 웹페이지 (깃허브 리포지토리 내 프로젝트명은 MovieRank)',
+                        'REST API를 활용한 국내,북미 박스오피스 웹페이지',
                 },
             ],
         },
@@ -57,18 +58,18 @@ export const meObjKSY = {
     year: '16',
     age: `${curYear - bornKSY}`,
     hobby: 'MLB 더쇼 하기',
-    headline: '아...',
+    headline: '뉴비',
     profileImg: ProfileKSY,
-
+    github_name: 'TylerKang-97',
     comment: '코멘트입니다.',
 
     techStacks: [
         {
-            name: 'java(Swing)',
+            name: 'JAVA',
             projects: [
                 {
                     projectName: 'On Your Study Plan',
-                    description: '내 수강과목들에 대한 학점 현황 관리 프로그램',
+                    description: '자율 학습 모니터링 프로그램',
                 },
             ],
         },
@@ -77,7 +78,7 @@ export const meObjKSY = {
             projects: [
                 {
                     projectName: 'Box Farmers',
-                    description: '온습도센서, 히터, 쿨러등을 활용한 스마트팜 시스템',
+                    description: '교육용 스마트팜 시스템',
                 },
             ],
         },
@@ -87,7 +88,7 @@ export const meObjKSY = {
                 {
                     projectName: 'Movie Salon',
                     description:
-                        'TMDB, KOBIS, Firebase API를 활용한 국내,북미 박스오피스 웹페이지 (깃허브 리포지토리 내 프로젝트명은 MovieRank)',
+                        'REST API를 활용한 국내,북미 박스오피스 웹페이지',
                 },
             ],
         },

@@ -31,8 +31,8 @@ const styles = makeStyles({
         marginTop: '5%',
         margin: 'auto',
         borderRadius: '70%',
-        width: '24rem',
-        height: '24rem',
+        width: '15rem',
+        height: '15rem',
     },
 });
 const About = () => {
