@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import MJC_LOGO from 'images/MJC_LOGO.svg';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles } from '@material-ui/core/styles';
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 
 const styles = makeStyles({
     //이미지 flex:left로
@@ -41,6 +42,8 @@ const styles = makeStyles({
         margin: 'auto',
         color: '#10FF00',
         textAlign: 'center',
+
+        borderBottom: 'none',
     },
     profileImg: {
         margin: 'auto',
@@ -87,6 +90,20 @@ const styles = makeStyles({
         margin: '2% 0 2% 0',
         color: 'white',
     },
+    infoTable: {
+        // color: 'white',
+    },
+    infoTable__row: {},
+    infoTalbe__Cell__left: {
+        color: 'white',
+        fontSize: '2rem',
+        borderBottom: 'none',
+    },
+    infoTalbe__Cell__right: {
+        color: 'white',
+        fontSize: '1.6rem',
+        borderBottom: 'none',
+    },
 });
 
 const AboutDetail = ({ name }) => {
@@ -118,12 +135,39 @@ const AboutDetail = ({ name }) => {
                 <img src={meObj.profileImg} className={classes.profileImg} alt="프로필 사진" />
             </div>
             <div className={classes.container}>
-                <div className={classes.headline}>"{meObj.headline}"</div>
-                <div className={classes.name}>저는 {name}입니다... 아...</div>
                 <div className={classes.comment}>
-                    저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
-                    {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
-                    {meObj.hobby}가 내 취미입니다...
+                    <Table className={classes.infoTable}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell colSpan="2" className={classes.headline}>
+                                    {/* <div> */}"{meObj.headline}"{/* </div> */}
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell className={classes.infoTalbe__Cell__left}>이름</TableCell>
+                                <TableCell className={classes.infoTalbe__Cell__right}>{meObj.name}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={classes.infoTalbe__Cell__left}>나이</TableCell>
+                                <TableCell className={classes.infoTalbe__Cell__right}>{meObj.age}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={classes.infoTalbe__Cell__left}>최종학력 / 입학년도</TableCell>
+                                <TableCell className={classes.infoTalbe__Cell__right}>
+                                    {meObj.school} {meObj.major} / {meObj.year}학번
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell className={classes.infoTalbe__Cell__left}>취미</TableCell>
+                                <TableCell className={classes.infoTalbe__Cell__right}>{meObj.hobby}</TableCell>
+                            </TableRow>
+                            {/* 저는 {meObj.school}을 졸업해 지금 만 {meObj.age}살 이며,
+                        {meObj.school}에 {meObj.major} {meObj.year}학번으로 입학했고,
+                        {meObj.hobby}가 내 취미입니다... */}
+                        </TableBody>
+                    </Table>
                 </div>
             </div>
             <div className={classes.container}>
@@ -131,10 +175,7 @@ const AboutDetail = ({ name }) => {
                     <div>간단한 자기소개</div>
                     <div className={classes.comment}>{meObj.comment}</div>
                     <div className={classes.myStack}>
-                        <div className={classes.myStack__availableTechs}>
-                            {' '}
-                            사용 가능한 기술 스택
-                        </div>
+                        <div className={classes.myStack__availableTechs}> 사용 가능한 기술 스택</div>
                         {meObj.techStacks.map((m) => {
                             return (
                                 <ul className={classes.myStackList}>
