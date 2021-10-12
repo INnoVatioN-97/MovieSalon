@@ -42,7 +42,7 @@ export const meObj012 = {
             name: 'React(Javascript)',
             projects: [
                 {
-                    projectName: 'Movie Salon',
+                    projectName: 'MovieSalon',
                     description:
                         'REST API를 활용한 국내,북미 박스오피스 웹페이지',
                 },
@@ -68,16 +68,16 @@ export const meObjKSY = {
             name: 'JAVA',
             projects: [
                 {
-                    projectName: 'On Your Study Plan',
+                    projectName: 'OnYourStudyPlan',
                     description: '자율 학습 모니터링 프로그램',
                 },
             ],
         },
         {
-            name: 'C(Arduino)',
+            name: 'C++(Arduino)',
             projects: [
                 {
-                    projectName: 'Box Farmers',
+                    projectName: 'BoxFarmers',
                     description: '교육용 스마트팜 시스템',
                 },
             ],

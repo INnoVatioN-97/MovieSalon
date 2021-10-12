@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
-import MJC_LOGO from 'images/MJC_LOGO.svg';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles, Link } from '@material-ui/core';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Chart_go, Chart_Kang } from './Chart';
 
 const styles = makeStyles({
     //이미지 flex:left로
@@ -25,7 +24,10 @@ const styles = makeStyles({
         flexDirection: 'column',
         color: 'white',
         margin: '2%',
-        width: '100%',
+        width: '42%',
+        '@media (max-width: 550px)': {
+            width: '100%',
+        },
         height: '100%',
     },
     container_2: {
@@ -38,6 +40,18 @@ const styles = makeStyles({
             width: '100%',
         },
         width: '45%',
+        height: '100%',
+    },
+    container_chart: {
+        display: 'flex',
+        flexDirection: 'column',
+        color: 'white',
+        flex: 'wrap',
+        margin: '2%',
+        '@media (max-width: 850px)': {
+            width: '85%',
+        },
+        width: '25%',
         height: '100%',
     },
     intro: {
@@ -53,7 +67,6 @@ const styles = makeStyles({
         margin: 'auto',
         color: '#10FF00',
         textAlign: 'center',
-
         borderBottom: 'none',
     },
     profileImg: {
@@ -185,6 +198,16 @@ const AboutDetail = ({ name }) => {
                     </Table>
                 </div>
             </div>
+            {name === '고영일' ? 
+            <div className={classes.container_chart}>
+                <Chart_go />    
+            </div>
+            : 
+            <div className={classes.container_chart}>
+                <Chart_Kang />    
+            </div>
+            }
+            
             <div className={classes.container_2}>
                 <div className={classes.intro}>
                     <div>간단한 자기소개</div>

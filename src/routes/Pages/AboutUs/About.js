@@ -4,6 +4,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Profile012 from 'images/Profile012.jpg';
 import ProfileKSY from 'images/ProfileKSY.jpg';
+import AboutProject from './AboutProject';
 
 const styles = makeStyles({
     root: {
@@ -80,7 +81,9 @@ const About = () => {
                 </span>
                 <span>💪kingksy777@gmail.com</span>
             </div>
+            <Link href="/#/AboutProject/"><p>AboutProject</p></Link>
         </div>
+        
     );
 };
 
