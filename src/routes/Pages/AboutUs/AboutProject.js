@@ -47,16 +47,6 @@ const styles = makeStyles({
         textAlign: 'center',
         borderBottom: 'none',
     },
-    profileImg: {
-        margin: 'auto',
-        borderRadius: '70%',
-        width: '15rem',
-        height: '15rem',
-    },
-    name: {
-        fontSize: '1.7rem',
-        margin: '3%',
-    },
     comment: {
         // wordBreak: 'keep-all',
         // wordBreak: 'break-all',
@@ -74,52 +64,9 @@ const styles = makeStyles({
         padding: '2%',
         fontFamily: 'Wemakeprice-Regular',
     },
-    myStack: {
-        backgroundColor: '#1F272E',
-        fontSize: '1.2rem',
-        padding: '2%',
-        color: 'white',
-        borderRadius: '2.3rem',
-        // margin: '5%',
-    },
-    stackName: {
+    charts: {
         textAlign: 'center',
-        fontSize: '1rem',
-        fontWeight: 'bold',
-    },
-    myStack__availableTechs: {
-        textAlign: 'center',
-        color: '#10FF00',
-    },
-    myStackList: {
-        listStyle: 'none',
-        fontSize: '1.7rem',
-        color: '#10FF00',
-    },
-    myStackList__li: {
-        // textAlign: 'center',
-        fontSize: '1.3rem',
-        margin: '2% 0 2% -5%',
-        color: 'white',
-    },
-    infoTable: {
-        // color: 'white',
-    },
-    infoTable__row: {},
-    infoTalbe__Cell__left: {
-        color: 'white',
-        fontSize: '1.5rem',
-        borderBottom: 'none',
-        // marginLeft: '1%',
-    },
-    infoTalbe__Cell__right: {
-        color: 'white',
-        fontSize: '1.1rem',
-        borderBottom: 'none',
-    },
-    link: {
-    color: '#FFFF00',
-    },
+    }
 });
 const AboutProject = () => {
     const classes = styles();
@@ -135,7 +82,7 @@ return (
                             위해 프로젝트를 시작했습니다.
                         </span>
                     </div>
-                    <div>
+                    <div className={classes.charts}>
                         <Project />
                     </div>
                 </div>

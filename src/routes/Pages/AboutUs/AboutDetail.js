@@ -45,7 +45,7 @@ const styles = makeStyles({
     container_chart: {
         display: 'flex',
         flexDirection: 'column',
-        color: 'white',
+        color: '#FFFF00',
         flex: 'wrap',
         margin: '2%',
         '@media (max-width: 850px)': {
@@ -53,6 +53,7 @@ const styles = makeStyles({
         },
         width: '25%',
         height: '100%',
+        textAlign: 'center',
     },
     intro: {
         textAlign: 'center',

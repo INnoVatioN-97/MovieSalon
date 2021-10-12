@@ -7,11 +7,11 @@ export const Chart_go = () => {
     const data = {
         labels: [
           'JAVA',
-          'C++',
+          'Dart',
           'JS'
         ],
         datasets: [{
-          data: [300, 50, 100],
+          data: [300, 50, 200],
           backgroundColor: [
           '#FF6384',
           '#36A2EB',
