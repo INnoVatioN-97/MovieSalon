@@ -13,7 +13,6 @@ import Filmography from 'routes/Details/Filmography';
 import SliderCarousel from './SliderCarousel';
 import About from 'routes/Pages/AboutUs/About';
 import AboutDetail from 'routes/Pages/AboutUs/AboutDetail';
-import AboutProject from 'routes/Pages/AboutUs/AboutProject';
 
 const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcomming, hotMovie, krHome, kobis }) => {
     // 파라미터 {}포함시 userObj 확인가능, movies 실종
@@ -68,9 +67,6 @@ const AppRouter = ({ refreshUser, movies, userObj, isLoggedIn, tmdbHome, upcommi
                         </Route>
                         <Route exact path="/aboutUs">
                             <About />
-                        </Route>
-                        <Route exact path="/aboutProject">
-                            <AboutProject />
                         </Route>
                     </div>
                 ) : (

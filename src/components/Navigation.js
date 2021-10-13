@@ -20,16 +20,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'left',
         backgroundColor: '#2f3640',
         color: '#10FF00',
-        // '&:hover': {
-        //     color: '#ffffff',
-        //     fontSize: '1.4rem',
-        // },
         height: '100%',
     },
     appBarProfile: {
-        // margin: 10,
-        // marginRight: '30px',
-        // marginRight: '1%',
         width: '40px',
         borderRadius: '20px',
         verticalAlign: 'middle',
@@ -40,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
     },
     appBarProfile_Mobile__img: {
-        // minWidth: '50px',
-        // maxWidth: '270px',
         width: '270px',
         borderRadius: '20px',
     },
@@ -52,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
     },
     title: {
-        // color: '#10FF00',
         flexGrow: 1,
         display: 'none',
         [theme.breakpoints.up('sm')]: {
@@ -61,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '0.5rem',
     },
     link: {
-        // margin: 10,
         paddingLeft: 10,
         paddingRight: 3,
         fontSize: '1.2rem',
@@ -112,7 +101,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navigation = ({ userObj }) => {
-    // console.log('userObj from Navigation', userObj);
     const [state, setState] = useState({
         mobileView: false,
         drawerOpen: false,

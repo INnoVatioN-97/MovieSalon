@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import { TableCell, TableHead, TableRow } from '@material-ui/core';
 
-
 /*
 2021.07.14 List 기능 추가 ver1.0 @TylerKang
 */
@@ -34,7 +33,6 @@ const MovieList = ({ movies, kobis }) => {
     const [isLoading, setIsLoading] = useState(true);
     console.log('movies', movies);
     console.log('kobis', kobis);
-    const yesterday = new Date();
 
     useEffect(() => {
         setTimeout(() => {
@@ -51,27 +49,27 @@ const MovieList = ({ movies, kobis }) => {
                                 // console.log('movie_list',movie);
                                 return (
                                     <>
-                                    {movie === undefined ? <p></p> 
-                                    :
-                                    <>
-                                    {k.movieNm === movie.title ? (
-                                        <Movie
-                                            key={movie.id}
-                                            id={movie.id}
-                                            movieNm={movie.title}
-                                            rank={k.rank}
-                                            rankInten={k.rankInten}
-                                            openDt={k.openDt}
-                                            audiCnt={k.audiCnt}
-                                            audiAcc={k.audiAcc}
-                                            audiInten={k.audiInten}
-                                        />
-                                    ) : (
-                                        <p></p>
-                                    )}
-                                    </>
-                                    }
-                                        
+                                        {movie === undefined ? (
+                                            <p></p>
+                                        ) : (
+                                            <>
+                                                {k.movieNm === movie.title ? (
+                                                    <Movie
+                                                        key={movie.id}
+                                                        id={movie.id}
+                                                        movieNm={movie.title}
+                                                        rank={k.rank}
+                                                        rankInten={k.rankInten}
+                                                        openDt={k.openDt}
+                                                        audiCnt={k.audiCnt}
+                                                        audiAcc={k.audiAcc}
+                                                        audiInten={k.audiInten}
+                                                    />
+                                                ) : (
+                                                    <p></p>
+                                                )}
+                                            </>
+                                        )}
                                     </>
                                 );
                             })}

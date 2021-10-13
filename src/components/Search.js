@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { fade, makeStyles, Typography, MenuList, Paper, MenuItem, ListItemIcon } from '@material-ui/core';
+import { fade, makeStyles, Typography, MenuList, MenuItem, ListItemIcon } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
 import NoImageAvailable from 'images/NoImageAvailable.png';

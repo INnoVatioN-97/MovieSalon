@@ -1,8 +1,8 @@
-import { authService, firebaseInstance } from 'fbase';
+import { authService } from 'fbase';
 import React, { useState } from 'react';
 import { createHashHistory } from 'history';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 // import '../css/Profile.css';
 
 export const history = createHashHistory();
@@ -108,13 +108,12 @@ const useStyles = makeStyles({
     },
 });
 
-const AuthForm = ({ userObj, isLoggedIn }) => {
+const AuthForm = () => {
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const onChange = (event) => {
-        // onChange = press the key
         const {
             target: { name, value },
         } = event;

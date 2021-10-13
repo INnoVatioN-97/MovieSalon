@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles, Link } from '@material-ui/core';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Chart_go, Chart_Kang } from './Chart';
+import { Chart_go as ChartGo, Chart_Kang as ChartKang } from './Chart';
 
 const styles = makeStyles({
     //이미지 flex:left로
@@ -131,7 +131,7 @@ const styles = makeStyles({
         borderBottom: 'none',
     },
     link: {
-    color: '#FFFF00',
+        color: '#FFFF00',
     },
 });
 
@@ -199,16 +199,16 @@ const AboutDetail = ({ name }) => {
                     </Table>
                 </div>
             </div>
-            {name === '고영일' ? 
-            <div className={classes.container_chart}>
-                <Chart_go />    
-            </div>
-            : 
-            <div className={classes.container_chart}>
-                <Chart_Kang />    
-            </div>
-            }
-            
+            {name === '고영일' ? (
+                <div className={classes.container_chart}>
+                    <ChartGo />
+                </div>
+            ) : (
+                <div className={classes.container_chart}>
+                    <ChartKang />
+                </div>
+            )}
+
             <div className={classes.container_2}>
                 <div className={classes.intro}>
                     <div>간단한 자기소개</div>
@@ -240,7 +240,10 @@ const AboutDetail = ({ name }) => {
                                                             flexGrow: '1',
                                                         }}
                                                     >
-                                                       <Link href={'https://github.com/' +meObj.github_name +'/' + m.projectName} className={classes.link}>
+                                                        <Link
+                                                            href={'https://github.com/' + meObj.github_name + '/' + m.projectName}
+                                                            className={classes.link}
+                                                        >
                                                             {m.projectName}
                                                         </Link>
                                                     </span>

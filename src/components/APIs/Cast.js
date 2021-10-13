@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import DefaultProfileImage from 'images/DefaultProfileImage.png';
 import DefaultProfileImage_2 from 'images/DefaultProfileImage_2.PNG';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 import { withStyles } from '@material-ui/core/styles';
@@ -185,7 +184,11 @@ class Cast extends React.Component {
         return (
             <>
                 <div className={classes.topMovieContainer}>
-                    <img className={classes.profile_image} src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2} />
+                    <img
+                        className={classes.profile_image}
+                        src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2}
+                        alt="profileImg"
+                    />
                     <Box className={classes.box}>
                         <div className={classes.cast_content}>
                             <h2>{castInfo[1]}</h2>
