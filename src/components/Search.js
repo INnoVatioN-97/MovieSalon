@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { fade, makeStyles, Typography, MenuList, Paper, MenuItem, ListItemIcon } from '@material-ui/core';
@@ -7,11 +7,11 @@ import { InputBase } from '@material-ui/core';
 import NoImageAvailable from 'images/NoImageAvailable.png';
 const styles = makeStyles((theme) => ({
     posterIcon: {
-        width: '3.5rem',
-        height: '3.5rem',
-        borderRadius: '70%',
+        // 영화 포스터의 비율은 1:1.3 (가로:세로)이다. 너비 기준값을 정해주면 너비 X 1.3으로 높이 설정하도록 함.
+        width: '16rem',
+        height: 'width * 1.3',
         verticalAlign: 'middle',
-        alignItems: 'left',
+        // alignItems: 'left',
     },
     search: {
         textAlign: 'center',
@@ -28,13 +28,11 @@ const styles = makeStyles((theme) => ({
         },
     },
     searchIcon: {
-        // matgin: '20%',
         padding: theme.spacing(1, 1),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
         display: 'flex',
-        // alignItems: 'center',
         justifyContent: 'center',
         verticalAlign: 'middle',
     },
@@ -59,13 +57,17 @@ const styles = makeStyles((theme) => ({
         backgroundColor: '#1F272E',
         margin: 'auto',
         borderRadius: ' 0 0 20px 20px',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     searchResult__text: {
         color: '#ffffff',
         textDecoration: 'none',
         textAlign: 'center',
         borderBottom: 'none',
-        // verticalAlign: 'middle',
+        wordBreak: 'keep-all',
     },
 }));
 
@@ -80,13 +82,18 @@ const Search = () => {
     const handleChange = (e) => {
         const target = e.target.value;
         if (target === '') {
-            setKeyword();
+            setKeyword('');
             setSearchedMovies([]);
         } else {
             setKeyword(e.target.value);
-            getSearchMovies(e.target.value);
         }
     };
+
+    useEffect(() => {
+        if (keyword.length > 1) {
+            getSearchMovies(keyword);
+        }
+    }, [keyword]);
 
     const getSearchMovies = async (keywords) => {
         const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
@@ -121,7 +128,7 @@ const Search = () => {
                     {isLoading ? (
                         ''
                     ) : (
-                        <Paper className={classes.searchResult}>
+                        <div className={classes.searchResult}>
                             {searchedMovies.map((m) => (
                                 <MenuList
                                     onClick={() => {
@@ -130,23 +137,35 @@ const Search = () => {
                                     }}
                                 >
                                     {m.original_title || m.title.indexOf(keyword) > -1 ? (
-                                        <MenuItem className={classes.searchResult__text}>
-                                            <Link to={url + m.id} className={classes.searchResult__text}>
-                                                <ListItemIcon>
-                                                    {m.poster_path ? (
-                                                        <img
-                                                            src={imgPathRoot + m.poster_path}
-                                                            alt="poster"
-                                                            className={classes.posterIcon}
-                                                        />
-                                                    ) : (
-                                                        <img src={NoImageAvailable} alt="poster" className={classes.posterIcon} />
-                                                    )}
-                                                </ListItemIcon>
-                                            </Link>
-                                            <Link to={url + m.id} className={classes.searchResult__text}>
-                                                <Typography variant="inherit">{m.title + ' (' + m.release_date + ' 개봉)'}</Typography>
-                                            </Link>
+                                        <MenuItem>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    width: '15rem',
+                                                }}
+                                            >
+                                                <Link to={url + m.id} className={classes.searchResult__text}>
+                                                    <ListItemIcon>
+                                                        {m.poster_path ? (
+                                                            <img
+                                                                src={imgPathRoot + m.poster_path}
+                                                                alt="poster"
+                                                                className={classes.posterIcon}
+                                                            />
+                                                        ) : (
+                                                            <img src={NoImageAvailable} alt="poster" className={classes.posterIcon} />
+                                                        )}
+                                                    </ListItemIcon>
+                                                </Link>
+                                                <Link to={url + m.id} className={classes.searchResult__text}>
+                                                    <Typography variant="inherit" style={{ whiteSpace: 'pre-line' }}>
+                                                        {m.release_date !== undefined
+                                                            ? m.title + ' (' + m.release_date + ' 개봉)'
+                                                            : m.title + ' (개봉일 정보 없음.)'}
+                                                    </Typography>
+                                                </Link>
+                                            </div>
                                         </MenuItem>
                                     ) : (
                                         <MenuItem className={classes.searchResult__text}>
@@ -155,7 +174,7 @@ const Search = () => {
                                     )}
                                 </MenuList>
                             ))}
-                        </Paper>
+                        </div>
                     )}
                 </div>
             </div>

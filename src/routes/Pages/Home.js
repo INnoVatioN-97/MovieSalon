@@ -108,13 +108,13 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
     const tmdbViewURL = '/viewTmdb/';
     // const kobisViewURL = '/viewMovie?movieNm=';
     const isMobile = useMediaQuery('(max-width: 400px)');
-    const krBoxOffice = krHome.slice(0,3); // [kobis :: Tmdb 연동 정보를 받아 3개만 추출] 
+    const krBoxOffice = krHome.slice(0, 3); // [kobis :: Tmdb 연동 정보를 받아 3개만 추출]
 
     useEffect(() => {
         setTimeout(() => {
-            setIsLoading(false)
+            setIsLoading(false);
         }, 1000);
-    }, [])
+    }, []);
 
     const printTop3Movies_KOBIS = () => {
         console.log('krHome:', krBoxOffice);
@@ -123,12 +123,12 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
                 <div>
                     <h2>박스오피스 (국내) 🇰🇷</h2>
                 </div>
-                <div className={classes.posters}>
+                <div className={isMobile ? classes.posters2_Mobile : classes.posters2}>
                     {krBoxOffice.map((m) => (
-                        <span className={classes.posters__poster}>
+                        <span className={classes.posters2__poster}>
                             <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>
                                 {/* 변경해야함*/}
-                                <img width="100%" height="100%" src={tmdbPosterURL + m.poster_path} alt={m.title} width="150" />
+                                <img width="100%" height="100%" src={tmdbPosterURL + m.backdrop_path} alt={m.title} />
                                 <div>{m.title}</div>
                             </Link>
                         </span>
@@ -169,7 +169,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
             <div className={classes.hottest}>
                 <p>The hottest Movie of The Week </p>
                 <Link to={tmdbViewURL + hotMovie.id}>
-                    <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} />
+                    <img className={classes.backdrop} src={tmdbPosterURL + hotMovie.backdrop_path} alt="backdrop" />
                 </Link>
                 <p>{hotMovie.title}</p>
             </div>
@@ -184,9 +184,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
             </div>
             <div className={classes.topMovieContainer}>
                 <div className={classes.topMovieContainer__container}>
-                    <Box className={classes.box}>
-                    {isLoading ? <p>로딩중</p> : <> {printTop3Movies_KOBIS()} </>}
-                    </Box>
+                    <Box className={classes.box}>{isLoading ? <p>로딩중</p> : <> {printTop3Movies_KOBIS()} </>}</Box>
                 </div>
             </div>
             <div className={classes.topMovieContainer}>
