@@ -15,6 +15,9 @@ const styles = makeStyles({
         padding: '2%',
         margin: '2% auto auto auto',
         width: '50%',
+        '@media (max-width: 750px)': {
+            width: '80%',
+        },
         borderRadius: '2.5rem',
         backgroundColor: '#1e272e',
         alignItems: 'center',

@@ -23,49 +23,48 @@ const styles = makeStyles({
     },
     inputComment: {
         backgroundColor: '#2d3436',
-        // width: '100%',
+       // width: '100%',
         color: '#10FF00',
         borderRadius: '20px',
     },
     commentsLine: {
         // verticalAlign: 'middle',
-        borderRadius: '20px',
-        backgroundColor: '#2d3436',
+       // borderRadius: '20px',
+       backgroundColor: 'rgba(12, 12, 12, 0.7)',
         fontSize: '1.3rem',
         padding: '2% 6% 2% 6%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    // owner: {fontSize:},
-    btnDelete: {
-        backgroundColor: '#4cd137',
-        fontSize: '2.0rem',
-        borderRadius: '2.5rem',
-        height: '2.6rem',
-        whiteSpace: 'nowrap',
-        // justifyContent: 'center',
-        '&:hover': {
-            // border: 'solid',
-            // borderColor: 'grey',
-            backgroundColor: '#44bd32',
-        },
-    },
-    btnAdd: {
+
+    btnTest: {
         width: '5rem',
-        height: '3rem',
-        whiteSpace: 'nowrap',
-        backgroundColor: '#4cd137',
-        fontSize: '1.8rem',
-        borderRadius: '2.5rem',
-        // justifyContent: 'center',
+        height: '2rem',
+        fontSize: '1.2rem',
+        textTransform: 'uppercase',
+        letterSpacing: '2.5px',
+        fontWeight: '700',
+        color: '#111111',
+        backgroundColor: '#44bd32',
+        border: 'none',
+        // borderRadius: '2%',
+        boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)',
+        transition: 'all 0.3s ease 0s',
+        cursor: 'pointer',
+        outline: 'none',
+        marginLeft: '30px',
         '&:hover': {
-            // border: 'solid',
-            // borderColor: 'grey',
-            backgroundColor: '#44bd32',
+            backgroundColor: '#4cd137',
+            boxShadow: '0px 15px 20px rgba(46, 229, 157, 0.4)',
+            color: '#000000',
+            transform: 'translateY(-7px)',
         },
+    
     },
+
     tableCell: {
+       // width: '100%',
         borderBottom: 'none',
     },
 });
@@ -191,27 +190,30 @@ const Comment = ({ owner, colSpan, code }) => {
                             />
                         </TableCell>
                         <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
-                            <button onClick={addComment} className={classes.btnAdd}>
-                                추가
+                            <button onClick={addComment} className={classes.btnTest}>
+                                등록
                             </button>
                         </TableCell>
                     </TableRow>
                     {comments.map((m) => (
+                        <>
                         <TableRow align="center" className={classes.commentsRow}>
                             <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
                                 <div className={classes.commentsLine}>
                                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                        <span>"{m.comment}"</span>
-                                        <span>- {m.id}</span>
+                                        <span style={{color: "white"}}>"{m.comment}"</span>
+                                        <span>Written by @{m.id.split('@')[0]}</span>
                                     </div>
-                                    <span>
-                                        <button id={m.id} onClick={onDeleteClick} className={classes.btnDelete}>
-                                            삭제
-                                        </button>
-                                    </span>
+                                    
+                                </div>
+                                <div>
+                                    <button id={m.id} onClick={onDeleteClick} className={classes.btnTest}>
+                                        🗑삭제
+                                    </button>
                                 </div>
                             </TableCell>
                         </TableRow>
+                        </>
                     ))}
                 </TableBody>
             ) : (

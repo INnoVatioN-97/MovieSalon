@@ -77,7 +77,7 @@ const useStyles = makeStyles({
         color: 'white',
         margin: '4% 4% 5% 4%',
         '&:hover': {
-            transform: 'scale(1.4)',
+            transform: 'scale(1.2)',
         },
     },
     posters_border: {
@@ -113,7 +113,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 1000);
+        }, 1500);
     }, []);
 
     const printTop3Movies_KOBIS = () => {
@@ -128,7 +128,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
                         <span className={classes.posters2__poster}>
                             <Link to={tmdbViewURL + m.id} className={classes.movieTitle}>
                                 {/* 변경해야함*/}
-                                <img width="100%" height="100%" src={tmdbPosterURL + m.backdrop_path} alt={m.title} />
+                                <img width="100%" height="100%" src={tmdbPosterURL + m.poster_path} alt={m.title} />
                                 <div>{m.title}</div>
                             </Link>
                         </span>
