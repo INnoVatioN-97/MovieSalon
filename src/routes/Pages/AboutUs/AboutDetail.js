@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles, Link } from '@material-ui/core';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Chart_go as ChartGo, Chart_Kang as ChartKang } from './Chart';
+import { Chart_go as ChartGo, Chart_Kang as ChartKang } from 'components/AboutUs/Chart';
 
 const styles = makeStyles({
     //이미지 flex:left로
