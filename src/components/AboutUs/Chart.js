@@ -1,91 +1,34 @@
 import React from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 
+const Chart = ({ name, skills }) => {
+    const colors = ['#FF6384', '#36A2EB', '#e84393', '#FFCE56', '#6c5ce7', '#00b894', '#d63031'];
+    console.log('skills: ', skills);
+    // const { name } = skills;
+    const names = skills.map((m) => {
+        return m.name;
+    });
 
-
-export const Chart_go = () => {
+    console.log('meObj:', skills);
     const data = {
-        labels: [
-          'JAVA',
-          'Dart',
-          'JS'
+        labels: names,
+        datasets: [
+            {
+                // data: [300, 50, 100],
+                data: skills.map((m) => {
+                    return m.projects.length;
+                }),
+                backgroundColor: colors.splice(0, names.length),
+                hoverBackgroundColor: colors.splice(0, names.length),
+            },
         ],
-        datasets: [{
-          data: [300, 50, 200],
-          backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-          ],
-          hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-          ],
-        }]
-      };
-  return (
-    <div>
-        <h2>Ko's Stack</h2>
-        <Doughnut data={data} />
-    </div>
-  );
-}
-
-export const Chart_Kang = () => {
-  const data = {
-      labels: [
-        'JAVA',
-        'C++',
-        'JS'
-      ],
-      datasets: [{
-        data: [300, 50, 100],
-        backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-        ],
-        hoverBackgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-        ],
-      }]
     };
-return (
-  <div>
-      <h2>Kang's Stack</h2>
-      <Doughnut data={data} />
-  </div>
-);
-}
+    return (
+        <div>
+            <h2>{name}'s Stacks 한 눈에 보기</h2>
+            <Doughnut data={data} />
+        </div>
+    );
+};
 
-  export const Project = () => {
-    const data2 = {
-        labels: [
-          'JS',
-          'CSS',
-          'HTML'
-        ],
-        datasets: [{
-          data: [93.1, 5.6, 1.3],
-          backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-          ],
-          hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-          ]
-        }]
-      };
-      return (
-          <div>
-              <h2>Project</h2>
-              <Doughnut data={data2} />
-          </div>
-      )
-  }
+export default Chart;

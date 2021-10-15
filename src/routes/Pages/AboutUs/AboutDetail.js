@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { meObj012, meObjKSY } from 'components/AboutUs/AboutMe';
 import { makeStyles, Link } from '@material-ui/core';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Chart_go as ChartGo, Chart_Kang as ChartKang } from 'components/AboutUs/Chart';
+import Chart from 'components/AboutUs/Chart';
 
 const styles = makeStyles({
     //이미지 flex:left로
@@ -199,15 +199,10 @@ const AboutDetail = ({ name }) => {
                     </Table>
                 </div>
             </div>
-            {name === '고영일' ? (
-                <div className={classes.container_chart}>
-                    <ChartGo />
-                </div>
-            ) : (
-                <div className={classes.container_chart}>
-                    <ChartKang />
-                </div>
-            )}
+
+            <div className={classes.container_chart}>
+                <Chart name={meObj.name} skills={meObj.techStacks} />
+            </div>
 
             <div className={classes.container_2}>
                 <div className={classes.intro}>
