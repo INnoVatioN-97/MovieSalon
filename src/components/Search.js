@@ -54,7 +54,7 @@ const styles = makeStyles((theme) => ({
     },
     searchResult: {
         width: '100%',
-        backgroundColor: '#1F272E',
+        backgroundColor: 'rgba(12, 12, 12, 0.9)',
         margin: 'auto',
         borderRadius: ' 0 0 20px 20px',
         display: 'flex',

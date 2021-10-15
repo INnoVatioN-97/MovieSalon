@@ -57,11 +57,11 @@ export const meObjKSY = {
     school: '명지전문대학',
     year: '16',
     age: `${curYear - bornKSY}`,
-    hobby: 'MLB 더쇼 하기',
-    headline: '뉴비',
+    hobby: '플스',
+    headline: '맥북이 필요한 뉴비입니다.',
     profileImg: ProfileKSY,
     github_name: 'TylerKang-97',
-    comment: '코멘트입니다.',
+    comment: 'ios 배우고싶다..',
 
     techStacks: [
         {
