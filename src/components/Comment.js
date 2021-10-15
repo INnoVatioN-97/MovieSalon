@@ -23,14 +23,14 @@ const styles = makeStyles({
     },
     inputComment: {
         backgroundColor: '#2d3436',
-       // width: '100%',
+        // width: '100%',
         color: '#10FF00',
         borderRadius: '20px',
     },
     commentsLine: {
         // verticalAlign: 'middle',
-       // borderRadius: '20px',
-       backgroundColor: 'rgba(12, 12, 12, 0.7)',
+        // borderRadius: '20px',
+        backgroundColor: 'rgba(12, 12, 12, 0.7)',
         fontSize: '1.3rem',
         padding: '2% 6% 2% 6%',
         display: 'flex',
@@ -60,11 +60,10 @@ const styles = makeStyles({
             color: '#000000',
             transform: 'translateY(-7px)',
         },
-    
     },
 
     tableCell: {
-       // width: '100%',
+        // width: '100%',
         borderBottom: 'none',
     },
 });
@@ -172,47 +171,59 @@ const Comment = ({ owner, colSpan, code }) => {
             {!refresh ? (
                 <TableBody>
                     <TableRow>
-                        <TableCell align="center" colSpan={colSpan - 1} width="90%" className={classes.tableCell}>
-                            <TextField
-                                id="commentField"
-                                fullWidth={true}
-                                label="한줄평 남기기"
-                                placeholder="한줄평 입력"
-                                // multiline
-                                variant="filled"
-                                size="medium"
-                                value={comment}
-                                onChange={handleChange}
-                                onKeyPress={addComment}
-                                InputProps={{
-                                    className: classes.inputComment,
-                                }}
-                            />
-                        </TableCell>
-                        <TableCell align="center" colSpan="1" width="10%" className={classes.tableCell}>
-                            <button onClick={addComment} className={classes.btnTest}>
-                                등록
-                            </button>
+                        <TableCell align="center" colSpan={colSpan} className={classes.tableCell}>
+                            <div
+                                style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', verticalAlign: 'middle' }}
+                            >
+                                <span style={{ flexGrow: '8' }}>
+                                    <TextField
+                                        id="commentField"
+                                        fullWidth={true}
+                                        label="한줄평 남기기"
+                                        placeholder="한줄평 입력"
+                                        // multiline
+                                        variant="filled"
+                                        size="medium"
+                                        value={comment}
+                                        onChange={handleChange}
+                                        onKeyPress={addComment}
+                                        InputProps={{
+                                            className: classes.inputComment,
+                                        }}
+                                    />
+                                </span>
+                                <span style={{ flexGrow: '1' }}>
+                                    <button onClick={addComment} className={classes.btnTest}>
+                                        등록
+                                    </button>
+                                </span>
+                            </div>
                         </TableCell>
                     </TableRow>
                     {comments.map((m) => (
                         <>
-                        <TableRow align="center" className={classes.commentsRow}>
-                            <TableCell colSpan={colSpan + 1} align="center" className={classes.commentsCell}>
-                                <div className={classes.commentsLine}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                        <span style={{color: "white"}}>"{m.comment}"</span>
-                                        <span>Written by @{m.id.split('@')[0]}</span>
+                            <TableRow align="center" className={classes.commentsRow}>
+                                <TableCell colSpan={colSpan} align="center" className={classes.commentsCell}>
+                                    <div className={classes.commentsLine}>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                width: '100%',
+                                            }}
+                                        >
+                                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                <span style={{ color: 'white' }}>"{m.comment}"</span>
+                                                <span>Written by @{m.id.split('@')[0]}</span>
+                                            </div>
+                                            <button id={m.id} onClick={onDeleteClick} className={classes.btnTest}>
+                                                🗑삭제
+                                            </button>
+                                        </div>
                                     </div>
-                                    
-                                </div>
-                                <div>
-                                    <button id={m.id} onClick={onDeleteClick} className={classes.btnTest}>
-                                        🗑삭제
-                                    </button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
+                                </TableCell>
+                            </TableRow>
                         </>
                     ))}
                 </TableBody>
