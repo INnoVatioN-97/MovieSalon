@@ -3,6 +3,7 @@
 
 _" 당신의 한줄평으로 영화를 얘기해보세요 "_ <br/>
 Made by [INNovation](https://github.com/INnoVatioN-97) & [TylerKang](https://github.com/TylerKang-97)
+### [Link](http://ec2-54-180-85-120.ap-northeast-2.compute.amazonaws.com/#/)
 
 ## Introduction
 #### 1. 개요
