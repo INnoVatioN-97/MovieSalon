@@ -16,6 +16,16 @@ const useStyles = makeStyles({
     backgroundColor: 'rgba(12, 12, 12, 0.9)',
     color: '#10FF00',
   },
+  movieSubInfo: { display: 'flex', flexDirection: 'column' },
+  genreContainer: {
+    listStyle: 'none',
+    marginTop: 5,
+    marginLeft: 0,
+    paddingLeft: 10,
+  },
+  genreContainer__item: {
+    color: 'white',
+  },
   carosol: {
     position: 'relative',
     marginLeft: '12%',
@@ -65,17 +75,17 @@ const ViewTMDB = ({ match, userObj }) => {
       `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=ko`
     );
     setMovieInfo({
-      title: title,
-      original_title: original_title,
-      tagline: tagline,
+      title,
+      original_title,
+      tagline,
       overview: overview.substring(0, 350),
-      release_date: release_date,
-      runtime: runtime,
-      vote_average: vote_average,
+      release_date,
+      runtime,
+      vote_average,
     });
     setPosters({
-      poster_path: poster_path,
-      backdrop_path: backdrop_path,
+      poster_path,
+      backdrop_path,
     });
     setGenre(genres);
     setIsLoading(false);
@@ -125,26 +135,40 @@ const ViewTMDB = ({ match, userObj }) => {
                 <p>{movieInfo.overview}</p>
                 <div className='lb-cols'>
                   <Table>
-                    <TableRow>
+                    <TableRow
+                      style={{
+                        textAlign: 'center',
+                      }}
+                    >
                       <TableCell>
-                        Runtime:
-                        <br />
-                        <span>{movieInfo.runtime}mins</span>
+                        <div className={classes.movieSubInfo}>
+                          Runtime:
+                          <span>{movieInfo.runtime}mins</span>
+                        </div>
                       </TableCell>
                       <TableCell>
-                        release_date:
-                        <br />
-                        <span>{movieInfo.release_date}</span>
+                        <div className={classes.movieSubInfo}>
+                          release_date:
+                          <span>{movieInfo.release_date}</span>
+                        </div>
                       </TableCell>
                       <TableCell>
-                        vote_average:
-                        <br />
-                        <span>{movieInfo.vote_average}/10</span>
+                        <div className={classes.movieSubInfo}>
+                          vote_average:
+                          <span>{movieInfo.vote_average}/10</span>
+                        </div>
                       </TableCell>
                       <TableCell>
-                        Genres:
-                        <br />
-                        <span>{genre.map((g) => g.name + '|')}</span>
+                        <div className={classes.movieSubInfo}>
+                          Genres:
+                          <ul className={classes.genreContainer}>
+                            {genre.map((g) => (
+                              <li className={classes.genreContainer__item}>
+                                {g.name}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </TableCell>
                     </TableRow>
                   </Table>
