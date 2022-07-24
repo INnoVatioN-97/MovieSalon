@@ -6,18 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-    typography: {
-        fontFamily: '"Noto Sans KR", serif',
-    },
+  typography: {
+    fontFamily: '"Noto Sans KR", serif',
+  },
 });
 
 ReactDOM.render(
-    <React.StrictMode>
-        <MuiThemeProvider theme={theme}>
-            <App />
-        </MuiThemeProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+  <React.StrictMode>
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // 리포지토리명 변경 테스트
