@@ -2023,6 +2023,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz#0c8b74c50f29ee44f423f7416829c0bf8bb5eb27"
   integrity sha512-LwzQKA4vzIct1zNZzBmRKI9QuNpLgTQMEjsQLf3BXuGYb3QPTP4Yjf6mkdX+X1mYttZ808QpOwAzZjv28kq7DA==
 
+"@sefailyasoz/react-carousel@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@sefailyasoz/react-carousel/-/react-carousel-1.1.1.tgz#f6ec32effce7a2428702f44d48bdec4dd73f61f9"
+  integrity sha512-cpwubrSfXReAPZjTBYDa1G2kDBql5HpksPq3hN+VnPAdlhIk+WDKdrPKktAhRQ4fsFKJIsqBgm+/nbKI+tLotw==
+
 "@sinclair/typebox@^0.24.1":
   version "0.24.20"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.20.tgz#11a657875de6008622d53f56e063a6347c51a6dd"
