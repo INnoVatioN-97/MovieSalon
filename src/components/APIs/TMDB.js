@@ -63,7 +63,10 @@ const styles = (theme) => ({
     marginBottom: '0',
   },
   images_border: {
-    borderRadius: '4px 4px 4px 4px',
+    borderRadius: '2rem',
+    width: '8rem',
+    height: '12rem',
+    objectFit: 'cover',
   },
   contentTitle: {
     color: 'white',
