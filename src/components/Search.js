@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
-import NoImageAvailable from 'images/NoImageAvailable.png';
+import NoImageAvailable from 'assets/images/NoImageAvailable.png';
 
 const styles = makeStyles((theme) => ({
   posterIcon: {

@@ -3,14 +3,20 @@ import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import DefaultProfileImage from 'images/DefaultProfileImage.png';
-import NoImageAvailable from 'images/NoImageAvailable.png';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@material-ui/core';
+import DefaultProfileImage from 'assets/images/DefaultProfileImage.png';
+import NoImageAvailable from 'assets/images/NoImageAvailable.png';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 import ReactPlayer from 'react-player';
-import 'css/Dialog.css';
+import '../../assets/css/Dialog.css';
 
 /**
  * 박스오피스 / 개봉 예정작 버튼에 각각 ID값을 줘
@@ -25,340 +31,383 @@ import 'css/Dialog.css';
  */
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: 'auto',
-        alignItems: 'center',
-        textAlign: 'center',
+  root: {
+    margin: 'auto',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  container: {
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  posters: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  posters__poster: {
+    margin: '2%',
+    '&:hover': {
+      transform: 'scale(1.2)',
+      // opacity: '0.5',
     },
-    container: {
-        alignItems: 'center',
-        textAlign: 'center',
-    },
-    posters: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-    },
-    posters__poster: {
-        margin: '2%',
-        '&:hover': {
-            transform: 'scale(1.2)',
-           // opacity: '0.5',
-        },
-    },
-    dia_header: {
-        backgroundColor: '#282c34',
-        color: '#00FC87',
-    },
-    dia_table: {
-        display: 'flex',
-        fiexDirection: 'row',
-        flexWrap: 'wrap',
-        backgroundColor: '#20232a',
-        color: 'white',
-    },
-    dia_table2: {
-        display: 'flex',
-        fiexDirection: 'row',
-        flexWrap: 'wrap',
-        backgroundColor: '#20232a',
-        color: 'white',
-    },
-    dia_poster: {
-        borderRadius: '3%',
-    },
-    dia_cast: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-    },
-    dia_cast_Mobile: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'spaceBetween',
-    },
-    dia_similer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-    },
-    dia_content_guide: {
-        color: '#00FC87',
-    },
+  },
+  dia_header: {
+    backgroundColor: '#282c34',
+    color: '#00FC87',
+  },
+  dia_table: {
+    display: 'flex',
+    fiexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#20232a',
+    color: 'white',
+  },
+  dia_table2: {
+    display: 'flex',
+    fiexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#20232a',
+    color: 'white',
+  },
+  dia_poster: {
+    borderRadius: '3%',
+  },
+  dia_cast: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  dia_cast_Mobile: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'spaceBetween',
+  },
+  dia_similer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  dia_content_guide: {
+    color: '#00FC87',
+  },
 }));
 
 const TmdbList = ({ tmdbHome, upcomming }) => {
-    const classes = useStyles();
-    const isMobile = useMediaQuery('(max-width: 768px)');
+  const classes = useStyles();
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [open, setOpen] = useState(false);
-    const [viewChange, setViewChange] = useState(false);
-    const [titles, setTitles] = useState('');
-    const [movie, setMovie] = useState('');
-    const [castMember, setCastMember] = useState([]);
-    const [trailers, setTrailers] = useState([]);
-    const [similars, setSimilars] = useState([]);
-    const [tmdbs, setTmdbs] = useState(tmdbHome);
-    const [upcommings, setUpcommings] = useState(upcomming);
-    const [id, setId] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [viewChange, setViewChange] = useState(false);
+  const [titles, setTitles] = useState('');
+  const [movie, setMovie] = useState('');
+  const [castMember, setCastMember] = useState([]);
+  const [trailers, setTrailers] = useState([]);
+  const [similars, setSimilars] = useState([]);
+  const [tmdbs, setTmdbs] = useState(tmdbHome);
+  const [upcommings, setUpcommings] = useState(upcomming);
+  const [id, setId] = useState(0);
 
-    useEffect(() => {
-        const getMovieCasts = async (id) => {
-            // 출연진 정보
-            const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-            const {
-                data: { cast },
-            } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`);
-            // console.log('cast', cast);
-            setCastMember(cast.slice(0, 5));
-            // setIsLoading(false);
-        };
+  useEffect(() => {
+    const getMovieCasts = async (id) => {
+      // 출연진 정보
+      const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+      const {
+        data: { cast },
+      } = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`
+      );
+      // console.log('cast', cast);
+      setCastMember(cast.slice(0, 5));
+      // setIsLoading(false);
+    };
 
-        const getMovieVideos = async (id) => {
-            // 트레일러
-            const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-            const {
-                data: { results },
-            } = await axios.get(`
+    const getMovieVideos = async (id) => {
+      // 트레일러
+      const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+      const {
+        data: { results },
+      } = await axios.get(`
             https://api.themoviedb.org/3/movie/${id}/videos?api_key=${TMDB_API_KEY}&language=en-US`);
-            console.log('videos', results);
-            setTrailers(results.slice(0, 1));
-            setIsLoading(false);
-            // console.log('isLoading:', isLoading);
-        };
-
-        const getSimilerMovies = async (id) => {
-            // 유사한 영화
-            const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
-            const {
-                data: { results },
-            } = await axios.get(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`);
-            setSimilars(results.slice(0, 4));
-        };
-
-        console.log('useEffect에서의 id값: ', id);
-        if (id !== 0 && isLoading) {
-            console.log(`id:${id}`);
-            getMovieCasts(id);
-            getSimilerMovies(id);
-            getMovieVideos(id);
-            console.log('isLoading:', isLoading);
-        } else {
-            console.log(`id:${id}이므로 안가져왔음.`);
-            console.log('isLoading:', isLoading);
-        }
-    }, [id, isLoading]);
-
-    // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
-    const onOpenChange = (e) => {
-        setOpen(!open);
-        setTitles(e.target.title);
-        console.log('e.target.id:', e.target.id);
-        /**
-         * 0: "653349"
-         * 1: "7.5"
-         * 2: "2021-08-27"
-         * 3: "/kdnZgD1PfNQmRKWBAFvCsyNfFG7.jpg"
-         * 4: "Vacation Friends"
-         * 5: "모범생 마커스와 에밀리는 멕시코의 리조트에 갔다가"
-         * 6: " 쾌락을 추구하는 론"
-         * 7: " 카일라와 친구가 된다. 마커스와 에밀리는 새로 사귄 ‘휴가 친구’와 함께 아무 거리낌 없이 즐겁고 방탕한 일주일을 보낸다. 광란의 휴가를 보낸 몇 달 후"
-         * 8: " 마커스와 에밀리는 자신들의 결혼식에 초대하지도 않은 론과 카일라가 나타나자 경악을 금치 못한다."
-         */
-        const movieObj = e.target.id.split(',');
-        setMovie({
-            movieCode: movieObj[0],
-            rate: movieObj[1],
-            openedAt: movieObj[2],
-            poster_path: movieObj[3],
-            movieName: movieObj[4],
-            plot: movieObj.slice(5),
-        });
-        console.log('onOpenChange에서의 movies값: ', movie);
-        const movieId = e.target.id.substring(0, 7);
-        setId(movieId);
+      console.log('videos', results);
+      setTrailers(results.slice(0, 1));
+      setIsLoading(false);
+      // console.log('isLoading:', isLoading);
     };
 
-    const onCloseHandle = () => {
-        setIsLoading(true);
-        setOpen(false);
-        setId(0);
-        setMovie([]);
-        setTrailers('');
-        setCastMember([]);
-        setSimilars([]);
+    const getSimilerMovies = async (id) => {
+      // 유사한 영화
+      const TMDB_API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+      const {
+        data: { results },
+      } = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`
+      );
+      setSimilars(results.slice(0, 4));
     };
 
-    const onClickHandles = (event) => {
-        let id = event.target.id;
-        id === 'btnBoxOffice' ? setViewChange(false) : setViewChange(true);
-        // console.log('viewChange', viewChange);
-        // console.log('event:', event.target.id);
-    };
+    console.log('useEffect에서의 id값: ', id);
+    if (id !== 0 && isLoading) {
+      console.log(`id:${id}`);
+      getMovieCasts(id);
+      getSimilerMovies(id);
+      getMovieVideos(id);
+      console.log('isLoading:', isLoading);
+    } else {
+      console.log(`id:${id}이므로 안가져왔음.`);
+      console.log('isLoading:', isLoading);
+    }
+  }, [id, isLoading]);
 
-    const printDialog = (castMember, url, trailer, trailers, similer) => {
-        const { rate, openedAt, poster_path, movieName, plot } = movie;
-        // console.log('printDialog:', rate, openedAt, poster_path, movieName, plot);
-        return (
-            <Dialog open={open} onClose={onCloseHandle} maxWidth="md">
-                <DialogTitle className={classes.dia_header}>{titles}</DialogTitle>
-                {isLoading ? (
-                    <DialogContent>
-                        <Table>
-                            <TableHead>로딩중...</TableHead>
-                        </Table>
-                    </DialogContent>
-                ) : (
-                    <DialogContent className={isMobile ? classes.dia_table : classes.dia_table2}>
-                        <Table>
-                            <TableRow>
-                                <TableCell align="center" width="25%" rowSpan={isMobile ? '1' : '4'} colSpan={isMobile ? '4' : '1'}>
-                                    <Link to={'/viewTmdb/' + id.slice(0,-1)}>
-                                        <img
-                                            className={classes.dia_poster}
-                                            src={poster_path ? url + poster_path : NoImageAvailable}
-                                            alt="Poster"
-                                        />
-                                    </Link>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b className={classes.dia_content_guide}>{movieName}</b>
-                                </TableCell>
-                                <TableCell>
-                                    {openedAt} <b>[⭐{rate}]</b>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <b className={classes.dia_content_guide}>📃줄거리:</b>
-                                </TableCell>
-                                <TableCell>
-                                    <label>{plot}</label>
-                                </TableCell>
-                            </TableRow>
-                        </Table>
-                        <Table>
-                            <TableHead>
-                                <b className={classes.dia_content_guide}>🎞️출연진</b>
-                            </TableHead>
-                            <TableRow>
-                                <div className={classes.dia_cast}>
-                                    {castMember.map((c) => (
-                                        <TableCell>
-                                            <>
-                                                <Link to={'/Filmography/' + c.id}>
-                                                    <img
-                                                        className="item"
-                                                        src={c.profile_path ? url + c.profile_path : DefaultProfileImage}
-                                                        alt="castingMembers"
-                                                        width="100"
-                                                        height="100"
-                                                    />
-                                                </Link>{' '}
-                                                <br />
-                                                <span>
-                                                    <b>{c.name}</b>
-                                                </span>
-                                            </>
-                                        </TableCell>
-                                    ))}
-                                </div>
-                            </TableRow>
-                            <TableRow>
-                                {trailers.map((t) => (
-                                    <TableCell>
-                                        {/*현재 어플리케이션을 돌리는 주소를 매핑 해야함(localhost) */}
-                                        <ReactPlayer
-                                            url={trailer + t.key + '&origin=https://localhost:3000'}
-                                            controls
-                                            width="100%"
-                                        ></ReactPlayer>
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </Table>
-                        <Table>
-                            <TableHead>
-                                <b className={classes.dia_content_guide}>🎬이런영화는 어떤가요?</b>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <div className={classes.dia_similer}>
-                                        {similer.map((s) => (
-                                            <TableCell>
-                                                <Link to={'/viewTmdb/' + s.id}>
-                                                    <img id={s.id} src={url + s.poster_path} alt={url + s.poster_path} />
-                                                </Link>
-                                            </TableCell>
-                                        ))}
-                                    </div>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </DialogContent>
-                )}
-            </Dialog>
-        );
-    };
-    const url = 'https://image.tmdb.org/t/p/w200';
-    const trailer = 'https://www.youtube.com/embed/';
+  // 영화 포스터를 클릭하면 다이얼로그를 띄우도록 하는 함수
+  const onOpenChange = (e) => {
+    setOpen(!open);
+    setTitles(e.target.title);
+    console.log('e.target.id:', e.target.id);
+    /**
+     * 0: "653349"
+     * 1: "7.5"
+     * 2: "2021-08-27"
+     * 3: "/kdnZgD1PfNQmRKWBAFvCsyNfFG7.jpg"
+     * 4: "Vacation Friends"
+     * 5: "모범생 마커스와 에밀리는 멕시코의 리조트에 갔다가"
+     * 6: " 쾌락을 추구하는 론"
+     * 7: " 카일라와 친구가 된다. 마커스와 에밀리는 새로 사귄 ‘휴가 친구’와 함께 아무 거리낌 없이 즐겁고 방탕한 일주일을 보낸다. 광란의 휴가를 보낸 몇 달 후"
+     * 8: " 마커스와 에밀리는 자신들의 결혼식에 초대하지도 않은 론과 카일라가 나타나자 경악을 금치 못한다."
+     */
+    const movieObj = e.target.id.split(',');
+    setMovie({
+      movieCode: movieObj[0],
+      rate: movieObj[1],
+      openedAt: movieObj[2],
+      poster_path: movieObj[3],
+      movieName: movieObj[4],
+      plot: movieObj.slice(5),
+    });
+    console.log('onOpenChange에서의 movies값: ', movie);
+    const movieId = e.target.id.substring(0, 7);
+    setId(movieId);
+  };
+
+  const onCloseHandle = () => {
+    setIsLoading(true);
+    setOpen(false);
+    setId(0);
+    setMovie([]);
+    setTrailers('');
+    setCastMember([]);
+    setSimilars([]);
+  };
+
+  const onClickHandles = (event) => {
+    let id = event.target.id;
+    id === 'btnBoxOffice' ? setViewChange(false) : setViewChange(true);
+    // console.log('viewChange', viewChange);
+    // console.log('event:', event.target.id);
+  };
+
+  const printDialog = (castMember, url, trailer, trailers, similer) => {
+    const { rate, openedAt, poster_path, movieName, plot } = movie;
+    // console.log('printDialog:', rate, openedAt, poster_path, movieName, plot);
     return (
-        <div className={classes.root}>
-            <br />
-            <div className={classes.buttonsContainer}>
-                <button className="button" id="btnBoxOffice" onClick={onClickHandles}>
-                    BoxOffice
-                </button>
-                <button className="button" id="btnUpcomingRelease" onClick={onClickHandles}>
-                    개봉예정작
-                </button>
-            </div>
-            <br />
-            {viewChange ? (
-                <div className={classes.posters}>
-                    {upcommings.map((u) => (
-                        <span className={classes.posters__poster}>
-                            <img
-                                className="poster"
-                                src={u.poster_path ? url + u.poster_path : NoImageAvailable}
-                                alt="img"
-                                onClick={onOpenChange}
-                                id={[u.id, u.vote_average, u.release_date, u.poster_path, u.original_title, u.overview]}
-                                title={u.title}
-                                width="200"
-                                height="300"
-                            />
-                            <div className={classes.dia_content_guide}>{u.title}</div>
+      <Dialog open={open} onClose={onCloseHandle} maxWidth='md'>
+        <DialogTitle className={classes.dia_header}>{titles}</DialogTitle>
+        {isLoading ? (
+          <DialogContent>
+            <Table>
+              <TableHead>로딩중...</TableHead>
+            </Table>
+          </DialogContent>
+        ) : (
+          <DialogContent
+            className={isMobile ? classes.dia_table : classes.dia_table2}
+          >
+            <Table>
+              <TableRow>
+                <TableCell
+                  align='center'
+                  width='25%'
+                  rowSpan={isMobile ? '1' : '4'}
+                  colSpan={isMobile ? '4' : '1'}
+                >
+                  <Link to={'/viewTmdb/' + id.slice(0, -1)}>
+                    <img
+                      className={classes.dia_poster}
+                      src={poster_path ? url + poster_path : NoImageAvailable}
+                      alt='Poster'
+                    />
+                  </Link>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b className={classes.dia_content_guide}>{movieName}</b>
+                </TableCell>
+                <TableCell>
+                  {openedAt} <b>[⭐{rate}]</b>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <b className={classes.dia_content_guide}>📃줄거리:</b>
+                </TableCell>
+                <TableCell>
+                  <label>{plot}</label>
+                </TableCell>
+              </TableRow>
+            </Table>
+            <Table>
+              <TableHead>
+                <b className={classes.dia_content_guide}>🎞️출연진</b>
+              </TableHead>
+              <TableRow>
+                <div className={classes.dia_cast}>
+                  {castMember.map((c) => (
+                    <TableCell>
+                      <>
+                        <Link to={'/Filmography/' + c.id}>
+                          <img
+                            className='item'
+                            src={
+                              c.profile_path
+                                ? url + c.profile_path
+                                : DefaultProfileImage
+                            }
+                            alt='castingMembers'
+                            width='100'
+                            height='100'
+                          />
+                        </Link>{' '}
+                        <br />
+                        <span>
+                          <b>{c.name}</b>
                         </span>
-                    ))}
+                      </>
+                    </TableCell>
+                  ))}
                 </div>
-            ) : (
-                <div className={classes.posters}>
-                    {tmdbs.map((m, index) => (
-                        <span className={classes.posters__poster}>
-                            <img
-                                className="poster"
-                                src={url + m.poster_path}
-                                alt="img"
-                                onClick={onOpenChange}
-                                id={[m.id, m.vote_average, m.release_date, m.poster_path, m.original_title, m.overview]}
-                                title={m.title}
-                            />
-                            <div className={classes.dia_content_guide}>{m.title.slice(0, 20)}</div>
-                        </span>
+              </TableRow>
+              <TableRow>
+                {trailers.map((t) => (
+                  <TableCell>
+                    {/*현재 어플리케이션을 돌리는 주소를 매핑 해야함(localhost) */}
+                    <ReactPlayer
+                      url={trailer + t.key + '&origin=https://localhost:3000'}
+                      controls
+                      width='100%'
+                    ></ReactPlayer>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </Table>
+            <Table>
+              <TableHead>
+                <b className={classes.dia_content_guide}>
+                  🎬이런영화는 어떤가요?
+                </b>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <div className={classes.dia_similer}>
+                    {similer.map((s) => (
+                      <TableCell>
+                        <Link to={'/viewTmdb/' + s.id}>
+                          <img
+                            id={s.id}
+                            src={url + s.poster_path}
+                            alt={url + s.poster_path}
+                          />
+                        </Link>
+                      </TableCell>
                     ))}
-                </div>
-            )}
-            {Boolean(movie) ? printDialog(castMember, url, trailer, trailers, similars) : ''}
-        </div>
+                  </div>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </DialogContent>
+        )}
+      </Dialog>
     );
+  };
+  const url = 'https://image.tmdb.org/t/p/w200';
+  const trailer = 'https://www.youtube.com/embed/';
+  return (
+    <div className={classes.root}>
+      <br />
+      <div className={classes.buttonsContainer}>
+        <button className='button' id='btnBoxOffice' onClick={onClickHandles}>
+          BoxOffice
+        </button>
+        <button
+          className='button'
+          id='btnUpcomingRelease'
+          onClick={onClickHandles}
+        >
+          개봉예정작
+        </button>
+      </div>
+      <br />
+      {viewChange ? (
+        <div className={classes.posters}>
+          {upcommings.map((u) => (
+            <span className={classes.posters__poster}>
+              <img
+                className='poster'
+                src={u.poster_path ? url + u.poster_path : NoImageAvailable}
+                alt='img'
+                onClick={onOpenChange}
+                id={[
+                  u.id,
+                  u.vote_average,
+                  u.release_date,
+                  u.poster_path,
+                  u.original_title,
+                  u.overview,
+                ]}
+                title={u.title}
+                width='200'
+                height='300'
+              />
+              <div className={classes.dia_content_guide}>{u.title}</div>
+            </span>
+          ))}
+        </div>
+      ) : (
+        <div className={classes.posters}>
+          {tmdbs.map((m, index) => (
+            <span className={classes.posters__poster}>
+              <img
+                className='poster'
+                src={url + m.poster_path}
+                alt='img'
+                onClick={onOpenChange}
+                id={[
+                  m.id,
+                  m.vote_average,
+                  m.release_date,
+                  m.poster_path,
+                  m.original_title,
+                  m.overview,
+                ]}
+                title={m.title}
+              />
+              <div className={classes.dia_content_guide}>
+                {m.title.slice(0, 20)}
+              </div>
+            </span>
+          ))}
+        </div>
+      )}
+      {Boolean(movie)
+        ? printDialog(castMember, url, trailer, trailers, similars)
+        : ''}
+    </div>
+  );
 };
 
 export default TmdbList;

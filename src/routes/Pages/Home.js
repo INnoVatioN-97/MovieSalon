@@ -6,7 +6,7 @@ import { useMediaQuery } from '@material-ui/core';
 // firebase login import 추가
 import 'firebase/firestore';
 import 'firebase/auth';
-import 'css/Home.css';
+import '../../assets/css/Home.css';
 
 const useStyles = makeStyles({
   root: {

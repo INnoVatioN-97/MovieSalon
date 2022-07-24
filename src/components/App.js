@@ -1,15 +1,15 @@
-import "../css/App.css";
-import React, { useEffect, useState } from "react";
-import AppRouter from "./Router";
-import { authService } from "fbase";
-import DefaultProfileImage from "images/DefaultProfileImage.png";
-import { getKobisMovies } from "./APIs/KobisAPI";
+import '../assets/css/App.css';
+import React, { useEffect, useState } from 'react';
+import AppRouter from './Router';
+import { authService } from 'fbase';
+import DefaultProfileImage from 'assets/images/DefaultProfileImage.png';
+import { getKobisMovies } from './APIs/KobisAPI';
 import {
   getTmdbBoxOffice,
   getUpcommingMovies,
   getHotWeekMovies,
   getTMDBSearchKRBoxOffice,
-} from "./APIs/TmdbAPI";
+} from './APIs/TmdbAPI';
 
 //movieList 내에 있던 영화 불러오는 기능을 App.js에 넣고 그걸 AppRouter에 props로 전달해주기.
 const App = () => {
@@ -83,7 +83,7 @@ const App = () => {
 
   const refreshUser = () => {
     const user = authService.currentUser;
-    console.log("currentUser from App.js", user);
+    console.log('currentUser from App.js', user);
     if (Boolean(user)) {
       setUserObj({
         displayName: user.displayName,
@@ -98,7 +98,7 @@ const App = () => {
   return (
     <>
       {init ? (
-        "초기화중..."
+        '초기화중...'
       ) : (
         <>
           <AppRouter
