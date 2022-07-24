@@ -84,10 +84,10 @@ const Comment = ({ owner, colSpan, code }) => {
   // const []
 
   useEffect(() => {
-    console.log('comments:', comments);
-    console.log('refresh:', refresh);
+    // console.log('comments:', comments);
+    // console.log('refresh:', refresh);
     if (refresh && code !== 0) {
-      console.log('새로 코멘트 가져와야되는 구간');
+      // console.log('새로 코멘트 가져와야되는 구간');
       if (comments.length === 0) {
         const getData = dbService
           .collection(`comment_movieCode=${code}`)
@@ -98,14 +98,14 @@ const Comment = ({ owner, colSpan, code }) => {
               ...doc.data(),
             }));
             setComments(commentsArray);
-            console.log('dbService 접근!', comments);
+            // console.log('dbService 접근!', comments);
           });
         return () => {
           setRefresh(false);
           getData();
         };
       } else {
-        console.log('새로 코멘트 가져오지 않는구간');
+        // console.log('새로 코멘트 가져오지 않는구간');
       }
     }
   }, [refresh, code, comments]);
@@ -116,7 +116,7 @@ const Comment = ({ owner, colSpan, code }) => {
 
   const addComment = async (event) => {
     // console.log('event.keyCode:', event.code);
-    console.log('추가눌릴때: ', event.type);
+    // console.log('추가눌릴때: ', event.type);
     event.preventDefault();
     if (event.code === 'Enter' || event.type === 'click') {
       //Enter 키를 누르면 입력된 한줄평을 파이어베이스 DB에 넣고,
@@ -135,7 +135,7 @@ const Comment = ({ owner, colSpan, code }) => {
         .doc(commentObj.userId)
         .set(commentObj)
         .then(() => {
-          console.log('Document successfully written!');
+          // console.log('Document successfully written!');
           setComment('');
           setComments([]);
           setRefresh(true);
@@ -150,7 +150,7 @@ const Comment = ({ owner, colSpan, code }) => {
 
   const onDeleteClick = async (event) => {
     if (owner === event.target.id) {
-      console.log('code:', code);
+      // console.log('code:', code);
       // alert('이 댓글 주인!');
       const isDelete = window.confirm(`이 댓글을 삭제하시겠습니까?`);
       if (isDelete === true) {
@@ -159,7 +159,7 @@ const Comment = ({ owner, colSpan, code }) => {
           .doc(owner)
           .delete() // insert
           .then(() => {
-            console.log('Document successfully Deleted!');
+            // console.log('Document successfully Deleted!');
             alert('제대로 삭제됨!');
             setComments([]);
             setRefresh(true);

@@ -134,7 +134,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
         data: { results },
       } = await axios.get(`
             https://api.themoviedb.org/3/movie/${id}/videos?api_key=${TMDB_API_KEY}&language=en-US`);
-      console.log('videos', results);
+      // console.log('videos', results);
       setTrailers(results.slice(0, 1));
       setIsLoading(false);
       // console.log('isLoading:', isLoading);
@@ -151,16 +151,16 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
       setSimilars(results.slice(0, 4));
     };
 
-    console.log('useEffect에서의 id값: ', id);
+    // console.log('useEffect에서의 id값: ', id);
     if (id !== 0 && isLoading) {
-      console.log(`id:${id}`);
+      // console.log(`id:${id}`);
       getMovieCasts(id);
       getSimilerMovies(id);
       getMovieVideos(id);
-      console.log('isLoading:', isLoading);
+      // console.log('isLoading:', isLoading);
     } else {
-      console.log(`id:${id}이므로 안가져왔음.`);
-      console.log('isLoading:', isLoading);
+      // console.log(`id:${id}이므로 안가져왔음.`);
+      // console.log('isLoading:', isLoading);
     }
   }, [id, isLoading]);
 
@@ -168,7 +168,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
   const onOpenChange = (e) => {
     setOpen(!open);
     setTitles(e.target.title);
-    console.log('e.target.id:', e.target.id);
+    // console.log('e.target.id:', e.target.id);
     /**
      * 0: "653349"
      * 1: "7.5"
@@ -189,7 +189,7 @@ const TmdbList = ({ tmdbHome, upcomming }) => {
       movieName: movieObj[4],
       plot: movieObj.slice(5),
     });
-    console.log('onOpenChange에서의 movies값: ', movie);
+    // console.log('onOpenChange에서의 movies값: ', movie);
     const movieId = e.target.id.substring(0, 7);
     setId(movieId);
   };

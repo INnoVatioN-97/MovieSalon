@@ -117,7 +117,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
   }, []);
 
   const printTop3Movies_KOBIS = () => {
-    console.log('krHome:', krBoxOffice);
+    // console.log('krHome:', krBoxOffice);
     return (
       <div>
         <div>
@@ -144,7 +144,7 @@ const Home = ({ tmdbHome, hotMovie, krHome }) => {
   };
 
   const printTop3Movies_TMDB = () => {
-    console.log('tmdbHome:', tmdbHome);
+    // console.log('tmdbHome:', tmdbHome);
     return (
       <div>
         <div>

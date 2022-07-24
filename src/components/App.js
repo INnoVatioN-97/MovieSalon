@@ -83,7 +83,7 @@ const App = () => {
 
   const refreshUser = () => {
     const user = authService.currentUser;
-    console.log('currentUser from App.js', user);
+    // console.log('currentUser from App.js', user);
     if (Boolean(user)) {
       setUserObj({
         displayName: user.displayName,

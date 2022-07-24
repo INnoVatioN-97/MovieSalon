@@ -25,7 +25,7 @@ export default class SliderCarousel extends Component {
       `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${TMDB_API_KEY}&language=ko&page=1`
     );
     this.setState({ similer: results.slice(0, 8), isLoading: false });
-    console.log('responsive_similer', this.state.similer[0].poster_path);
+    // console.log('responsive_similer', this.state.similer[0].poster_path);
   };
 
   componentDidMount() {

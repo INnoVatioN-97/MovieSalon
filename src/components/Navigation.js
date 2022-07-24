@@ -151,11 +151,12 @@ const Navigation = ({ userObj }) => {
       ]
     : [
         {
+          key: 'preLogin',
           url: '/#/',
           text: '로그인 하기',
         },
         {
-          key: 'About',
+          key: 'About..',
           url: '/#/aboutUs',
           text: 'About Us',
         },
@@ -242,13 +243,13 @@ const Navigation = ({ userObj }) => {
     // 모바일뷰 화면에서 三 버튼 클릭시 발생되는 함수 (드로워가 열릴 수 있도록 State를 변경.)
     const handleDrawerOpen = () => {
       setState((prevState) => ({ ...prevState, drawerOpen: true }));
-      console.log('drawer open!');
+      // console.log('drawer open!');
     };
 
     // 드로워가 열린 상태에서 바깥을 클릭하거나 메뉴 아이템을 클릭시 발생되는 함수 (앱 드로워 닫힘)
     const handleDrawerClose = () => {
       setState((prevState) => ({ ...prevState, drawerOpen: false }));
-      console.log('drawerClosed');
+      // console.log('drawerClosed');
     };
 
     // Drawer가 열릴때 Drawer속 내용물을 표시함.

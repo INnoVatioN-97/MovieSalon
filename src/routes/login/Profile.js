@@ -30,13 +30,13 @@ const Profile = ({ refreshUser, userObj }) => {
      * btnConfirmChangeProfile
      * btnChangeProfile
      */
-    console.log('event.target.id:', event.target.id);
+    // console.log('event.target.id:', event.target.id);
     event.preventDefault(); //창 새로고침 막기.
     if (
       userObj.displayName === newDisplayName &&
       userObj.photoURL === attachment
     ) {
-      console.log('아무것도 안바뀜.');
+      // console.log('아무것도 안바뀜.');
     } else {
       if (
         userObj.displayName !== newDisplayName &&
@@ -48,7 +48,7 @@ const Profile = ({ refreshUser, userObj }) => {
           photoURL: userObj.photoURL,
           email: userObj.email,
         });
-        console.log('별명만 바뀜');
+        // console.log('별명만 바뀜');
       } else if (
         userObj.photoURL !== attachment &&
         userObj.displayName === newDisplayName
@@ -70,7 +70,7 @@ const Profile = ({ refreshUser, userObj }) => {
           photoURL: attachmentUrl,
           email: userObj.email,
         });
-        console.log('프사만 바뀜');
+        // console.log('프사만 바뀜');
       } else if (
         userObj.displayName !== newDisplayName &&
         userObj.photoURL !== attachment
@@ -93,7 +93,7 @@ const Profile = ({ refreshUser, userObj }) => {
             attachment !== userObj.photoURL ? attachmentUrl : userObj.photoURL,
           email: userObj.email,
         });
-        console.log('프사, 별명 둘다 바뀜');
+        // console.log('프사, 별명 둘다 바뀜');
       }
       refreshUser();
       setAttachment(userObj.photoURL);
@@ -124,7 +124,7 @@ const Profile = ({ refreshUser, userObj }) => {
 
   const onChangeProfile = () => {
     setIsChange(!isChange);
-    console.log('isChange:', isChange);
+    // console.log('isChange:', isChange);
   };
 
   return (
