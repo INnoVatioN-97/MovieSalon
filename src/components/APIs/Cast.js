@@ -8,14 +8,10 @@ import 'css/View.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Carousel } from '@sefailyasoz/react-carousel';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+
 const useStyles = makeStyles({
   root: {
     textAlign: 'center',
-    // background: '#485460',
     height: '100%',
   },
   box_film: {
@@ -93,11 +89,15 @@ const useStyles = makeStyles({
   },
 });
 
+const imgUrl = 'https://image.tmdb.org/t/p/w200';
+const queryUrl = '/viewTmdb';
+
 function Cast({ id }) {
   useEffect(() => {
     getCastInfo(personId).then(() => getFilmoMovies(personId));
   }, []);
 
+  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [personId, setPersonId] = useState(id);
   const [castInfo, setCastInfo] = useState([]);
@@ -123,72 +123,54 @@ function Cast({ id }) {
     } = await axios.get(
       `https://api.themoviedb.org/3/person/${ID}/movie_credits?api_key=${TMDB_API_KEY}&language=ko`
     );
-
     setMovies(cast.slice(0, cast.length));
     setIsLoading(true);
   };
-
-  const classes = useStyles();
-
-  const imgUrl = 'https://image.tmdb.org/t/p/w200';
-  let queryUrl = '/viewTmdb/';
-  function PrintCast() {
-    return movies.map((m) => (
-      <Link to={queryUrl + m?.id}>
-        <img
-          src={m?.poster_path ? imgUrl + m?.poster_path : NoImageAvailable}
-          height='350px'
-          alt={m?.title}
-        />
-      </Link>
-    ));
-  }
-
-  /**
-   * 아래 출연작 슬라이더 그냥 그리드뷰로 보여주기
-   */
 
   return (
     <>
       {isLoading ? (
         <>
           <div className={classes.topMovieContainer}>
-            {/* <Box className={classes.box}> */}
             <img
               className={classes.profile_image}
-              src={castInfo[5] ? imgUrl + castInfo[5] : DefaultProfileImage_2}
+              src={
+                castInfo[5] ? `${imgUrl}${castInfo[5]}` : DefaultProfileImage_2
+              }
               alt='profileImg'
             />
             <div className={classes.cast_content}>
               <h2>{castInfo[1]}</h2>
-              <p>{castInfo[2] === 1 ? <p>woman</p> : <p>man</p>}</p>
-              <p>{'🎂' + castInfo[3]}</p>
-              <p>{'🏠' + castInfo[4]}</p>
+              <p>
+                {Number.isInteger(castInfo[2]) && castInfo[2] === 1 ? (
+                  <p>woman</p>
+                ) : (
+                  <p>man</p>
+                )}
+              </p>
+              {castInfo[3] && <p>{'🎂' + castInfo[3]}</p>}
+              {castInfo[4] && <p>{'🏠' + castInfo[4]}</p>}
             </div>
-            {/* </Box> */}
           </div>
           <Box className={classes.carosol}>
             <h2> 🎞️출연작 </h2>
-
-            <Carousel
-              data={movies.map((m) => {
-                return {
-                  headerText: <Link to={queryUrl + m?.id}></Link>,
-                  image: m?.poster_path
-                    ? imgUrl + m?.poster_path
-                    : NoImageAvailable,
-                };
-              })}
-              autoPlay={true}
-              rightItem={<ChevronLeft />}
-              leftItem={<ChevronRight />}
-              animationDuration={3000}
-              headerTextType='black'
-              subTextType='white'
-              size='normal'
-            />
-
-            {/* <Slider {...settings}><PrintCast /></Slider> */}
+            <Slider {...settings}>
+              {/* <PrintCast /> */}
+              {movies.map((m) => (
+                <Link to={`${queryUrl}/${m?.id}`}>
+                  <img
+                    key={m?.id}
+                    src={
+                      m?.poster_path
+                        ? imgUrl + m?.poster_path
+                        : NoImageAvailable
+                    }
+                    height='350px'
+                    alt={m?.title}
+                  />
+                </Link>
+              ))}
+            </Slider>
           </Box>
         </>
       ) : (
@@ -199,3 +181,38 @@ function Cast({ id }) {
 }
 
 export default Cast;
+
+const settings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: false,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
