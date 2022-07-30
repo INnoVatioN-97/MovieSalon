@@ -321,6 +321,7 @@ const Navigation = ({ userObj }) => {
   return (
     <header className={classes.root}>
       {mobileView ? displayMobileView() : displayDesktopView()}
+      {/* {displayDesktopView()} */}
     </header>
   );
 };
